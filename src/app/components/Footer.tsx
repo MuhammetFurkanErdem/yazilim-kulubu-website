@@ -3,62 +3,53 @@ import { Code2, Github, Linkedin, Instagram, MessageCircle } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="bg-[#111827] border-t border-[#374151]">
-      <div className="max-w-[1280px] mx-auto px-20 py-16">
-        <div className="grid grid-cols-4 gap-12">
-          {/* Logo + Description */}
-          <div className="col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-[#534AB7] rounded-lg flex items-center justify-center">
-                <Code2 className="w-5 h-5 text-white" />
+    <footer className="bg-surface border-t border-default transition-colors duration-300">
+      <div className="max-w-[1280px] mx-auto px-8 lg:px-20 py-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8">
+          
+          {/* Brand & Info */}
+          <div className="flex flex-col gap-3">
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="w-8 h-8 bg-[var(--brand-primary)] rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                <Code2 className="w-4 h-4 text-white" />
               </div>
-              <span className="text-sm font-semibold text-white">YGK</span>
+              <span className="text-lg font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
+            </Link>
+            <div className="text-sm font-medium text-muted flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+              <span>Çanakkale Onsekiz Mart Üniversitesi</span>
+              <span className="hidden sm:inline text-default">•</span>
+              <a href="mailto:ygk@comu.edu.tr" className="hover:text-[var(--brand-primary)] transition-colors">ygk@comu.edu.tr</a>
             </div>
-            <p className="text-[13px] text-[#6B7280] leading-relaxed">
-              Çanakkale Onsekiz Mart Üniversitesi bünyesinde gerçek projeler, gerçek deneyim.
-            </p>
           </div>
 
-          {/* Keşfet */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Keşfet</h4>
-            <ul className="space-y-2">
-              <li><Link to="/projeler" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Projeler</Link></li>
-              <li><Link to="/etkinlikler" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Etkinlikler</Link></li>
-              <li><Link to="/ekibimiz" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Ekip</Link></li>
-            </ul>
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            <a href="https://chat.whatsapp.com/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="WhatsApp Grubu">
+              <MessageCircle className="w-4 h-4" />
+            </a>
+            <a href="https://github.com/ygk-comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="GitHub">
+              <Github className="w-4 h-4" />
+            </a>
+            <a href="https://linkedin.com/company/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="LinkedIn">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="Instagram">
+              <Instagram className="w-4 h-4" />
+            </a>
           </div>
 
-          {/* Topluluk */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Topluluk</h4>
-            <ul className="space-y-2">
-              <li><a href="https://discord.gg/ygkcomu" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Discord</a></li>
-              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">GitHub</a></li>
-              <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">LinkedIn</a></li>
-              <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Instagram</a></li>
-            </ul>
-          </div>
-
-          {/* Kulüp */}
-          <div>
-            <h4 className="text-sm font-semibold text-white mb-4">Kulüp</h4>
-            <ul className="space-y-2">
-              <li><Link to="/hakkimizda" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Hakkımızda</Link></li>
-              <li><Link to="/ekibimiz" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">Üyelik</Link></li>
-              <li><Link to="/iletisim" className="text-[13px] text-[#6B7280] hover:text-white transition-colors">İletişim</Link></li>
-            </ul>
-          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-[#374151] flex items-center justify-between">
-          <p className="text-[13px] text-[#6B7280]">
-            © 2025 Yazılım Geliştirme Kulübü · ÇOMÜ
+        <div className="pt-6 border-t border-default flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs font-semibold text-muted">
+            © {new Date().getFullYear()} YGK. Tüm hakları saklıdır.
           </p>
-          <p className="font-mono text-[13px] text-[#6B7280]">
-            Built with ❤️ by YGK
-          </p>
+          <div className="flex items-center gap-6 text-xs font-semibold text-muted">
+            <Link to="/hakkimizda" className="hover:text-[var(--brand-primary)] transition-colors">Hakkımızda</Link>
+            <Link to="/etkinlikler" className="hover:text-[var(--brand-primary)] transition-colors">Etkinlikler</Link>
+            <Link to="/iletisim" className="hover:text-[var(--brand-primary)] transition-colors">İletişim</Link>
+          </div>
         </div>
       </div>
     </footer>

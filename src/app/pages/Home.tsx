@@ -258,7 +258,7 @@ export function Home() {
                 Üyelik Başvurusu <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button variant="secondary" size="lg" className="rounded-dynamic px-8 border-default">
-                Discord'a Katıl
+                WhatsApp'a Katıl
               </Button>
             </div>
           </div>

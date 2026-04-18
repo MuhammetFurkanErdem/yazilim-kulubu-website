@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Globe, Smartphone, Gamepad2, Link2 } from 'lucide-react';
+import { ArrowRight, Globe, Smartphone, Gamepad2, Link2, Users, Rocket, Target, Quote, Trophy } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
@@ -29,155 +29,37 @@ export function About() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-32 px-20 grid-bg overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#534AB7] rounded-full blur-[120px] opacity-10" />
+    <div className="min-h-screen bg-page transition-colors duration-300">
+      {/* Centered Hero Section */}
+      <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
+        <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
         
-        <div className="relative z-10 max-w-[1280px] mx-auto text-center">
+        <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-[64px] font-bold mb-6">
-              Kod yazan bir <span className="text-[#7F77DD]">topluluk</span> inşa ediyoruz.
+
+            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
+              Kod yazan bir <span className="text-[var(--brand-primary)]">topluluk</span> <br className="hidden md:block" /> inşa ediyoruz.
             </h1>
-            <p className="text-lg text-[#6B7280] max-w-[720px] mx-auto leading-relaxed">
-              ÇOMÜ bünyesinde, öğrencilerin teknolojiyi sadece öğrenmekle kalmayıp gerçek ürünler ürettiği bir ortam yaratıyoruz.
+            <p className="text-xl text-muted max-w-[720px] mx-auto leading-relaxed font-medium">
+              ÇOMÜ bünyesinde, öğrencilerin teknolojiyi sadece öğrenmekle kalmayıp gerçek ürünler ürettiği ve birlikte büyüdüğü bir ortam yaratıyoruz.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Who We Are Section */}
-      <section className="py-24 px-20">
-        <div className="max-w-[1280px] mx-auto grid grid-cols-12 gap-12 items-center">
-          {/* Left - Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="col-span-7"
-          >
-            <div className="mb-4">
-              <span className="text-sm font-mono text-[#7F77DD] tracking-wider uppercase">Biz Kimiz?</span>
-            </div>
-            <h2 className="text-[42px] font-bold mb-6">Üniversite kulübü değil, mini bir teknoloji şirketi.</h2>
-            <div className="space-y-4 text-[#6B7280] leading-relaxed">
-              <p>
-                Yazılım Geliştirme Kulübü, 2022 yılında tutkulu bir grup öğrenci tarafından kuruldu. 
-                Amacımız, üniversite öğrencilerine sadece teorik bilgi değil, gerçek dünya deneyimi kazandırmak.
-              </p>
-              <p>
-                4 farklı kol altında (Web, Mobil, Oyun, Blockchain) çalışan ekiplerimiz, 
-                her dönem yeni projeler geliştiriyor, workshop'lar düzenliyor ve hackathon'lara katılıyor.
-              </p>
-              <p>
-                120'den fazla aktif üyemiz ve 40'tan fazla tamamlanmış projemizle, 
-                ÇOMÜ'nun en aktif teknoloji topluluğuyuz.
-              </p>
-            </div>
-            <div className="flex items-center gap-4 mt-8">
-              <Button variant="primary">Üye Ol</Button>
-              <Button variant="secondary">Kollarımızı Keşfet</Button>
-            </div>
-          </motion.div>
-
-          {/* Right - Code Mockup */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="col-span-5"
-          >
-            <div className="relative bg-[#08080f] border border-[#534AB7]/30 rounded-2xl p-6 accent-line">
-              {/* Editor Bar */}
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#374151]">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                </div>
-                <span className="text-xs text-[#6B7280] font-mono ml-2">kulüp.ts</span>
-              </div>
-
-              {/* Code */}
-              <pre className="font-mono text-sm leading-relaxed">
-                <code>
-                  <span className="text-[#7F77DD]">const</span>{' '}
-                  <span className="text-white">kulüp</span>{' '}
-                  <span className="text-[#7F77DD]">=</span>{' '}
-                  <span className="text-white">{'{'}</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">isim</span>
-                  <span className="text-white">:</span>{' '}
-                  <span className="text-[#BA7517]">"YGK · ÇOMÜ"</span>
-                  <span className="text-white">,</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">kuruluş</span>
-                  <span className="text-white">:</span>{' '}
-                  <span className="text-[#D85A30]">2022</span>
-                  <span className="text-white">,</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">üyeler</span>
-                  <span className="text-white">:</span>{' '}
-                  <span className="text-[#D85A30]">120</span>
-                  <span className="text-white">,</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">projeler</span>
-                  <span className="text-white">:</span>{' '}
-                  <span className="text-[#D85A30]">40</span>
-                  <span className="text-white">,</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">kollar</span>
-                  <span className="text-white">: [</span>
-                  <span className="text-[#BA7517]">"Web"</span>
-                  <span className="text-white">,</span>{' '}
-                  <span className="text-[#BA7517]">"Mobil"</span>
-                  <span className="text-white">,</span>
-                  {'\n          '}
-                  <span className="text-[#BA7517]">"Oyun"</span>
-                  <span className="text-white">,</span>{' '}
-                  <span className="text-[#BA7517]">"Blockchain"</span>
-                  <span className="text-white">],</span>
-                  {'\n  '}
-                  <span className="text-[#1D9E75]">misyon</span>
-                  <span className="text-white">:</span>{' '}
-                  <span className="text-[#7F77DD]">{'() =>'}</span>{' '}
-                  <span className="text-white">{'{'}</span>
-                  {'\n    '}
-                  <span className="text-[#6B7280]">{'// Gerçek projeler, gerçek deneyim'}</span>
-                  {'\n    '}
-                  <span className="text-[#7F77DD]">return</span>{' '}
-                  <span className="text-[#BA7517]">"değer üret"</span>
-                  <span className="text-white">;</span>
-                  {'\n  '}
-                  <span className="text-white">{'}'}</span>
-                  {'\n'}
-                  <span className="text-white">{'};'}</span>
-                  {'\n\n'}
-                  <span className="text-white">kulüp.</span>
-                  <span className="text-[#1D9E75]">üyeOl</span>
-                  <span className="text-white">(</span>
-                  <span className="text-[#7F77DD]">sen</span>
-                  <span className="text-white">);</span>
-                </code>
-              </pre>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Stats Counter Section */}
-      <section className="py-16 px-20 bg-[#111827]/30">
+      <section className="py-12 px-8 bg-surface border-b border-default relative z-20">
         <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { label: 'Aktif Üye', value: counts.members, suffix: '+' },
               { label: 'Tamamlanan Proje', value: counts.projects, suffix: '+' },
-              { label: 'Yıl', value: counts.years, suffix: '' },
-              { label: 'Etkinlik/Yıl', value: counts.events, suffix: '+' }
+              { label: 'Yıl Deneyim', value: counts.years, suffix: '' },
+              { label: 'Büyük Etkinlik', value: counts.events, suffix: '+' }
             ].map((stat, idx) => (
               <motion.div
                 key={idx}
@@ -185,59 +67,116 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="relative bg-[#111827] border border-[#374151] rounded-2xl p-8 text-center accent-line"
+                className="bg-elevated border border-default rounded-dynamic p-6 text-center shadow-dynamic"
               >
-                <div className="text-5xl font-bold font-mono bg-gradient-to-r from-white to-[#7F77DD] bg-clip-text text-transparent mb-2">
+                <div className="text-4xl md:text-5xl font-bold font-mono text-primary mb-2">
                   {stat.value}{stat.suffix}
                 </div>
-                <div className="text-sm text-[#6B7280]">{stat.label}</div>
+                <div className="text-sm font-medium uppercase tracking-wider text-muted">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Who We Are Section */}
+      <section className="py-24 px-8 lg:px-20 bg-page">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left - Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Üniversite kulübü değil, mini bir teknoloji şirketi.</h2>
+            <div className="space-y-6 text-lg text-muted leading-relaxed font-medium">
+              <p>
+                Yazılım Geliştirme Kulübü, 2022 yılında tutkulu bir grup öğrenci tarafından kuruldu. 
+                Amacımız, üniversite öğrencilerine sadece teorik bilgi değil, gerçek dünya deneyimi kazandırmak.
+              </p>
+              <p>
+                4 farklı kol altında (Web, Mobil, Oyun, Blockchain) çalışan ekiplerimiz, 
+                her dönem yeni projeler geliştiriyor, workshop'lar düzenliyor ve ulusal hackathon'lara katılıyor.
+              </p>
+              <p>
+                Hedefimiz çok net: Girdiğin ilk günden mezuniyetine kadar gerçek değer üreten, sektöre %100 hazır bir yazılımcı olmanı sağlamak.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
+              <Button variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-8 w-full sm:w-auto font-bold">
+                Aramıza Katıl
+              </Button>
+              <Button variant="secondary" size="lg" className="rounded-dynamic border-default px-8 w-full sm:w-auto font-bold bg-surface hover:bg-elevated">
+                Yönetim Ekibiyle Tanış
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Right - Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="relative aspect-[4/3] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
+              <img 
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200" 
+                alt="Ekip çalışması" 
+                className="w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150 transition-all duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-page/80 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                <div>
+                  <div className="text-white font-bold text-xl drop-shadow-md">Takım Çalışması</div>
+                  <div className="text-white/80 text-sm font-medium drop-shadow-md">Hackathon 2023 - 1.lik Ödülü</div>
+                </div>
+                <div className="w-12 h-12 rounded-full bg-[var(--brand-primary)] flex items-center justify-center shadow-lg">
+                  <Trophy className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Our Branches Section */}
-      <section className="py-24 px-20">
+      <section className="py-24 px-8 lg:px-20 bg-surface border-y border-default">
         <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-[42px] font-bold mb-4">Kollarımız</h2>
-            <p className="text-lg text-[#6B7280]">Her kol kendi alanında uzmanlaşmış ekiplerden oluşur</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Uzmanlık Kollarımız</h2>
+            <p className="text-xl text-muted font-medium">İlgi alanına göre seç, odaklan ve en iyisi ol.</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 name: 'Web Geliştirme',
+                desc: 'Modern web uygulamaları, frontend ve backend mimarileri.',
                 icon: Globe,
-                color: '#534AB7',
-                glow: 'glow-web',
-                variant: 'web',
-                tech: ['Next.js', 'React', 'Node.js', 'Supabase', 'TypeScript']
+                color: 'var(--brand-primary)',
+                tech: ['React', 'Node.js', 'Next.js', 'TypeScript']
               },
               {
                 name: 'Mobil Geliştirme',
+                desc: 'Cross-platform ve native mobil uygulama geliştirme süreçleri.',
                 icon: Smartphone,
-                color: '#1D9E75',
-                glow: 'glow-mobile',
-                variant: 'mobile',
-                tech: ['Flutter', 'Dart', 'Firebase', 'Android', 'iOS']
+                color: '#10b981',
+                tech: ['Flutter', 'React Native', 'Swift', 'Kotlin']
               },
               {
                 name: 'Oyun Geliştirme',
+                desc: 'Oyun motorları, 3D modelleme ve oyun mekaniği tasarımı.',
                 icon: Gamepad2,
-                color: '#D85A30',
-                glow: 'glow-game',
-                variant: 'game',
-                tech: ['Unity', 'C#', 'Godot', 'GDScript', 'Blender']
+                color: '#f59e0b',
+                tech: ['Unity', 'C#', 'Unreal Engine', 'Blender']
               },
               {
-                name: 'Blockchain',
-                icon: Link2,
-                color: '#BA7517',
-                glow: 'glow-blockchain',
-                variant: 'blockchain',
-                tech: ['Solidity', 'Ethereum', 'Web3.js', 'Rust', 'Hardhat']
+                name: 'Siber Güvenlik',
+                desc: 'Ağ güvenliği, penetrasyon testleri ve güvenli kodlama.',
+                icon: Target,
+                color: '#ef4444',
+                tech: ['Python', 'Kali Linux', 'Burp Suite', 'Bash']
               }
             ].map((branch, idx) => (
               <motion.div
@@ -246,18 +185,22 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className={`relative bg-[#111827] border border-[#374151] rounded-2xl p-8 flex items-start gap-6 hover:-translate-y-1 transition-all duration-300 hover:border-[${branch.color}] ${branch.glow} accent-line`}
-                style={{ '--accent-color': branch.color } as any}
+                className="bg-elevated border border-default rounded-dynamic p-8 hover:-translate-y-1 transition-all duration-300 shadow-dynamic group"
               >
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${branch.color}20`, border: `1px solid ${branch.color}` }}>
-                  <branch.icon className="w-8 h-8" style={{ color: branch.color }} />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-3">{branch.name}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {branch.tech.map(tech => (
-                      <Badge key={tech} variant={branch.variant as any}>{tech}</Badge>
-                    ))}
+                <div className="flex items-start gap-6">
+                  <div className="w-16 h-16 rounded-dynamic flex items-center justify-center flex-shrink-0 bg-surface border border-default transition-colors group-hover:border-[var(--brand-primary)]">
+                    <branch.icon className="w-8 h-8 text-primary transition-colors group-hover:text-[var(--brand-primary)]" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{branch.name}</h3>
+                    <p className="text-muted font-medium mb-6 leading-relaxed">{branch.desc}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {branch.tech.map(tech => (
+                        <span key={tech} className="px-3 py-1 bg-surface border border-default rounded-full text-xs font-mono font-medium text-primary">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -266,20 +209,18 @@ export function About() {
         </div>
       </section>
 
-      {/* What We Do Section */}
-      <section className="py-24 px-20 bg-[#111827]/30">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-12 gap-12">
-            {/* Left - Activities List */}
-            <div className="col-span-6 space-y-6">
-              <h2 className="text-[42px] font-bold mb-8">Ne Yapıyoruz?</h2>
+      {/* What We Do & Testimonial Section */}
+      <section className="py-24 px-8 lg:px-20 bg-page">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left - Activities */}
+          <div>
+            <h2 className="text-4xl font-bold mb-10 tracking-tight">Sürekli Gelişim Ritüellerimiz</h2>
+            <div className="space-y-6">
               {[
-                'Haftalık Buluşmalar',
-                'Aylık Workshop\'lar',
-                'Proje Dönemleri',
-                'Hackathon\'lar',
-                'Sektör Konuşmaları',
-                'Mentörlük Programı'
+                { title: 'Haftalık Buluşmalar', desc: 'Kod okumaları, teknoloji tartışmaları ve networking.' },
+                { title: 'Proje Sprintleri', desc: 'Gerçek ürünleri takım halinde 4 haftalık sprintlerle canlıya alma.' },
+                { title: 'Tech Talks', desc: 'Sektör profesyonellerinden doğrudan tecrübe aktarımı.' },
+                { title: 'Hackathon Kampları', desc: 'Ulusal yarışmalara özel olarak hazırlanan elit kodlama kampları.' }
               ].map((activity, idx) => (
                 <motion.div
                   key={idx}
@@ -287,52 +228,45 @@ export function About() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="flex items-center gap-4"
+                  className="flex gap-6 items-start p-6 bg-surface border border-default rounded-dynamic"
                 >
-                  <span className="text-2xl font-mono font-bold text-[#534AB7]">
+                  <div className="text-2xl font-mono font-bold text-[var(--brand-primary)] bg-[var(--brand-primary)]/10 w-12 h-12 flex items-center justify-center rounded-dynamic flex-shrink-0">
                     {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-lg text-[#6B7280]">{activity}</span>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">{activity.title}</h4>
+                    <p className="text-muted font-medium">{activity.desc}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
+          </div>
 
-            {/* Right - Quote Card */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="col-span-6"
-            >
-              <div className="sticky top-24 bg-[#111827] border border-[#374151] rounded-2xl p-8 accent-line">
-                <div className="text-6xl text-[#534AB7] mb-4">"</div>
-                <p className="text-xl text-[#6B7280] italic mb-6 leading-relaxed">
-                  Burada yazdığım kod sadece ödev değil — gerçek bir ürün. 
-                  Bu deneyim beni çok geliştirdi ve staj başvurularımda büyük fark yarattı.
-                </p>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#534AB7] to-[#7F77DD]" />
-                  <div>
-                    <div className="font-semibold">Ahmet Kaya</div>
-                    <div className="text-sm text-[#6B7280]">Başkan · Web Kolu</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: '🔨', text: 'Yaparak öğren' },
-                    { icon: '🤝', text: 'Birlikte büyü' },
-                    { icon: '🚀', text: 'Canlıya al' },
-                    { icon: '🌍', text: 'Açık kaynak' }
-                  ].map((value, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm text-[#6B7280]">
-                      <span>{value.icon}</span>
-                      <span>{value.text}</span>
-                    </div>
-                  ))}
+          {/* Right - Quote Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center"
+          >
+            <div className="bg-elevated border border-default rounded-dynamic p-10 shadow-dynamic relative w-full">
+              <Quote className="absolute top-8 right-8 w-12 h-12 text-default/50" />
+              <p className="text-2xl font-medium italic text-primary leading-relaxed mb-10 relative z-10 pt-4">
+                "Burada yazdığım kod sadece bir ödev değil, gerçek bir üründü. Bu pratik deneyim, beni sektöre tamamen hazır hale getirdi ve staj başvurularımda doğrudan fark yarattı."
+              </p>
+              <div className="flex items-center gap-4">
+                <img 
+                  src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150" 
+                  alt="Ahmet Kaya" 
+                  className="w-16 h-16 rounded-full border-2 border-default object-cover"
+                />
+                <div>
+                  <div className="font-bold text-lg">Ahmet Kaya</div>
+                  <div className="text-sm font-medium text-[var(--brand-primary)]">Eski Kulüp Başkanı, Frontend Developer</div>
                 </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
