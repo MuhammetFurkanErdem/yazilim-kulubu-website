@@ -60,7 +60,7 @@ export function Events() {
               onClick={() => setFilter(f.id)}
               className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shadow-sm ${
                 filter === f.id
-                  ? 'bg-[var(--brand-primary)] text-white border-transparent'
+                  ? 'bg-[var(--brand-primary)] text-[var(--brand-text)] border-transparent'
                   : 'bg-elevated border border-default text-muted hover:border-[var(--brand-primary)] hover:text-primary'
               }`}
             >

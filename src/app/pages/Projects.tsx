@@ -255,7 +255,7 @@ export function Projects() {
                         <Github className="w-3.5 h-3.5" />
                         Kaynak Kod
                       </a>
-                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-[var(--brand-text)] hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
                         <ExternalLink className="w-3.5 h-3.5" />
                         Demo
                       </a>
@@ -336,7 +336,7 @@ export function Projects() {
                         <Github className="w-3.5 h-3.5" />
                         Kaynak Kod
                       </a>
-                      <a href="#" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                      <a href="#" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-[var(--brand-text)] hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
                         <ExternalLink className="w-3.5 h-3.5" />
                         Demo
                       </a>

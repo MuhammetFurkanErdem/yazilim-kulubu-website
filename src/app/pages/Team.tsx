@@ -171,7 +171,7 @@ export function Team() {
                     </a>
                     <a
                       href={`mailto:${member.email}`}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/90 text-white font-medium text-sm rounded-full transition-all shadow-sm"
+                      className="flex items-center gap-2 px-5 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/90 text-[var(--brand-text)] font-medium text-sm rounded-full transition-all shadow-sm"
                     >
                       <Mail className="w-4 h-4" />
                       İletişim

@@ -4,6 +4,8 @@ import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
 import { NetworkBackground } from '../components/NetworkBackground';
+import { MatrixBackground } from '../components/MatrixBackground';
+import { GlowingOrbsBackground } from '../components/GlowingOrbsBackground';
 export function Home() {
   const [animatedText, setAnimatedText] = useState('');
   const words = ['işbirliği yap,', 'öğren,', 'inşa et,'];
@@ -255,7 +257,7 @@ export function Home() {
         <div className="max-w-[1280px] mx-auto">
           <div className="bg-elevated border border-default rounded-dynamic p-12 lg:p-20 text-center shadow-dynamic relative overflow-hidden">
             {/* Subtle decor for CTA */}
-            <div className="absolute top-0 left-0 w-full h-2 bg-[var(--brand-primary)]" />
+            <div className="absolute top-0 left-0 w-full h-2 bg-[#534AB7]" />
 
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">Bir sonraki projen<br />burada başlıyor.</h2>
             <p className="text-lg text-muted mb-10 max-w-[600px] mx-auto">

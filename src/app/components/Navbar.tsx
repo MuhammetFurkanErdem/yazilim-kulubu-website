@@ -8,8 +8,18 @@ export function Navbar() {
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Anasayfa', path: '/' },
@@ -21,14 +31,18 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-20 bg-page/80 backdrop-blur-lg border-b border-default transition-colors duration-300">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'h-20 bg-page/90 backdrop-blur-lg border-b border-default shadow-sm' 
+        : 'h-28 bg-transparent border-transparent'
+    }`}>
       <div className="max-w-[1280px] mx-auto px-8 h-full flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-[var(--brand-primary)] rounded-dynamic flex items-center justify-center transition-transform group-hover:scale-105">
-            <Code2 className="w-6 h-6 text-[var(--brand-text)]" />
+          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm">
+            <img src="/logo.png" alt="YGK Logo" className="w-full h-full object-cover scale-110" />
           </div>
-          <span className="text-lg font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
+          <span className="text-xl font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
         </Link>
 
         {/* Desktop Nav Links */}
@@ -37,7 +51,7 @@ export function Navbar() {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:-translate-y-[1px] ${location.pathname === link.path
+              className={`text-base font-medium transition-colors hover:-translate-y-[1px] ${location.pathname === link.path
                   ? 'text-[var(--brand-primary)]'
                   : 'text-muted hover:text-primary'
                 }`}

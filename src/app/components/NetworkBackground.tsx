@@ -35,7 +35,7 @@ export function NetworkBackground() {
       mouse.x = e.x;
       mouse.y = e.y;
     };
-    
+
     const handleMouseLeave = () => {
       mouse.x = null;
       mouse.y = null;
@@ -64,7 +64,7 @@ export function NetworkBackground() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
         const isDark = document.documentElement.classList.contains('dark');
-        ctx.fillStyle = isDark ? 'rgba(127, 119, 221, 0.5)' : 'rgba(83, 74, 183, 0.3)'; // Brand primary colors
+        ctx.fillStyle = isDark ? 'rgba(127, 119, 221, 0.6)' : 'rgba(83, 74, 183, 0.4)'; // Brand primary colors
         ctx.fill();
       }
 
@@ -82,15 +82,15 @@ export function NetworkBackground() {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
+
           if (distance < mouse.radius) {
             const forceDirectionX = dx / distance;
             const forceDirectionY = dy / distance;
             const force = (mouse.radius - distance) / mouse.radius;
-            
+
             const directionX = forceDirectionX * force * 2;
             const directionY = forceDirectionY * force * 2;
-            
+
             this.x -= directionX;
             this.y -= directionY;
           }
@@ -112,7 +112,7 @@ export function NetworkBackground() {
         const y = Math.random() * (canvas.height - size * 2) + size * 2;
         const directionX = (Math.random() * 1) - 0.5;
         const directionY = (Math.random() * 1) - 0.5;
-        
+
         particlesArray.push(new Particle(x, y, directionX, directionY, size));
       }
     };
@@ -131,18 +131,18 @@ export function NetworkBackground() {
     const connect = () => {
       let opacityValue = 1;
       const isDark = document.documentElement.classList.contains('dark');
-      
+
       for (let a = 0; a < particlesArray.length; a++) {
         for (let b = a; b < particlesArray.length; b++) {
-          const distance = 
+          const distance =
             ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
             ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-            
+
           if (distance < (canvas.width / 10) * (canvas.height / 10)) {
             opacityValue = 1 - (distance / 15000);
             if (!ctx) return;
             const colorRGB = isDark ? '127, 119, 221' : '83, 74, 183';
-            ctx.strokeStyle = `rgba(${colorRGB}, ${opacityValue * 0.5})`;
+            ctx.strokeStyle = `rgba(${colorRGB}, ${opacityValue * 0.65})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -164,10 +164,10 @@ export function NetworkBackground() {
   }, [theme]); // Re-run effect when theme changes to update colors immediately
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 w-full h-full pointer-events-none z-0" 
-      style={{ opacity: 0.6 }}
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      style={{ opacity: 0.75 }}
     />
   );
 }

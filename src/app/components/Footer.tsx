@@ -10,8 +10,8 @@ export function Footer() {
           {/* Brand & Info */}
           <div className="flex flex-col gap-3">
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-8 h-8 bg-[var(--brand-primary)] rounded-lg flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                <Code2 className="w-4 h-4 text-white" />
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                <img src="/logo.png" alt="YGK Logo" className="w-full h-full object-cover scale-110" />
               </div>
               <span className="text-lg font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
             </Link>
