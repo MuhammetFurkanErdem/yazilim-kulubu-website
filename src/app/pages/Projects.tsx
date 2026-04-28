@@ -25,42 +25,54 @@ export function Projects() {
       branch: 'web',
       tech: ['React', 'Node.js', 'MongoDB'],
       team: 4,
-      desc: 'Öğrencilerin notlarını takip etmelerini sağlayan web uygulaması'
+      desc: 'Öğrencilerin notlarını takip etmelerini sağlayan web uygulaması',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     },
     {
       name: 'Kampüs Etkinlik App',
       branch: 'mobile',
       tech: ['Flutter', 'Firebase', 'Dart'],
       team: 3,
-      desc: 'ÇOMÜ kampüsündeki tüm etkinlikleri tek yerden takip et'
+      desc: 'ÇOMÜ kampüsündeki tüm etkinlikleri tek yerden takip et',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     },
     {
       name: 'Yemek Tahmin Modeli',
       branch: 'blockchain',
       tech: ['Python', 'TensorFlow', 'FastAPI'],
       team: 2,
-      desc: 'Kafeterya menüsünü tahmin eden AI modeli'
+      desc: 'Kafeterya menüsünü tahmin eden AI modeli',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     },
     {
       name: 'Çanakkale Chronicles',
       branch: 'game',
       tech: ['Unity', 'C#', 'Blender'],
       team: 5,
-      desc: 'Çanakkale Savaşı\'nı anlatan eğitici oyun'
+      desc: 'Çanakkale Savaşı\'nı anlatan eğitici oyun',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     },
     {
       name: 'YGK Token & DAO',
       branch: 'blockchain',
       tech: ['Solidity', 'Hardhat', 'React'],
       team: 3,
-      desc: 'Kulüp yönetimi için blockchain tabanlı oylama sistemi'
+      desc: 'Kulüp yönetimi için blockchain tabanlı oylama sistemi',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     },
     {
       name: 'Ders Programı Viewer',
       branch: 'web',
       tech: ['Next.js', 'Prisma', 'tRPC'],
       team: 2,
-      desc: 'Ders programlarını görselleştiren uygulama'
+      desc: 'Ders programlarını görselleştiren uygulama',
+      githubUrl: 'https://github.com/ygk-comu',
+      demoUrl: '#'
     }
   ];
 
@@ -238,12 +250,14 @@ export function Projects() {
                         +{project.team}
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <a href="#" className="w-9 h-9 rounded-xl bg-page border border-default hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] text-muted transition-all flex items-center justify-center">
-                        <Github className="w-4 h-4" />
+                    <div className="flex items-center gap-2">
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-page border border-default hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] text-muted transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <Github className="w-3.5 h-3.5" />
+                        Kaynak Kod
                       </a>
-                      <a href="#" className="w-9 h-9 rounded-xl bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center justify-center shadow-sm">
-                        <ExternalLink className="w-4 h-4" />
+                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Demo
                       </a>
                     </div>
                   </div>
@@ -317,12 +331,14 @@ export function Projects() {
                       <User className="w-3.5 h-3.5 mr-1" />
                       Üye Projesi
                     </Badge>
-                    <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <a href="#" className="w-8 h-8 rounded-full bg-page border border-default hover:border-[var(--brand-primary)] text-muted hover:text-[var(--brand-primary)] transition-all flex items-center justify-center">
-                        <Github className="w-4 h-4" />
+                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <a href="https://github.com/ygk-comu" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-page border border-default hover:border-[var(--brand-primary)] text-muted hover:text-[var(--brand-primary)] transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <Github className="w-3.5 h-3.5" />
+                        Kaynak Kod
                       </a>
-                      <a href="#" className="w-8 h-8 rounded-full bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center justify-center shadow-sm">
-                        <ExternalLink className="w-4 h-4" />
+                      <a href="#" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-[var(--brand-primary)] text-white hover:opacity-90 transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Demo
                       </a>
                     </div>
                   </div>
