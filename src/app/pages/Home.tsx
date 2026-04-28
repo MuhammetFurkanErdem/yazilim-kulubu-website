@@ -3,7 +3,7 @@ import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Github, Linkedin,
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
-
+import { NetworkBackground } from '../components/NetworkBackground';
 export function Home() {
   const [animatedText, setAnimatedText] = useState('');
   const words = ['işbirliği yap,', 'öğren,', 'inşa et,'];
@@ -28,8 +28,7 @@ export function Home() {
     <div className="min-h-screen">
       {/* Centered Hero Section */}
       <section className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-page transition-colors duration-300 text-center px-8 pt-20">
-        {/* Subtle dot pattern background for depth */}
-        <div className="absolute inset-0 opacity-40 dark:opacity-20" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
+        <NetworkBackground />
 
         <div className="relative z-10 max-w-[900px] mx-auto flex flex-col items-center">
 
