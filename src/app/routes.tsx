@@ -4,6 +4,7 @@ import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { Team } from "./pages/Team";
 import { Events } from "./pages/Events";
+import { EventDetail } from "./pages/EventDetail";
 import { Projects } from "./pages/Projects";
 import { Contact } from "./pages/Contact";
 import { Join } from "./pages/Join";
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
       { path: "hakkimizda", Component: About },
       { path: "ekibimiz", Component: Team },
       { path: "etkinlikler", Component: Events },
+      { path: "etkinlikler/:id", Component: EventDetail },
       { path: "projeler", Component: Projects },
       { path: "iletisim", Component: Contact },
       { path: "katil", Component: Join },

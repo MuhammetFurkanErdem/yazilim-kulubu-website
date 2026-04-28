@@ -27,7 +27,7 @@ export function Contact() {
     {
       id: '2',
       question: 'Üyelik ücretli mi?',
-      answer: 'Hayır, kulüp üyeliği tamamen ücretsizdir. Tüm etkinlikler ve workshop\'lar da ücretsizdir.'
+      answer: 'Hayır, kulüp üyeliği tamamen ücretsizdir. Tüm etkinlikler ve workshop\'lar da aksi belirtilmedikçe ücretsizdir.'
     },
     {
       id: '3',
@@ -82,7 +82,7 @@ export function Contact() {
       {/* Hero */}
       <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
         <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-        
+
         <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -93,7 +93,7 @@ export function Contact() {
               Bizimle <span className="text-[var(--brand-primary)]">İletişime Geç</span>
             </h1>
             <p className="text-xl text-muted max-w-[720px] mx-auto leading-relaxed font-medium">
-              Soru, öneri, iş birliği teklifleri veya sadece tanışmak için — her zaman buradayız. Bize ulaşmaktan çekinmeyin.
+              Soru, öneri, iş birliği teklifleri veya sadece tanışmak için her zaman buradayız. Bize ulaşmaktan çekinmeyin.
             </p>
           </motion.div>
         </div>
@@ -102,7 +102,7 @@ export function Contact() {
       {/* Main Layout */}
       <section className="py-24 px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          
+
           {/* Left Column - Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -113,7 +113,7 @@ export function Contact() {
             {/* Contact Card */}
             <div className="bg-surface border border-default rounded-dynamic p-8 shadow-dynamic">
               <h3 className="text-2xl font-bold mb-8 tracking-tight">İletişim Bilgileri</h3>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-page border border-default flex items-center justify-center flex-shrink-0 text-[var(--brand-primary)]">
@@ -186,85 +186,85 @@ export function Contact() {
           >
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--brand-primary)] rounded-full blur-[100px] opacity-10" />
             <h3 className="text-3xl font-bold mb-8 tracking-tight">Mesaj Gönder</h3>
-            
+
             {isSubmitted ? (
-              <motion.div 
-                 initial={{ opacity: 0, scale: 0.95 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 className="flex flex-col items-center justify-center py-12 text-center relative z-10"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center py-12 text-center relative z-10"
               >
-                 <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
-                   <CheckCircle className="w-10 h-10" />
-                 </div>
-                 <h3 className="text-3xl font-bold text-primary mb-3">Mesajınız Alındı!</h3>
-                 <p className="text-muted font-medium mb-8 max-w-[320px]">
-                   Teşekkür ederiz. En kısa sürede sizinle iletişime geçeceğiz.
-                 </p>
-                 <Button onClick={() => setIsSubmitted(false)} variant="secondary" className="font-bold border-default px-8">
-                   Yeni Mesaj Gönder
-                 </Button>
+                <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
+                  <CheckCircle className="w-10 h-10" />
+                </div>
+                <h3 className="text-3xl font-bold text-primary mb-3">Mesajınız Alındı!</h3>
+                <p className="text-muted font-medium mb-8 max-w-[320px]">
+                  Teşekkür ederiz. En kısa sürede sizinle iletişime geçeceğiz.
+                </p>
+                <Button onClick={() => setIsSubmitted(false)} variant="secondary" className="font-bold border-default px-8">
+                  Yeni Mesaj Gönder
+                </Button>
               </motion.div>
             ) : (
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold mb-2 text-primary">Ad</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
+                      placeholder="Adınız"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold mb-2 text-primary">Soyad</label>
+                    <input
+                      type="text"
+                      required
+                      className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
+                      placeholder="Soyadınız"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-sm font-bold mb-2 text-primary">Ad</label>
+                  <label className="block text-sm font-bold mb-2 text-primary">E-posta</label>
                   <input
-                    type="text"
+                    type="email"
                     required
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                    placeholder="Adınız"
+                    placeholder="ornek@email.com"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-bold mb-2 text-primary">Soyad</label>
-                  <input
-                    type="text"
+                  <label className="block text-sm font-bold mb-2 text-primary">Konu</label>
+                  <select className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium text-primary">
+                    <option>Üyelik Hakkında</option>
+                    <option>Etkinlikler</option>
+                    <option>Sponsorluk Görüşmesi</option>
+                    <option>Proje İş Birliği</option>
+                    <option>Medya / Basın</option>
+                    <option>Diğer</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold mb-2 text-primary">Mesaj</label>
+                  <textarea
+                    className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
+                    rows={6}
                     required
-                    className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                    placeholder="Soyadınız"
+                    placeholder="Mesajınızı buraya detaylıca yazın..."
                   />
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-bold mb-2 text-primary">E-posta</label>
-                <input
-                  type="email"
-                  required
-                  className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                  placeholder="ornek@email.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold mb-2 text-primary">Konu</label>
-                <select className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium text-primary">
-                  <option>Üyelik Hakkında</option>
-                  <option>Etkinlikler</option>
-                  <option>Sponsorluk Görüşmesi</option>
-                  <option>Proje İş Birliği</option>
-                  <option>Medya / Basın</option>
-                  <option>Diğer</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-bold mb-2 text-primary">Mesaj</label>
-                <textarea
-                  className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
-                  rows={6}
-                  required
-                  placeholder="Mesajınızı buraya detaylıca yazın..."
-                />
-              </div>
-
-              <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg">
-                {isSubmitting ? 'Gönderiliyor...' : (
-                  <>Mesajı Gönder <Send className="w-5 h-5 ml-2" /></>
-                )}
-              </Button>
-            </form>
+                <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg">
+                  {isSubmitting ? 'Gönderiliyor...' : (
+                    <>Mesajı Gönder <Send className="w-5 h-5 ml-2" /></>
+                  )}
+                </Button>
+              </form>
             )}
           </motion.div>
 
@@ -278,15 +278,15 @@ export function Contact() {
             {/* Map Card */}
             <div className="bg-surface border border-default rounded-dynamic overflow-hidden shadow-dynamic group">
               <div className="h-48 bg-page relative overflow-hidden flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800" 
-                  alt="Kampüs Haritası" 
+                <img
+                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800"
+                  alt="Kampüs Haritası"
                   className="absolute inset-0 w-full h-full object-cover filter contrast-125 dark:grayscale dark:contrast-150 transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-[var(--brand-primary)]/20 mix-blend-overlay"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />
                 <div className="relative w-16 h-16 rounded-full bg-surface shadow-2xl flex items-center justify-center">
-                   <MapPin className="w-8 h-8 text-[var(--brand-primary)]" />
+                  <MapPin className="w-8 h-8 text-[var(--brand-primary)]" />
                 </div>
               </div>
               <div className="p-6">
@@ -301,7 +301,7 @@ export function Contact() {
             {/* FAQ */}
             <div className="bg-surface border border-default rounded-dynamic p-6 shadow-dynamic">
               <h3 className="text-xl font-bold mb-6 tracking-tight">Sıkça Sorulan Sorular</h3>
-              
+
               <Accordion.Root
                 type="single"
                 collapsible
@@ -320,9 +320,8 @@ export function Contact() {
                         <span className="text-primary">{faq.question}</span>
                         <div className="w-6 h-6 rounded-full bg-page flex items-center justify-center border border-default group-hover:border-[var(--brand-primary)] transition-colors">
                           <ChevronDown
-                            className={`w-4 h-4 text-muted group-hover:text-[var(--brand-primary)] transition-transform ${
-                              openFaq === faq.id ? 'rotate-180 text-[var(--brand-primary)]' : ''
-                            }`}
+                            className={`w-4 h-4 text-muted group-hover:text-[var(--brand-primary)] transition-transform ${openFaq === faq.id ? 'rotate-180 text-[var(--brand-primary)]' : ''
+                              }`}
                           />
                         </div>
                       </Accordion.Trigger>
@@ -372,7 +371,7 @@ export function Contact() {
                   e.currentTarget.style.boxShadow = '';
                 }}
               >
-                <div 
+                <div
                   className="w-16 h-16 rounded-2xl bg-surface border border-default flex items-center justify-center mb-6 transition-colors duration-300"
                   style={{ color: platform.color }}
                 >

@@ -2,8 +2,26 @@ import { motion } from 'motion/react';
 import { ArrowRight, Github, ExternalLink, User } from 'lucide-react';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
+import { Modal } from '../components/Modal';
+import { useState } from 'react';
+import { CheckCircle, Send } from 'lucide-react';
 
 export function Projects() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      // Optional: close modal automatically after a delay
+      // setTimeout(() => { setIsModalOpen(false); setIsSubmitted(false); }, 3000);
+    }, 1500);
+  };
   const featuredProject = {
     name: 'YGK Platform',
     branch: 'web',
@@ -279,7 +297,7 @@ export function Projects() {
                 Sadece kulüp içinde kalmıyor, üyelerimizin bireysel başarılarını da sergiliyoruz.
                 Geliştirdiğin bir proje mi var? Hemen bize gönder, inceleyip toplulukla paylaşalım!
               </p>
-              <Button variant="primary" size="lg" className="rounded-xl shadow-dynamic font-bold px-8">
+              <Button onClick={() => { setIsModalOpen(true); setIsSubmitted(false); }} variant="primary" size="lg" className="rounded-xl shadow-dynamic font-bold px-8">
                 Projeni Gönder <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </div>
@@ -364,6 +382,83 @@ export function Projects() {
           </div>
         </div>
       </section>
+
+      {/* Submit Project Modal */}
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        title="Projeni Paylaş"
+      >
+        {isSubmitted ? (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center justify-center py-12 text-center"
+          >
+            <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
+              <CheckCircle className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-bold text-primary mb-3">Tebrikler, Projen Gönderildi!</h3>
+            <p className="text-muted font-medium mb-8 max-w-[320px]">
+              Projeni inceleyip en kısa sürede "Üye Projeleri" bölümünde sergileyeceğiz. Eline sağlık!
+            </p>
+            <Button onClick={() => setIsModalOpen(false)} variant="secondary" className="font-bold border-default px-8">
+              Kapat
+            </Button>
+          </motion.div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <p className="text-sm text-muted font-medium mb-2">
+              Kendi geliştirdiğin, bitmiş veya devam eden projenin detaylarını aşağıya gir. Diğer üyelerimize ilham ol!
+            </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-sm font-bold text-primary">Adın Soyadın</label>
+                <input type="text" placeholder="Örn: Ali Yılmaz" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-bold text-primary">Bölüm / Sınıf</label>
+                <input type="text" placeholder="Örn: Bilgisayar Müh. 2. Sınıf" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">Projenin Adı</label>
+              <input type="text" placeholder="Örn: Kampüs Yemekhane Botu" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">Kullanılan Teknolojiler</label>
+              <input type="text" placeholder="Örn: Python, Telegram API, PostgreSQL (virgülle ayırın)" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-sm font-bold text-primary">GitHub Linki</label>
+                <input type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-bold text-primary">Canlı Demo (Varsa)</label>
+                <input type="url" placeholder="https://..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">Proje Hakkında Kısa Bilgi</label>
+              <textarea rows={4} placeholder="Projen ne işe yarıyor? Neden geliştirdin?" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
+            </div>
+
+            <div className="pt-2">
+              <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-3.5 font-bold shadow-dynamic">
+                {isSubmitting ? 'Gönderiliyor...' : (
+                  <>Projeyi Gönder <Send className="w-5 h-5 ml-2" /></>
+                )}
+              </Button>
+            </div>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 }

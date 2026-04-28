@@ -3,9 +3,9 @@ import { ArrowRight, Calendar, MapPin, Users, Clock, Zap } from 'lucide-react';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 
 export function Events() {
-  const [filter, setFilter] = useState('all');
   const [countdown, setCountdown] = useState({ days: 12, hours: 8, mins: 34, secs: 22 });
 
   useEffect(() => {
@@ -21,13 +21,7 @@ export function Events() {
     return () => clearInterval(interval);
   }, []);
 
-  const filters = [
-    { id: 'all', label: 'Tümü', icon: null },
-    { id: 'hackathon', label: 'Hackathon', icon: '⚡' },
-    { id: 'workshop', label: 'Workshop', icon: '⚙' },
-    { id: 'talk', label: 'Talk', icon: '🎙' },
-    { id: 'social', label: 'Sosyal', icon: '🤝' }
-  ];
+
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
@@ -51,25 +45,6 @@ export function Events() {
         </div>
       </section>
 
-      {/* Filter Bar */}
-      <section className="py-8 px-8 border-b border-default bg-surface sticky top-20 z-40">
-        <div className="max-w-[1280px] mx-auto flex flex-wrap items-center gap-3">
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shadow-sm ${
-                filter === f.id
-                  ? 'bg-[var(--brand-primary)] text-[var(--brand-text)] border-transparent'
-                  : 'bg-elevated border border-default text-muted hover:border-[var(--brand-primary)] hover:text-primary'
-              }`}
-            >
-              {f.icon && <span className="mr-2">{f.icon}</span>}
-              {f.label}
-            </button>
-          ))}
-        </div>
-      </section>
 
       {/* Featured Event */}
       <section className="py-24 px-8 lg:px-20 bg-page">
@@ -300,6 +275,7 @@ export function Events() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { 
+                id: 'kis-hackathon-24',
                 name: 'Kış Hackathon \'24', 
                 type: 'Hackathon', 
                 date: 'Aralık 2024', 
@@ -308,6 +284,7 @@ export function Events() {
                 image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600'
               },
               { 
+                id: 'ai-ml-workshop',
                 name: 'AI/ML Workshop Serisi', 
                 type: 'Workshop', 
                 date: 'Kasım 2024', 
@@ -316,6 +293,7 @@ export function Events() {
                 image: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=600'
               },
               { 
+                id: 'open-source-gunu',
                 name: 'Open Source Günü', 
                 type: 'Talk', 
                 date: 'Ekim 2024', 
@@ -332,35 +310,38 @@ export function Events() {
                 transition={{ delay: idx * 0.1 }}
                 className="bg-surface border border-default rounded-dynamic overflow-hidden hover:-translate-y-1 transition-all duration-300 shadow-dynamic group"
               >
-                <div className="relative h-56 bg-page overflow-hidden">
-                  <img 
-                    src={event.image} 
-                    alt={event.name} 
-                    className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150 transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-page via-page/40 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold text-white shadow-sm">
-                      Tamamlandı
-                    </span>
-                  </div>
-                  <div className="absolute bottom-4 left-6 right-6">
-                    <div className="text-2xl font-black text-primary drop-shadow-md">{event.name}</div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <Badge variant={event.variant as any} className="mb-4 shadow-sm">{event.type}</Badge>
-                  <div className="flex items-center justify-between text-sm font-medium text-muted">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-[var(--brand-primary)]" />
-                      {event.date}
+                <Link to={`/etkinlikler/${event.id}`} className="block h-full">
+                  <div className="relative h-56 bg-page overflow-hidden">
+                    <img 
+                      src={event.image} 
+                      alt={event.name} 
+                      className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150 transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-page via-page/40 to-transparent" />
+                    <div className="absolute top-4 right-4">
+                      <span className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold text-white shadow-sm">
+                        Tamamlandı
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-[var(--brand-primary)]" />
-                      {event.attendees} katılımcı
+                    <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
+                      <div className="text-2xl font-black text-primary drop-shadow-md">{event.name}</div>
+                      <ArrowRight className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md" />
                     </div>
                   </div>
-                </div>
+                  <div className="p-6">
+                    <Badge variant={event.variant as any} className="mb-4 shadow-sm">{event.type}</Badge>
+                    <div className="flex items-center justify-between text-sm font-medium text-muted">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-[var(--brand-primary)]" />
+                        {event.date}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-[var(--brand-primary)]" />
+                        {event.attendees} katılımcı
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>

@@ -1,10 +1,11 @@
-import { Plus, Search, Edit2, Trash2, Calendar as CalendarIcon, MapPin } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Calendar as CalendarIcon, MapPin, UploadCloud } from "lucide-react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { useState } from "react";
 
 export function Events() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventStatus, setEventStatus] = useState('Yaklaşan');
 
   const events = [
     { id: 1, title: "Web Geliştirme Eğitimi", date: "15 Ekim 2024", location: "Bilgisayar Müh. Lab 1", status: "Yaklaşan" },
@@ -130,22 +131,46 @@ export function Events() {
 
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Durum</label>
-            <select className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none">
+            <select 
+              value={eventStatus}
+              onChange={(e) => setEventStatus(e.target.value)}
+              className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none"
+            >
               <option value="Yaklaşan">Yaklaşan</option>
               <option value="Geçmiş">Geçmiş</option>
             </select>
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Kapak Görseli URL</label>
-            <input type="url" placeholder="https://..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
-            <p className="text-xs text-muted">Şimdilik sadece resim linki yapıştırın, dosya yükleme backend ile eklenecektir.</p>
+            <label className="text-sm font-bold text-primary">Kapak Görseli</label>
+            <div className="w-full border-2 border-dashed border-default rounded-xl bg-page hover:bg-surface transition-colors">
+              <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
+                <UploadCloud className="w-8 h-8 text-[var(--brand-primary)] opacity-80" />
+                <span className="text-sm font-bold text-primary">Görsel Seç</span>
+                <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 5MB)</span>
+                <input type="file" accept="image/*" className="hidden" />
+              </label>
+            </div>
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Açıklama</label>
-            <textarea rows={4} placeholder="Etkinlik hakkında detaylı bilgi..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
+            <label className="text-sm font-bold text-primary">Detaylı Açıklama</label>
+            <textarea rows={4} placeholder="Etkinlik hakkında detaylı bilgi, geçmişse etkinlikte neler yaşandı..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
           </div>
+
+          {eventStatus === 'Geçmiş' && (
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">Galeri Fotoğrafları</label>
+              <div className="w-full border-2 border-dashed border-default rounded-xl bg-page hover:bg-surface transition-colors">
+                <label className="flex flex-col items-center justify-center p-8 cursor-pointer w-full gap-2">
+                  <UploadCloud className="w-10 h-10 text-[var(--brand-primary)] opacity-80" />
+                  <span className="text-sm font-bold text-primary">Fotoğrafları Yükle</span>
+                  <span className="text-xs font-medium text-muted">Birden fazla fotoğraf seçebilirsiniz</span>
+                  <input type="file" accept="image/*" multiple className="hidden" />
+                </label>
+              </div>
+            </div>
+          )}
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-default">
             <Button variant="ghost" type="button" onClick={() => setIsModalOpen(false)}>
