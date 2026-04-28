@@ -6,6 +6,7 @@ import { Team } from "./pages/Team";
 import { Events } from "./pages/Events";
 import { Projects } from "./pages/Projects";
 import { Contact } from "./pages/Contact";
+import { Join } from "./pages/Join";
 import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { path: "etkinlikler", Component: Events },
       { path: "projeler", Component: Projects },
       { path: "iletisim", Component: Contact },
+      { path: "katil", Component: Join },
       { path: "*", Component: NotFound },
     ],
   },

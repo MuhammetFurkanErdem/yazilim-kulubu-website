@@ -5,29 +5,6 @@ import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
 
 export function About() {
-  const [counts, setCounts] = useState({ members: 0, projects: 0, years: 0, events: 0 });
-
-  useEffect(() => {
-    const targets = { members: 120, projects: 40, years: 3, events: 10 };
-    const duration = 2000;
-    const steps = 60;
-    const interval = duration / steps;
-
-    let step = 0;
-    const timer = setInterval(() => {
-      step++;
-      setCounts({
-        members: Math.floor((targets.members / steps) * step),
-        projects: Math.floor((targets.projects / steps) * step),
-        years: Math.floor((targets.years / steps) * step),
-        events: Math.floor((targets.events / steps) * step)
-      });
-      if (step >= steps) clearInterval(timer);
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
       {/* Centered Hero Section */}
@@ -51,33 +28,6 @@ export function About() {
         </div>
       </section>
 
-      {/* Stats Counter Section */}
-      <section className="py-12 px-8 bg-surface border-b border-default relative z-20">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { label: 'Aktif Üye', value: counts.members, suffix: '+' },
-              { label: 'Tamamlanan Proje', value: counts.projects, suffix: '+' },
-              { label: 'Yıl Deneyim', value: counts.years, suffix: '' },
-              { label: 'Büyük Etkinlik', value: counts.events, suffix: '+' }
-            ].map((stat, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-elevated border border-default rounded-dynamic p-6 text-center shadow-dynamic"
-              >
-                <div className="text-4xl md:text-5xl font-bold font-mono text-primary mb-2">
-                  {stat.value}{stat.suffix}
-                </div>
-                <div className="text-sm font-medium uppercase tracking-wider text-muted">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Who We Are Section */}
       <section className="py-24 px-8 lg:px-20 bg-page">

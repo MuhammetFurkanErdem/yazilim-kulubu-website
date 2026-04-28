@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Github, Linkedin, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Github, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
@@ -30,7 +30,7 @@ export function Home() {
       <section className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-page transition-colors duration-300 text-center px-8 pt-20">
         {/* Subtle dot pattern background for depth */}
         <div className="absolute inset-0 opacity-40 dark:opacity-20" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-        
+
         <div className="relative z-10 max-w-[900px] mx-auto flex flex-col items-center">
 
           <motion.h1
@@ -58,7 +58,7 @@ export function Home() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full sm:w-auto"
           >
-            <Button variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
+            <Button asLink href="/katil" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
               Bize Katıl
             </Button>
             <Button variant="secondary" size="lg" className="rounded-dynamic px-10 h-14 text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
@@ -66,7 +66,7 @@ export function Home() {
             </Button>
           </motion.div>
 
-          {/* Social Links & Mini Stats */}
+          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -75,28 +75,37 @@ export function Home() {
           >
             <a href="#" className="hover:text-primary transition-colors flex items-center gap-2"><Github className="w-5 h-5" /></a>
             <a href="#" className="hover:text-[#0A66C2] transition-colors flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
-            
-            <div className="w-px h-6 bg-default mx-2 hidden sm:block" />
-            
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary" />
-              <span className="font-mono font-bold text-primary">120+</span> 
-              <span className="text-sm">Aktif Üye</span>
-            </div>
-            
-            <div className="w-px h-6 bg-default mx-2 hidden sm:block" />
-            
-            <div className="flex items-center gap-2">
-              <Rocket className="w-5 h-5 text-primary" />
-              <span className="font-mono font-bold text-primary">40+</span> 
-              <span className="text-sm">Proje</span>
-            </div>
+            <a href="#" className="hover:text-[#E1306C] transition-colors flex items-center gap-2"><Instagram className="w-5 h-5" /></a>
           </motion.div>
         </div>
       </section>
 
+      {/* Stats Banner */}
+      <section className="border-b border-default bg-surface py-16 overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-8 lg:px-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-4 divide-x-0 md:divide-x divide-default text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col items-center justify-center space-y-3">
+              <div className="text-5xl md:text-6xl font-black text-primary font-mono tracking-tighter">800+</div>
+              <div className="text-xs md:text-sm font-bold text-muted uppercase tracking-widest">Aktif Üye</div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="flex flex-col items-center justify-center space-y-3">
+              <div className="text-5xl md:text-6xl font-black text-primary font-mono tracking-tighter">10+</div>
+              <div className="text-xs md:text-sm font-bold text-muted uppercase tracking-widest">Tamamlanan Proje</div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="flex flex-col items-center justify-center space-y-3">
+              <div className="text-5xl md:text-6xl font-black text-primary font-mono tracking-tighter">4</div>
+              <div className="text-xs md:text-sm font-bold text-muted uppercase tracking-widest">Ana Komite</div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="flex flex-col items-center justify-center space-y-3">
+              <div className="text-5xl md:text-6xl font-black text-primary font-mono tracking-tighter">5+</div>
+              <div className="text-xs md:text-sm font-bold text-muted uppercase tracking-widest">Büyük Etkinlik</div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Join Section */}
-      <section className="py-24 px-8 lg:px-20 bg-surface transition-colors duration-300 border-y border-default">
+      <section className="py-24 px-8 lg:px-20 bg-page transition-colors duration-300 border-b border-default">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Sadece kod değil, deneyim kazanıyorsun.</h2>
@@ -160,9 +169,9 @@ export function Home() {
               >
                 {/* Real Image Placeholder instead of fake code block */}
                 <div className="relative aspect-[4/3] bg-surface overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.name} 
+                  <img
+                    src={project.image}
+                    alt={project.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
                   />
                   <div className="absolute top-4 left-4">
@@ -171,7 +180,7 @@ export function Home() {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold mb-3">{project.name}</h3>
                   <div className="flex flex-wrap gap-2 mb-6 mt-auto">
@@ -219,15 +228,15 @@ export function Home() {
               >
                 {/* Real Placeholder Avatars */}
                 <div className="w-24 h-24 mx-auto mb-5 rounded-full overflow-hidden border-2 border-default bg-surface relative">
-                  <img 
-                    src={member.image} 
+                  <img
+                    src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover filter dark:grayscale"
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
                 <p className="text-sm text-muted font-medium mb-4">{member.role}</p>
-                
+
                 <div className="flex items-center justify-center gap-3">
                   <a href="#" className="w-10 h-10 rounded-dynamic bg-surface border border-default hover:bg-page transition-colors flex items-center justify-center text-muted hover:text-primary">
                     <Github className="w-4 h-4" />
@@ -248,13 +257,13 @@ export function Home() {
           <div className="bg-elevated border border-default rounded-dynamic p-12 lg:p-20 text-center shadow-dynamic relative overflow-hidden">
             {/* Subtle decor for CTA */}
             <div className="absolute top-0 left-0 w-full h-2 bg-[var(--brand-primary)]" />
-            
+
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">Bir sonraki projen<br />burada başlıyor.</h2>
             <p className="text-lg text-muted mb-10 max-w-[600px] mx-auto">
               Kulübe katıl, takımını kur ve ÇOMÜ'deki en büyük yazılım topluluğunun bir parçası ol.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button variant="primary" size="lg" className="rounded-dynamic px-8">
+              <Button asLink href="/katil" variant="primary" size="lg" className="rounded-dynamic px-8">
                 Üyelik Başvurusu <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button variant="secondary" size="lg" className="rounded-dynamic px-8 border-default">
