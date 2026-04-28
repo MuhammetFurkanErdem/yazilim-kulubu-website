@@ -87,7 +87,7 @@ export function Team() {
       {/* Hero */}
       <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
         <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-        
+
         <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -120,15 +120,14 @@ export function Team() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className={`flex flex-col md:flex-row gap-8 bg-surface border border-default rounded-dynamic overflow-hidden hover:border-[var(--brand-primary)] shadow-dynamic transition-all duration-300 ${
-                  idx % 2 === 1 ? 'md:flex-row-reverse' : ''
-                }`}
+                className={`flex flex-col md:flex-row gap-8 bg-surface border border-default rounded-dynamic overflow-hidden hover:border-[var(--brand-primary)] shadow-dynamic transition-all duration-300 ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''
+                  }`}
               >
                 {/* Photo Side */}
                 <div className="w-full md:w-2/5 relative min-h-[300px]">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
+                  <img
+                    src={member.image}
+                    alt={member.name}
                     className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-page/80 via-transparent to-transparent opacity-60" />
@@ -150,7 +149,7 @@ export function Team() {
                     </span>
                   </div>
                   <p className="text-lg text-muted leading-relaxed font-medium mb-8">{member.bio}</p>
-                  
+
                   <div className="bg-elevated border border-default rounded-xl p-4 mb-8">
                     <p className="text-sm font-medium text-primary italic">"{member.funFact}"</p>
                   </div>
@@ -204,9 +203,9 @@ export function Team() {
                 className="bg-elevated border border-default rounded-dynamic p-8 text-center hover:-translate-y-1 transition-all duration-300 hover:border-primary shadow-dynamic group"
               >
                 <div className="relative w-24 h-24 mx-auto mb-6">
-                  <img 
-                    src={leader.image} 
-                    alt={leader.name} 
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
                     className="absolute inset-0 w-full h-full object-cover rounded-full filter contrast-110 dark:grayscale dark:contrast-150 border-2 border-default transition-all duration-300 group-hover:border-primary"
                   />
                   <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-surface border border-default flex items-center justify-center text-primary">
@@ -340,8 +339,7 @@ export function Team() {
                       <option>Web Geliştirme</option>
                       <option>Mobil Geliştirme</option>
                       <option>Oyun Geliştirme</option>
-                      <option>Siber Güvenlik</option>
-                      <option>Yapay Zeka (AI/ML)</option>
+                      <option>Blockchain</option>
                     </select>
                   </div>
 

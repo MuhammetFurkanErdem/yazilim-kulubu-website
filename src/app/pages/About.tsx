@@ -33,7 +33,7 @@ export function About() {
       {/* Centered Hero Section */}
       <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
         <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-        
+
         <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -91,11 +91,11 @@ export function About() {
             <h2 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Üniversite kulübü değil, mini bir teknoloji şirketi.</h2>
             <div className="space-y-6 text-lg text-muted leading-relaxed font-medium">
               <p>
-                Yazılım Geliştirme Kulübü, 2022 yılında tutkulu bir grup öğrenci tarafından kuruldu. 
+                Yazılım Geliştirme Kulübü, 2022 yılında tutkulu bir grup öğrenci tarafından kuruldu.
                 Amacımız, üniversite öğrencilerine sadece teorik bilgi değil, gerçek dünya deneyimi kazandırmak.
               </p>
               <p>
-                4 farklı kol altında (Web, Mobil, Oyun, Blockchain) çalışan ekiplerimiz, 
+                4 farklı kol altında (Web, Mobil, Oyun, Blockchain) çalışan ekiplerimiz,
                 her dönem yeni projeler geliştiriyor, workshop'lar düzenliyor ve ulusal hackathon'lara katılıyor.
               </p>
               <p>
@@ -120,9 +120,9 @@ export function About() {
             className="relative"
           >
             <div className="relative aspect-[4/3] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
-              <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200" 
-                alt="Ekip çalışması" 
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
+                alt="Ekip çalışması"
                 className="w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150 transition-all duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-page/80 to-transparent" />
@@ -172,11 +172,11 @@ export function About() {
                 tech: ['Unity', 'C#', 'Unreal Engine', 'Blender']
               },
               {
-                name: 'Siber Güvenlik',
-                desc: 'Ağ güvenliği, penetrasyon testleri ve güvenli kodlama.',
+                name: 'Blockchain',
+                desc: 'Web3 teknolojileri, akıllı sözleşmeler ve dağıtık sistemler.',
                 icon: Target,
                 color: '#ef4444',
-                tech: ['Python', 'Kali Linux', 'Burp Suite', 'Bash']
+                tech: ['Solidity', 'Ethereum', 'Web3.js', 'Hardhat']
               }
             ].map((branch, idx) => (
               <motion.div
@@ -255,9 +255,9 @@ export function About() {
                 "Burada yazdığım kod sadece bir ödev değil, gerçek bir üründü. Bu pratik deneyim, beni sektöre tamamen hazır hale getirdi ve staj başvurularımda doğrudan fark yarattı."
               </p>
               <div className="flex items-center gap-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150" 
-                  alt="Ahmet Kaya" 
+                <img
+                  src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150"
+                  alt="Ahmet Kaya"
                   className="w-16 h-16 rounded-full border-2 border-default object-cover"
                 />
                 <div>
