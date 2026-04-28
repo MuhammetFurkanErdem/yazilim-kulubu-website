@@ -108,7 +108,7 @@ export function Projects() {
       {/* Hero */}
       <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
         <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-        
+
         <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -188,9 +188,9 @@ export function Projects() {
             {/* Right - Realistic Mockup Image */}
             <div className="col-span-1 lg:col-span-6 relative">
               <div className="relative rounded-dynamic overflow-hidden border border-default shadow-dynamic aspect-video bg-surface">
-                <img 
-                  src={featuredProject.image} 
-                  alt="YGK Platform Mockup" 
+                <img
+                  src={featuredProject.image}
+                  alt="YGK Platform Mockup"
                   className="w-full h-full object-cover filter contrast-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-[var(--brand-primary)]/20 to-transparent mix-blend-overlay"></div>
@@ -205,7 +205,7 @@ export function Projects() {
       <section className="py-24 px-8 lg:px-20 bg-surface border-y border-default">
         <div className="max-w-[1280px] mx-auto">
           <div className="mb-16 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kolu Projeleri</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kulüp Projeleri</h2>
             <p className="text-xl text-muted font-medium">Kulüp bünyesindeki farklı alan kollarımızın aktif geliştirdiği ürünler</p>
           </div>
 
@@ -230,7 +230,7 @@ export function Projects() {
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-2xl font-bold mb-3">{project.name}</h3>
                   <p className="text-sm font-medium text-muted mb-6 flex-1">{project.desc}</p>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tech.map(tech => (
                       <span key={tech} className="px-3 py-1 bg-page border border-default text-primary text-xs font-bold rounded-lg">
@@ -276,7 +276,7 @@ export function Projects() {
             <div className="col-span-1 lg:col-span-7">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Üye Projeleri</h2>
               <p className="text-xl text-muted leading-relaxed mb-8 font-medium">
-                Sadece kulüp içinde kalmıyor, üyelerimizin bireysel başarılarını da sergiliyoruz. 
+                Sadece kulüp içinde kalmıyor, üyelerimizin bireysel başarılarını da sergiliyoruz.
                 Geliştirdiğin bir proje mi var? Hemen bize gönder, inceleyip toplulukla paylaşalım!
               </p>
               <Button variant="primary" size="lg" className="rounded-xl shadow-dynamic font-bold px-8">
@@ -291,7 +291,7 @@ export function Projects() {
                   24
                 </div>
                 <div className="text-lg font-bold text-primary mb-8">Yayında Olan Üye Projesi</div>
-                
+
                 <div className="space-y-4 text-sm font-medium">
                   <div className="flex items-center gap-3 text-muted">
                     <div className="w-2 h-2 rounded-full bg-[var(--brand-primary)]" />
@@ -344,7 +344,7 @@ export function Projects() {
                   </div>
                   <h3 className="text-2xl font-bold mb-3 group-hover:text-[var(--brand-primary)] transition-colors">{project.name}</h3>
                   <p className="text-base font-medium text-muted mb-6">{project.desc}</p>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-8">
                     {project.tech.map(tech => (
                       <Badge key={tech} variant="neutral" className="bg-page border-default text-muted font-bold text-xs">{tech}</Badge>

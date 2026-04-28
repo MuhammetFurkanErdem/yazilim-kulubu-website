@@ -9,6 +9,13 @@ import { Contact } from "./pages/Contact";
 import { Join } from "./pages/Join";
 import { NotFound } from "./pages/NotFound";
 
+// Admin Imports
+import { AdminLayout } from "./admin/AdminLayout";
+import { Dashboard as AdminDashboard } from "./admin/Dashboard";
+import { Events as AdminEvents } from "./admin/Events";
+import { Projects as AdminProjects } from "./admin/Projects";
+import { Team as AdminTeam } from "./admin/Team";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -24,4 +31,15 @@ export const router = createBrowserRouter([
       { path: "*", Component: NotFound },
     ],
   },
+  {
+    path: "/admin",
+    Component: AdminLayout,
+    children: [
+      { index: true, Component: AdminDashboard },
+      { path: "etkinlikler", Component: AdminEvents },
+      { path: "projeler", Component: AdminProjects },
+      { path: "ekip", Component: AdminTeam },
+      { path: "*", Component: NotFound },
+    ],
+  }
 ]);
