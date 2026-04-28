@@ -280,7 +280,7 @@ export function Events() {
                 </div>
 
                 {/* Action */}
-                <Button variant="secondary" className="w-full md:w-auto px-8 rounded-xl font-bold bg-page border-default hover:bg-[var(--brand-primary)] hover:text-white hover:border-[var(--brand-primary)] mt-4 md:mt-0">
+                <Button variant="primary" className="w-full md:w-auto px-8 rounded-xl font-bold mt-4 md:mt-0 shadow-dynamic">
                   Kayıt Ol
                 </Button>
               </motion.div>

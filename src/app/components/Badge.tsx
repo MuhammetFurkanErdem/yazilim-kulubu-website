@@ -8,13 +8,13 @@ interface BadgeProps {
 
 export function Badge({ variant = 'brand', children, className = '' }: BadgeProps) {
   const variantClasses = {
-    brand: 'bg-[#26215C] border-[#534AB7] text-[#CECBF6]',
-    web: 'bg-[#26215C] border-[#534AB7] text-[#CECBF6]',
-    mobile: 'bg-[#0a3d2f] border-[#1D9E75] text-[#8fead4]',
-    game: 'bg-[#3d1f14] border-[#D85A30] text-[#f5c3ad]',
-    blockchain: 'bg-[#3d2f0f] border-[#BA7517] text-[#f5d89e]',
-    member: 'bg-[#3d1a28] border-[#D4537E] text-[#f5b7d1]',
-    neutral: 'bg-[#374151] border-[#6B7280] text-[#9CA3AF]'
+    brand: 'bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-[#26215C] dark:border-[#534AB7] dark:text-[#CECBF6]',
+    web: 'bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-[#26215C] dark:border-[#534AB7] dark:text-[#CECBF6]',
+    mobile: 'bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-[#0a3d2f] dark:border-[#1D9E75] dark:text-[#8fead4]',
+    game: 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-[#3d1f14] dark:border-[#D85A30] dark:text-[#f5c3ad]',
+    blockchain: 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-[#3d2f0f] dark:border-[#BA7517] dark:text-[#f5d89e]',
+    member: 'bg-pink-100 text-pink-800 border-pink-200 dark:bg-[#3d1a28] dark:border-[#D4537E] dark:text-[#f5b7d1]',
+    neutral: 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-[#374151] dark:border-[#6B7280] dark:text-[#9CA3AF]'
   };
 
   return (

@@ -1,11 +1,22 @@
 import { motion } from 'motion/react';
-import { MapPin, Mail, MessageCircle, Clock, Instagram, Linkedin, Github, Send, ChevronDown, ArrowRight } from 'lucide-react';
+import { MapPin, Mail, MessageCircle, Clock, Instagram, Linkedin, Github, Send, ChevronDown, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../components/Button';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useState } from 'react';
 
 export function Contact() {
   const [openFaq, setOpenFaq] = useState<string | undefined>(undefined);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 1500);
+  };
 
   const faqs = [
     {
@@ -176,12 +187,31 @@ export function Contact() {
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--brand-primary)] rounded-full blur-[100px] opacity-10" />
             <h3 className="text-3xl font-bold mb-8 tracking-tight">Mesaj Gönder</h3>
             
-            <form className="space-y-6 relative z-10">
+            {isSubmitted ? (
+              <motion.div 
+                 initial={{ opacity: 0, scale: 0.95 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 className="flex flex-col items-center justify-center py-12 text-center relative z-10"
+              >
+                 <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
+                   <CheckCircle className="w-10 h-10" />
+                 </div>
+                 <h3 className="text-3xl font-bold text-primary mb-3">Mesajınız Alındı!</h3>
+                 <p className="text-muted font-medium mb-8 max-w-[320px]">
+                   Teşekkür ederiz. En kısa sürede sizinle iletişime geçeceğiz.
+                 </p>
+                 <Button onClick={() => setIsSubmitted(false)} variant="secondary" className="font-bold border-default px-8">
+                   Yeni Mesaj Gönder
+                 </Button>
+              </motion.div>
+            ) : (
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-bold mb-2 text-primary">Ad</label>
                   <input
                     type="text"
+                    required
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
                     placeholder="Adınız"
                   />
@@ -190,6 +220,7 @@ export function Contact() {
                   <label className="block text-sm font-bold mb-2 text-primary">Soyad</label>
                   <input
                     type="text"
+                    required
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
                     placeholder="Soyadınız"
                   />
@@ -200,6 +231,7 @@ export function Contact() {
                 <label className="block text-sm font-bold mb-2 text-primary">E-posta</label>
                 <input
                   type="email"
+                  required
                   className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
                   placeholder="ornek@email.com"
                 />
@@ -222,14 +254,18 @@ export function Contact() {
                 <textarea
                   className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
                   rows={6}
+                  required
                   placeholder="Mesajınızı buraya detaylıca yazın..."
                 />
               </div>
 
-              <Button variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg">
-                Mesajı Gönder <Send className="w-5 h-5 ml-2" />
+              <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg">
+                {isSubmitting ? 'Gönderiliyor...' : (
+                  <>Mesajı Gönder <Send className="w-5 h-5 ml-2" /></>
+                )}
               </Button>
             </form>
+            )}
           </motion.div>
 
           {/* Right Column - Map & FAQ */}
