@@ -6,18 +6,37 @@ import { useState } from "react";
 export function Events() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventStatus, setEventStatus] = useState('Yaklaşan');
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
-  const events = [
+  const [events, setEvents] = useState([
     { id: 1, title: "Web Geliştirme Eğitimi", date: "15 Ekim 2024", location: "Bilgisayar Müh. Lab 1", status: "Yaklaşan" },
     { id: 2, title: "Yapay Zeka Zirvesi", date: "20 Kasım 2024", location: "Troia Kültür Merkezi", status: "Yaklaşan" },
     { id: 3, title: "Hackathon 2023", date: "10 Mayıs 2023", location: "ÇOMÜ Kütüphane", status: "Geçmiş" },
-  ];
+  ]);
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Bu etkinliği silmek istediğinize emin misiniz?")) {
+      setEvents(events.filter(e => e.id !== id));
+    }
+  };
+
+  const handleEdit = (event: any) => {
+    setSelectedEvent(event);
+    setEventStatus(event.status);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setSelectedEvent(null);
+    setEventStatus('Yaklaşan');
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary">Etkinlik Yönetimi</h1>
-        <Button variant="primary" className="flex items-center gap-2" onClick={() => setIsModalOpen(true)}>
+        <Button variant="primary" className="flex items-center gap-2" onClick={handleAdd}>
           <Plus className="w-4 h-4" /> Yeni Etkinlik Ekle
         </Button>
       </div>
@@ -71,10 +90,10 @@ export function Events() {
                     </span>
                   </td>
                   <td className="p-4 flex items-center justify-end gap-2">
-                    <button className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
+                    <button onClick={() => handleEdit(event)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
+                    <button onClick={() => handleDelete(event.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
@@ -85,16 +104,22 @@ export function Events() {
         </div>
       </div>
 
-      {/* Add Event Modal */}
+      {/* Add/Edit Event Modal */}
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
-        title="Yeni Etkinlik Ekle"
+        title={selectedEvent ? "Etkinliği Düzenle" : "Yeni Etkinlik Ekle"}
       >
-        <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); }}>
+        <form className="space-y-5" onSubmit={(e) => { 
+          e.preventDefault(); 
+          if(selectedEvent) {
+             setEvents(events.map(ev => ev.id === selectedEvent.id ? { ...ev, status: eventStatus } : ev));
+          }
+          setIsModalOpen(false); 
+        }}>
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Etkinlik Adı</label>
-            <input type="text" placeholder="Örn: Yapay Zeka Zirvesi" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <input type="text" defaultValue={selectedEvent?.title} placeholder="Örn: Yapay Zeka Zirvesi" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
           
           <div className="grid grid-cols-2 gap-4">
@@ -110,7 +135,7 @@ export function Events() {
 
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Konum</label>
-            <input type="text" placeholder="Örn: Troia Kültür Merkezi" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <input type="text" defaultValue={selectedEvent?.location} placeholder="Örn: Troia Kültür Merkezi" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

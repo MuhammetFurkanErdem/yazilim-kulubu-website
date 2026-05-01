@@ -5,18 +5,35 @@ import { useState } from "react";
 
 export function Team() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<any>(null);
 
-  const members = [
+  const [members, setMembers] = useState([
     { id: 1, name: "Ahmet Kaya", role: "Başkan", email: "ahmet@comu.edu.tr", image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" },
     { id: 2, name: "Büşra Yılmaz", role: "Başkan Yrd.", email: "busra@comu.edu.tr", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100" },
     { id: 3, name: "Mert Çelik", role: "Genel Sekreter", email: "mert@comu.edu.tr", image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=100" },
-  ];
+  ]);
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Bu üyeyi silmek istediğinize emin misiniz?")) {
+      setMembers(members.filter(m => m.id !== id));
+    }
+  };
+
+  const handleEdit = (member: any) => {
+    setSelectedMember(member);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setSelectedMember(null);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary">Ekip Yönetimi</h1>
-        <Button variant="primary" className="flex items-center gap-2" onClick={() => setIsModalOpen(true)}>
+        <Button variant="primary" className="flex items-center gap-2" onClick={handleAdd}>
           <Plus className="w-4 h-4" /> Yeni Üye Ekle
         </Button>
       </div>
@@ -74,10 +91,10 @@ export function Team() {
                     </div>
                   </td>
                   <td className="p-4 flex items-center justify-end gap-2">
-                    <button className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
+                    <button onClick={() => handleEdit(member)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
+                    <button onClick={() => handleDelete(member.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
@@ -88,32 +105,38 @@ export function Team() {
         </div>
       </div>
 
-      {/* Add Team Member Modal */}
+      {/* Add/Edit Team Member Modal */}
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
-        title="Yeni Ekip Üyesi Ekle"
+        title={selectedMember ? "Üyeyi Düzenle" : "Yeni Ekip Üyesi Ekle"}
       >
-        <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); }}>
+        <form className="space-y-5" onSubmit={(e) => { 
+          e.preventDefault(); 
+          if (selectedMember) {
+            setMembers(members.map(m => m.id === selectedMember.id ? { ...m, name: selectedMember.name } : m)); // Simple mockup
+          }
+          setIsModalOpen(false); 
+        }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">Ad Soyad</label>
-              <input type="text" placeholder="Örn: Ahmet Kaya" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              <input type="text" defaultValue={selectedMember?.name} placeholder="Örn: Ahmet Kaya" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
             </div>
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">Rol</label>
-              <input type="text" placeholder="Örn: Başkan" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              <input type="text" defaultValue={selectedMember?.role} placeholder="Örn: Başkan" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
             </div>
           </div>
 
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">E-posta Adresi</label>
-            <input type="email" placeholder="ornek@comu.edu.tr" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <input type="email" defaultValue={selectedMember?.email} placeholder="ornek@comu.edu.tr" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
 
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Profil Fotoğrafı URL</label>
-            <input type="url" placeholder="https://..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <input type="url" defaultValue={selectedMember?.image} placeholder="https://..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

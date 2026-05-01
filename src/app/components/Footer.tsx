@@ -1,12 +1,12 @@
 import { Link } from 'react-router';
-import { Code2, Github, Linkedin, Instagram, MessageCircle } from 'lucide-react';
+import { Code2, Github, Linkedin, Instagram, MessageCircle, Youtube } from 'lucide-react';
 
 export function Footer() {
   return (
     <footer className="bg-surface border-t border-default transition-colors duration-300">
       <div className="max-w-[1280px] mx-auto px-8 lg:px-20 py-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-8">
-          
+
           {/* Brand & Info */}
           <div className="flex flex-col gap-3">
             <Link to="/" className="flex items-center gap-3 group">
@@ -27,14 +27,14 @@ export function Footer() {
             <a href="https://chat.whatsapp.com/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="WhatsApp Grubu">
               <MessageCircle className="w-4 h-4" />
             </a>
-            <a href="https://github.com/ygk-comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="GitHub">
-              <Github className="w-4 h-4" />
+            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="Instagram">
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a href="https://youtube.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="YouTube">
+              <Youtube className="w-4 h-4" />
             </a>
             <a href="https://linkedin.com/company/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="LinkedIn">
               <Linkedin className="w-4 h-4" />
-            </a>
-            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="Instagram">
-              <Instagram className="w-4 h-4" />
             </a>
           </div>
 

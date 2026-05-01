@@ -1,85 +1,58 @@
 import { motion } from 'motion/react';
-import { Github, Linkedin, Mail, Globe, Smartphone, Gamepad2, Link2, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, Smartphone, Gamepad2, Link2, ArrowRight, Instagram } from 'lucide-react';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 
 export function Team() {
-  const leadership = [
-    {
-      name: 'Ahmet Kaya',
-      role: 'Başkan',
-      branch: 'Web Kolu',
-      year: '3. Sınıf',
-      bio: 'Full-stack geliştirme ve açık kaynak projelere tutkuyla katkı sağlayan bir öğrenciyim. YGK\'yı kuran ekibin bir parçası olmaktan gurur duyuyorum.',
-      funFact: '☕ Günde 5 kahve içerim ve kod yazarken lo-fi müzik dinlerim',
-      github: '#',
-      linkedin: '#',
-      email: 'ahmet@ygk.com',
-      image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=600'
-    },
-    {
-      name: 'Büşra Yılmaz',
-      role: 'Başkan Yardımcısı',
-      branch: 'AI/ML',
-      year: '4. Sınıf',
-      bio: 'Yapay zeka ve makine öğrenmesi alanında çalışıyorum. Özellikle doğal dil işleme ve görüntü tanıma projelerine odaklanıyorum.',
-      funFact: '🎨 Boş zamanlarımda dijital illüstrasyon yapıyorum',
-      github: '#',
-      linkedin: '#',
-      email: 'busra@ygk.com',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600'
-    },
-    {
-      name: 'Mert Çelik',
-      role: 'Genel Sekreter',
-      branch: 'Mobil Kolu',
-      year: '3. Sınıf',
-      bio: 'Flutter ile cross-platform mobil uygulamalar geliştiriyorum. Kullanıcı deneyimi ve performans optimizasyonu konularına özel ilgi duyuyorum.',
-      funFact: '🏃 Her sabah 6\'da koşuya çıkarım ve kod yazarken ayakta dururum',
-      github: '#',
-      linkedin: '#',
-      email: 'mert@ygk.com',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600'
-    }
-  ];
-
-  const branchLeaders = [
-    {
-      name: 'Selin Erdoğan',
-      branch: 'Web',
-      specialty: 'DevOps & Backend',
-      icon: Globe,
-      color: 'var(--brand-primary)',
-      variant: 'web',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200'
-    },
-    {
-      name: 'Kerem Arslan',
-      branch: 'Mobil',
-      specialty: 'Flutter & Native',
-      icon: Smartphone,
-      color: '#10b981',
-      variant: 'mobile',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200'
-    },
-    {
-      name: 'Deniz Yıldız',
-      branch: 'Oyun',
-      specialty: 'Unity & C#',
-      icon: Gamepad2,
-      color: '#f59e0b',
-      variant: 'game',
-      image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200'
-    },
-    {
-      name: 'Ece Kara',
-      branch: 'Blockchain',
-      specialty: 'Smart Contracts',
-      icon: Link2,
-      color: '#ef4444',
-      variant: 'blockchain',
-      image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200'
-    }
+  const groupedTeam = [
+    [
+      {
+        name: 'Ahmet Kaya',
+        role: 'Yönetim Kurulu Başkanı',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=600'
+      },
+      {
+        name: 'Büşra Yılmaz',
+        role: 'Yönetim Kurulu Başkan Yardımcısı',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600'
+      }
+    ],
+    [
+      {
+        name: 'Mert Çelik',
+        role: 'Genel Sekreter',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600'
+      },
+      {
+        name: 'Selin Erdoğan',
+        role: 'Reklam ve Tanıtım Koordinatörü',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=600'
+      },
+      {
+        name: 'Ozan Efe Akpınar',
+        role: 'Etkinlik Koordinatörü',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600'
+      }
+    ],
+    [
+      {
+        name: 'Deniz Yıldız',
+        role: 'Oyun Kolu Lideri',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600'
+      },
+      {
+        name: 'Ece Kara',
+        role: 'Web Kolu Lideri',
+        linkedin: '#',
+        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600'
+      }
+    ]
   ];
 
   return (
@@ -112,134 +85,55 @@ export function Team() {
             <p className="text-xl text-muted font-medium">Kulübümüzün vizyonunu belirleyen liderler</p>
           </div>
 
-          <div className="space-y-12">
-            {leadership.map((member, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className={`flex flex-col md:flex-row gap-8 bg-surface border border-default rounded-dynamic overflow-hidden hover:border-[var(--brand-primary)] shadow-dynamic transition-all duration-300 ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''
-                  }`}
-              >
-                {/* Photo Side */}
-                <div className="w-full md:w-2/5 relative min-h-[300px]">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-page/80 via-transparent to-transparent opacity-60" />
-                </div>
+          <div className="flex flex-col gap-12 sm:gap-16">
+            {groupedTeam.map((group, groupIdx) => (
+              <div key={groupIdx} className="flex flex-wrap justify-center gap-6 sm:gap-8">
+                {group.map((member, idx) => (
+                  <motion.div
+                    key={`${groupIdx}-${idx}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="w-full max-w-[320px] flex flex-col bg-surface border border-default rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    {/* Photo Side */}
+                    <div className="w-full aspect-[4/5] relative">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150"
+                      />
+                    </div>
 
-                {/* Content Side */}
-                <div className="w-full md:w-3/5 p-8 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-1 w-4 bg-[var(--brand-primary)] rounded" />
-                    <span className="text-xs font-mono font-bold text-[var(--brand-primary)] tracking-wider uppercase">{member.role}</span>
-                  </div>
-                  <h3 className="text-4xl font-bold mb-4 tracking-tight">{member.name}</h3>
-                  <div className="flex flex-wrap items-center gap-2 mb-6">
-                    <span className="px-3 py-1 bg-elevated border border-default rounded-full text-xs font-mono font-bold text-primary">
-                      {member.branch}
-                    </span>
-                    <span className="px-3 py-1 bg-elevated border border-default rounded-full text-xs font-mono font-medium text-muted">
-                      {member.year}
-                    </span>
-                  </div>
-                  <p className="text-lg text-muted leading-relaxed font-medium mb-8">{member.bio}</p>
+                    {/* Content Side */}
+                    <div className="w-full p-6 flex flex-col justify-center bg-surface flex-1">
+                      <h3 className="text-xl font-bold mb-1 font-mono tracking-tight text-primary">{member.name}</h3>
+                      <p className="text-sm font-mono font-bold text-[var(--brand-primary)] dark:text-[#b490ff] mb-6 line-clamp-2 min-h-[40px]">{member.role}</p>
 
-                  <div className="bg-elevated border border-default rounded-xl p-4 mb-8">
-                    <p className="text-sm font-medium text-primary italic">"{member.funFact}"</p>
-                  </div>
+                      <div className="h-px w-full bg-default mb-6 mt-auto" />
 
-                  <div className="flex flex-wrap items-center gap-3">
-                    <a
-                      href={member.linkedin}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-elevated border border-default hover:border-primary text-primary font-medium text-sm rounded-full transition-all shadow-sm"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                      LinkedIn
-                    </a>
-                    <a
-                      href={member.github}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-elevated border border-default hover:border-primary text-primary font-medium text-sm rounded-full transition-all shadow-sm"
-                    >
-                      <Github className="w-4 h-4" />
-                      GitHub
-                    </a>
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/90 text-[var(--brand-text)] font-medium text-sm rounded-full transition-all shadow-sm"
-                    >
-                      <Mail className="w-4 h-4" />
-                      İletişim
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+                      <div className="flex items-center gap-5">
+                        <a href={member.linkedin} className="text-muted hover:text-primary transition-colors">
+                          <Linkedin className="w-5 h-5" />
+                        </a>
+                        <a href="#" className="text-muted hover:text-primary transition-colors">
+                          <Instagram className="w-5 h-5" />
+                        </a>
+                        <a href="#" className="text-muted hover:text-primary transition-colors">
+                          <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-current">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.007 3.692h-1.92z" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Branch Leaders */}
-      <section className="py-24 px-8 lg:px-20 bg-surface border-y border-default">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kol Liderleri</h2>
-            <p className="text-xl text-muted font-medium">Her kolun teknik liderliğini yapan uzman üyelerimiz</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {branchLeaders.map((leader, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-elevated border border-default rounded-dynamic p-8 text-center hover:-translate-y-1 transition-all duration-300 hover:border-primary shadow-dynamic group"
-              >
-                <div className="relative w-24 h-24 mx-auto mb-6">
-                  <img
-                    src={leader.image}
-                    alt={leader.name}
-                    className="absolute inset-0 w-full h-full object-cover rounded-full filter contrast-110 dark:grayscale dark:contrast-150 border-2 border-default transition-all duration-300 group-hover:border-primary"
-                  />
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-surface border border-default flex items-center justify-center text-primary">
-                    <leader.icon className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <div className="inline-block px-3 py-1 bg-surface border border-default rounded-full text-xs font-mono font-bold text-primary mb-4">
-                  {leader.branch}
-                </div>
-
-                <h3 className="text-xl font-bold mb-2">{leader.name}</h3>
-                <p className="text-sm font-medium text-muted mb-6">{leader.specialty}</p>
-
-                <div className="flex items-center justify-center gap-3">
-                  <a
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-surface border border-default hover:border-primary text-muted hover:text-primary transition-all flex items-center justify-center"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-surface border border-default hover:border-primary text-muted hover:text-primary transition-all flex items-center justify-center"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
     </div>
   );

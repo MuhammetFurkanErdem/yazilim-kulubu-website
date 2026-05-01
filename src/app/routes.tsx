@@ -17,6 +17,7 @@ import { Dashboard as AdminDashboard } from "./admin/Dashboard";
 import { Events as AdminEvents } from "./admin/Events";
 import { Projects as AdminProjects } from "./admin/Projects";
 import { Team as AdminTeam } from "./admin/Team";
+import { Settings as AdminSettings } from "./admin/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
       { path: "etkinlikler", Component: AdminEvents },
       { path: "projeler", Component: AdminProjects },
       { path: "ekip", Component: AdminTeam },
+      { path: "ayarlar", Component: AdminSettings },
       { path: "*", Component: NotFound },
     ],
   }

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Github, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Youtube, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { useState, useEffect } from 'react';
@@ -62,7 +62,7 @@ export function Home() {
             <Button asLink href="/katil" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
               Bize Katıl
             </Button>
-            <Button variant="secondary" size="lg" className="rounded-dynamic px-10 h-14 text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
+            <Button asLink href="/iletisim" variant="secondary" size="lg" className="rounded-dynamic px-10 h-14 text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
               İletişime Geç
             </Button>
           </motion.div>
@@ -74,9 +74,9 @@ export function Home() {
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium"
           >
-            <a href="#" className="hover:text-primary transition-colors flex items-center gap-2"><Github className="w-5 h-5" /></a>
-            <a href="#" className="hover:text-[#0A66C2] transition-colors flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
             <a href="#" className="hover:text-[#E1306C] transition-colors flex items-center gap-2"><Instagram className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-[#FF0000] transition-colors flex items-center gap-2"><Youtube className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-[#0A66C2] transition-colors flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
           </motion.div>
         </div>
       </section>
@@ -101,42 +101,6 @@ export function Home() {
               <div className="text-5xl md:text-6xl font-black text-primary font-mono tracking-tighter">5+</div>
               <div className="text-xs md:text-sm font-bold text-muted uppercase tracking-widest">Büyük Etkinlik</div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Join Section */}
-      <section className="py-24 px-8 lg:px-20 bg-page transition-colors duration-300 border-b border-default">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Sadece kod değil, deneyim kazanıyorsun.</h2>
-            <p className="text-lg text-muted">Gerçek projeler, gerçek insanlar, gerçek fırsatlar.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { icon: Rocket, title: 'Gerçek Projeler', desc: 'Üniversite dışında da kullanılan, gerçek dünya problemlerini çözen projeler geliştir.' },
-              { icon: Brain, title: 'Workshop & Eğitim', desc: 'Her hafta yeni teknolojiler öğren, sektör profesyonellerinden ilham al.' },
-              { icon: Zap, title: 'Hackathon Kültürü', desc: '24 saat süren yoğun kodlama maratonlarında takımınla birlikte yarış.' },
-              { icon: Globe, title: 'Ağ & Bağlantı', desc: 'Aynı hedeflere sahip öğrenciler ve sektör profesyonelleriyle tanış.' },
-              { icon: Users, title: 'Mentor Desteği', desc: 'Deneyimli üyeler ve mezunlardan birebir mentorluk al.' },
-              { icon: Trophy, title: 'Tanınırlık', desc: 'Başarılı projelerini portföyüne ekle, iş başvurularında öne çık.' }
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-elevated border border-default rounded-dynamic p-8 hover:-translate-y-1 transition-transform duration-300 shadow-dynamic"
-              >
-                <div className="w-12 h-12 bg-surface border border-default rounded-dynamic flex items-center justify-center mb-6">
-                  <item.icon className="w-6 h-6 text-[var(--brand-primary)]" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-base text-muted leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -204,76 +168,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* Team Preview Section */}
-      <section className="py-24 px-8 lg:px-20 bg-surface transition-colors duration-300 border-t border-default">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Yönetim Ekibi</h2>
-            <p className="text-lg text-muted">Kulübümüze yön veren tutkulu öğrenciler</p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { name: 'Ahmet Kaya', role: 'Başkan', image: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=300' },
-              { name: 'Büşra Yılmaz', role: 'Başkan Yrd.', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300' },
-              { name: 'Mert Çelik', role: 'Genel Sekreter', image: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=300' },
-              { name: 'Selin Erdoğan', role: 'Kol Lideri', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=300' }
-            ].map((member, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-elevated border border-default rounded-dynamic p-6 text-center shadow-dynamic"
-              >
-                {/* Real Placeholder Avatars */}
-                <div className="w-24 h-24 mx-auto mb-5 rounded-full overflow-hidden border-2 border-default bg-surface relative">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover filter dark:grayscale"
-                  />
-                </div>
-                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-sm text-muted font-medium mb-4">{member.role}</p>
-
-                <div className="flex items-center justify-center gap-3">
-                  <a href="#" className="w-10 h-10 rounded-dynamic bg-surface border border-default hover:bg-page transition-colors flex items-center justify-center text-muted hover:text-primary">
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-dynamic bg-surface border border-default hover:bg-page transition-colors flex items-center justify-center text-muted hover:text-[#0A66C2]">
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-8 lg:px-20 bg-page transition-colors duration-300">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="bg-elevated border border-default rounded-dynamic p-12 lg:p-20 text-center shadow-dynamic relative overflow-hidden">
-            {/* Subtle decor for CTA */}
-            <div className="absolute top-0 left-0 w-full h-2 bg-[#534AB7]" />
-
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tight">Bir sonraki projen<br />burada başlıyor.</h2>
-            <p className="text-lg text-muted mb-10 max-w-[600px] mx-auto">
-              Kulübe katıl, takımını kur ve ÇOMÜ'deki en büyük yazılım topluluğunun bir parçası ol.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asLink href="/katil" variant="primary" size="lg" className="rounded-dynamic px-8">
-                Üyelik Başvurusu <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button variant="secondary" size="lg" className="rounded-dynamic px-8 border-default">
-                WhatsApp'a Katıl
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

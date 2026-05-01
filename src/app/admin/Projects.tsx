@@ -5,18 +5,38 @@ import { useState } from "react";
 
 export function Projects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectStatus, setProjectStatus] = useState('Aktif');
+  const [selectedProject, setSelectedProject] = useState<any>(null);
 
-  const projects = [
+  const [projects, setProjects] = useState([
     { id: 1, title: "ÇOMÜ Kampüs Haritası", status: "Aktif", demo: "https://demo.com", github: "https://github.com/ygk" },
     { id: 2, title: "Kulüp Web Sitesi", status: "Geliştirmede", demo: null, github: "https://github.com/ygk" },
     { id: 3, title: "Akıllı Otopark", status: "Tamamlandı", demo: "https://demo2.com", github: "https://github.com/ygk" },
-  ];
+  ]);
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Bu projeyi silmek istediğinize emin misiniz?")) {
+      setProjects(projects.filter(p => p.id !== id));
+    }
+  };
+
+  const handleEdit = (project: any) => {
+    setSelectedProject(project);
+    setProjectStatus(project.status);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setSelectedProject(null);
+    setProjectStatus('Aktif');
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary">Projeler Yönetimi</h1>
-        <Button variant="primary" className="flex items-center gap-2" onClick={() => setIsModalOpen(true)}>
+        <Button variant="primary" className="flex items-center gap-2" onClick={handleAdd}>
           <Plus className="w-4 h-4" /> Yeni Proje Ekle
         </Button>
       </div>
@@ -74,10 +94,10 @@ export function Projects() {
                     </div>
                   </td>
                   <td className="p-4 flex items-center justify-end gap-2">
-                    <button className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
+                    <button onClick={() => handleEdit(project)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
+                    <button onClick={() => handleDelete(project.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
@@ -88,16 +108,22 @@ export function Projects() {
         </div>
       </div>
 
-      {/* Add Project Modal */}
+      {/* Add/Edit Project Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Yeni Proje Ekle"
+        title={selectedProject ? "Projeyi Düzenle" : "Yeni Proje Ekle"}
       >
-        <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); }}>
+        <form className="space-y-5" onSubmit={(e) => { 
+          e.preventDefault(); 
+          if(selectedProject) {
+             setProjects(projects.map(p => p.id === selectedProject.id ? { ...p, status: projectStatus } : p));
+          }
+          setIsModalOpen(false); 
+        }}>
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Proje Adı</label>
-            <input type="text" placeholder="Örn: ÇOMÜ Kampüs Haritası" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <input type="text" defaultValue={selectedProject?.title} placeholder="Örn: ÇOMÜ Kampüs Haritası" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -128,7 +154,11 @@ export function Projects() {
 
           <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Durum</label>
-            <select className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none">
+            <select 
+              value={projectStatus}
+              onChange={(e) => setProjectStatus(e.target.value)}
+              className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none"
+            >
               <option value="Aktif">Aktif</option>
               <option value="Geliştirmede">Geliştirmede</option>
               <option value="Tamamlandı">Tamamlandı</option>

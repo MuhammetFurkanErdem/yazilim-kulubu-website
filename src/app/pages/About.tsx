@@ -52,14 +52,6 @@ export function About() {
                 Hedefimiz çok net: Girdiğin ilk günden mezuniyetine kadar gerçek değer üreten, sektöre %100 hazır bir yazılımcı olmanı sağlamak.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-10">
-              <Button variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-8 w-full sm:w-auto font-bold">
-                Aramıza Katıl
-              </Button>
-              <Button variant="secondary" size="lg" className="rounded-dynamic border-default px-8 w-full sm:w-auto font-bold bg-surface hover:bg-elevated">
-                Yönetim Ekibiyle Tanış
-              </Button>
-            </div>
           </motion.div>
 
           {/* Right - Image */}
@@ -94,7 +86,7 @@ export function About() {
       <section className="py-24 px-8 lg:px-20 bg-surface border-y border-default">
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Uzmanlık Kollarımız</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kollarımız</h2>
             <p className="text-xl text-muted font-medium">İlgi alanına göre seç, odaklan ve en iyisi ol.</p>
           </div>
 
@@ -159,66 +151,6 @@ export function About() {
         </div>
       </section>
 
-      {/* What We Do & Testimonial Section */}
-      <section className="py-24 px-8 lg:px-20 bg-page">
-        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Left - Activities */}
-          <div>
-            <h2 className="text-4xl font-bold mb-10 tracking-tight">Sürekli Gelişim Ritüellerimiz</h2>
-            <div className="space-y-6">
-              {[
-                { title: 'Haftalık Buluşmalar', desc: 'Kod okumaları, teknoloji tartışmaları ve networking.' },
-                { title: 'Proje Sprintleri', desc: 'Gerçek ürünleri takım halinde 4 haftalık sprintlerle canlıya alma.' },
-                { title: 'Tech Talks', desc: 'Sektör profesyonellerinden doğrudan tecrübe aktarımı.' },
-                { title: 'Hackathon Kampları', desc: 'Ulusal yarışmalara özel olarak hazırlanan elit kodlama kampları.' }
-              ].map((activity, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="flex gap-6 items-start p-6 bg-surface border border-default rounded-dynamic"
-                >
-                  <div className="text-2xl font-mono font-bold text-[var(--brand-primary)] bg-[var(--brand-primary)]/10 w-12 h-12 flex items-center justify-center rounded-dynamic flex-shrink-0">
-                    {String(idx + 1).padStart(2, '0')}
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-1">{activity.title}</h4>
-                    <p className="text-muted font-medium">{activity.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right - Quote Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center"
-          >
-            <div className="bg-elevated border border-default rounded-dynamic p-10 shadow-dynamic relative w-full">
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-default/50" />
-              <p className="text-2xl font-medium italic text-primary leading-relaxed mb-10 relative z-10 pt-4">
-                "Burada yazdığım kod sadece bir ödev değil, gerçek bir üründü. Bu pratik deneyim, beni sektöre tamamen hazır hale getirdi ve staj başvurularımda doğrudan fark yarattı."
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=150"
-                  alt="Ahmet Kaya"
-                  className="w-16 h-16 rounded-full border-2 border-default object-cover"
-                />
-                <div>
-                  <div className="font-bold text-lg">Ahmet Kaya</div>
-                  <div className="text-sm font-medium text-[var(--brand-primary)]">Eski Kulüp Başkanı, Frontend Developer</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 }
