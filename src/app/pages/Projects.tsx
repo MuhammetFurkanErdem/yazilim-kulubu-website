@@ -123,28 +123,8 @@ export function Projects() {
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
-      {/* Hero */}
-      <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
-        <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-
-        <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
-              Kodla <span className="text-[var(--brand-primary)]">Yarattıklarımız</span>
-            </h1>
-            <p className="text-xl text-muted max-w-[720px] mx-auto leading-relaxed font-medium">
-              Kulüp bünyesinde kollarımızla beraber geliştirdiğimiz ve üyelerimizin imzasını taşıyan gerçek dünya uygulamaları.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Featured Project */}
-      <section className="py-24 px-8 lg:px-20 bg-page">
+      <section className="pt-28 pb-24 px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -235,7 +215,7 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-elevated border border-default rounded-dynamic overflow-hidden hover:-translate-y-1 transition-all duration-300 hover:border-[var(--brand-primary)] shadow-sm hover:shadow-dynamic group flex flex-col"
+                className="bg-elevated border border-default rounded-dynamic overflow-hidden card-interactive shadow-sm group flex flex-col"
               >
                 {/* Visual Preview Placeholder */}
                 <div className="h-40 bg-page border-b border-default flex items-center justify-center relative overflow-hidden">
@@ -341,7 +321,7 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-surface border border-default rounded-dynamic p-8 hover:-translate-y-1 transition-all duration-300 hover:border-[var(--brand-primary)] shadow-sm hover:shadow-dynamic group flex flex-col justify-between"
+                className="bg-surface border border-default rounded-dynamic p-8 card-interactive shadow-sm group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex justify-between items-start mb-6">
@@ -384,13 +364,13 @@ export function Projects() {
       </section>
 
       {/* Submit Project Modal */}
-      <Modal 
-        isOpen={isModalOpen} 
+      <Modal
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Projeni Paylaş"
       >
         {isSubmitted ? (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center justify-center py-12 text-center"
@@ -411,7 +391,7 @@ export function Projects() {
             <p className="text-sm text-muted font-medium mb-2">
               Kendi geliştirdiğin, bitmiş veya devam eden projenin detaylarını aşağıya gir. Diğer üyelerimize ilham ol!
             </p>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-bold text-primary">Adın Soyadın</label>

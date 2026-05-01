@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Code2, Github, Linkedin, Instagram, MessageCircle, Youtube } from 'lucide-react';
+import { Code2, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -24,16 +24,13 @@ export function Footer() {
 
           {/* Social Links */}
           <div className="flex items-center gap-3">
-            <a href="https://chat.whatsapp.com/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="WhatsApp Grubu">
-              <MessageCircle className="w-4 h-4" />
-            </a>
-            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="Instagram">
+            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="Instagram">
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="https://youtube.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="YouTube">
+            <a href="https://youtube.com/@ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="YouTube">
               <Youtube className="w-4 h-4" />
             </a>
-            <a href="https://linkedin.com/company/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all" title="LinkedIn">
+            <a href="https://linkedin.com/company/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="LinkedIn">
               <Linkedin className="w-4 h-4" />
             </a>
           </div>

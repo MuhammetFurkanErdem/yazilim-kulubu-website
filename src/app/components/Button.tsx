@@ -18,7 +18,7 @@ export function Button({
   asLink = false,
   ...props 
 }: ButtonProps) {
-  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-bold transition-all duration-200';
+  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-bold btn-interactive focus-ring';
   
   const variantClasses = {
     primary: 'bg-[#534AB7] text-white hover:bg-[#7F77DD] hover:shadow-lg hover:shadow-[#534AB7]/30',

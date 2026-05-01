@@ -51,8 +51,8 @@ export function Navbar() {
             <Link
               key={link.path}
               to={link.path}
-              className={`text-base font-medium transition-colors hover:-translate-y-[1px] ${location.pathname === link.path
-                  ? 'text-[var(--brand-primary)]'
+              className={`text-base font-medium nav-link-animated ${location.pathname === link.path
+                  ? 'text-[var(--brand-primary)] active'
                   : 'text-muted hover:text-primary'
                 }`}
             >
@@ -66,7 +66,7 @@ export function Navbar() {
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-surface text-muted hover:text-primary transition-all duration-300"
+              className="p-2 rounded-full hover:bg-surface text-muted icon-interactive focus-ring"
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}

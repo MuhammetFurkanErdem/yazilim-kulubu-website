@@ -41,30 +41,9 @@ export function Events() {
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
-      {/* Hero */}
-      <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
-        <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-
-        <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
-              <span className="text-[var(--brand-primary)]">Etkinlikler</span> <br className="hidden md:block" /> & Buluşmalar
-            </h1>
-            <p className="text-xl text-muted max-w-[720px] mx-auto leading-relaxed font-medium">
-              Workshop'lardan hackathon'lara, sektör konuşmalarından sosyal etkinliklere kadar teknolojiyi bir araya getiren tüm aktivitelerimiz.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-
       {/* Featured Event (Büyük Etkinlik) - Admin panelinden isActive=true ise gösterilir */}
       {heroEvent.isActive && (
-        <section className="py-12 px-8 lg:px-20 bg-page">
+        <section className="pt-24 pb-12 px-8 lg:px-20 bg-page">
           <div className="max-w-[1280px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -281,7 +260,7 @@ export function Events() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-surface border border-default rounded-dynamic overflow-hidden hover:-translate-y-1 transition-all duration-300 shadow-dynamic group"
+                className="bg-surface border border-default rounded-dynamic overflow-hidden card-interactive shadow-dynamic group"
               >
                 <Link to={`/etkinlikler/${event.id}`} className="block h-full">
                   <div className="relative h-56 bg-page overflow-hidden">

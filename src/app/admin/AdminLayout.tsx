@@ -9,7 +9,8 @@ import {
   LogOut,
   Sun,
   Moon,
-  Code2
+  Code2,
+  Inbox
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ export function AdminLayout() {
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
     { name: "Etkinlikler", path: "/admin/etkinlikler", icon: Calendar },
     { name: "Projeler", path: "/admin/projeler", icon: Briefcase },
+    { name: "Başvurular", path: "/admin/basvurular", icon: Inbox },
     { name: "Ekip Yönetimi", path: "/admin/ekip", icon: Users },
     { name: "Ayarlar", path: "/admin/ayarlar", icon: Settings },
   ];

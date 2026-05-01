@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { MapPin, Mail, MessageCircle, Clock, Instagram, Linkedin, Github, Send, ChevronDown, ArrowRight, CheckCircle } from 'lucide-react';
+import { MapPin, Mail, Clock, Instagram, Linkedin, Youtube, Send, ChevronDown, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../components/Button';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useState } from 'react';
@@ -48,18 +48,18 @@ export function Contact() {
 
   const platforms = [
     {
-      name: 'WhatsApp',
-      handle: 'chat.whatsapp.com/ygk',
-      icon: MessageCircle,
-      color: '#25D366',
-      desc: 'Ana iletişim kanalımız'
+      name: 'Instagram',
+      handle: '@ygk_comu',
+      icon: Instagram,
+      color: '#E1306C',
+      desc: 'Güncel haberler ve duyurular'
     },
     {
-      name: 'GitHub',
-      handle: 'github.com/ygk-comu',
-      icon: Github,
-      color: 'var(--text-primary)',
-      desc: 'Açık kaynak projelerimiz'
+      name: 'YouTube',
+      handle: 'youtube.com/@ygk_comu',
+      icon: Youtube,
+      color: '#FF0000',
+      desc: 'Eğitim videoları ve etkinlik kayıtları'
     },
     {
       name: 'LinkedIn',
@@ -67,40 +67,13 @@ export function Contact() {
       icon: Linkedin,
       color: '#0A66C2',
       desc: 'Profesyonel ağımız'
-    },
-    {
-      name: 'Instagram',
-      handle: '@ygk_comu',
-      icon: Instagram,
-      color: '#E1306C',
-      desc: 'Güncel haberler ve duyurular'
     }
   ];
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
-      {/* Hero */}
-      <section className="relative pt-32 pb-24 px-8 flex flex-col items-center justify-center overflow-hidden border-b border-default">
-        <div className="absolute inset-0 opacity-40 dark:opacity-20 pointer-events-none" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjYWFhIiBmaWxsLW9wYWNpdHk9IjAuNSIgLz4KPC9zdmc+')", maskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 20%, transparent 100%)' }} />
-
-        <div className="relative z-10 max-w-[900px] mx-auto text-center mt-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">
-              Bizimle <span className="text-[var(--brand-primary)]">İletişime Geç</span>
-            </h1>
-            <p className="text-xl text-muted max-w-[720px] mx-auto leading-relaxed font-medium">
-              Soru, öneri, iş birliği teklifleri veya sadece tanışmak için her zaman buradayız. Bize ulaşmaktan çekinmeyin.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Main Layout */}
-      <section className="py-24 px-8 lg:px-20 bg-page">
+      <section className="pt-28 pb-24 px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
 
           {/* Left Column - Contact Info */}
@@ -135,15 +108,6 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-page border border-default flex items-center justify-center flex-shrink-0 text-[var(--brand-primary)]">
-                    <MessageCircle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-muted uppercase tracking-widest mb-1">WhatsApp</div>
-                    <div className="text-sm font-medium text-primary">chat.whatsapp.com/ygk</div>
-                  </div>
-                </div>
 
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-page border border-default flex items-center justify-center flex-shrink-0 text-[var(--brand-primary)]">
@@ -345,7 +309,7 @@ export function Contact() {
             <p className="text-xl text-muted font-medium">Bizi sosyal medyadan takip edin ve büyük topluluğumuzun bir parçası olun</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {platforms.map((platform, idx) => (
               <motion.a
                 key={idx}

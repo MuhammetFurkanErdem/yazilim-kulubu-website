@@ -80,5 +80,158 @@
 .rounded-dynamic { border-radius: var(--radius-custom); }
 .shadow-dynamic { box-shadow: var(--shadow-custom); }
 
+/* ===== Interactive Animation System ===== */
+
+/* Button press & hover — Light: soft scale + glow, Dark: brutalist translate + hard shadow */
+.btn-interactive {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.btn-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(83, 74, 183, 0.25);
+}
+.btn-interactive:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 2px 8px -2px rgba(83, 74, 183, 0.2);
+  transition-duration: 0.1s;
+}
+.dark .btn-interactive:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.2);
+}
+.dark .btn-interactive:active {
+  transform: translate(1px, 1px) scale(1);
+  box-shadow: 1px 1px 0px 0px rgba(255, 255, 255, 0.15);
+  transition-duration: 0.05s;
+}
+
+/* Card hover — Light: lift + soft shadow bloom, Dark: brutalist offset + border flash */
+.card-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px -8px rgba(83, 74, 183, 0.12);
+  border-color: var(--brand-primary);
+}
+.dark .card-interactive:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.08);
+  border-color: #FFFFFF;
+}
+.card-interactive:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
+}
+.dark .card-interactive:active {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.06);
+  transition-duration: 0.05s;
+}
+
+/* Nav link underline animation */
+.nav-link-animated {
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--brand-primary);
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+}
+.nav-link-animated:hover::after {
+  width: 100%;
+}
+.nav-link-animated:hover {
+  transform: translateY(-1px);
+}
+.dark .nav-link-animated::after {
+  height: 2px;
+  border-radius: 0;
+  background: #FFFFFF;
+}
+.dark .nav-link-animated:hover {
+  transform: translateY(-2px);
+}
+/* Active state — persistent underline */
+.nav-link-animated.active::after {
+  width: 100%;
+}
+
+/* Icon button hover — spin/bounce for light, snap for dark */
+.icon-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.icon-interactive:hover {
+  transform: rotate(15deg) scale(1.1);
+  color: var(--brand-primary);
+}
+.icon-interactive:active {
+  transform: rotate(0deg) scale(0.9);
+  transition-duration: 0.1s;
+}
+.dark .icon-interactive:hover {
+  transform: rotate(0deg) scale(1.15);
+  color: #FFFFFF;
+}
+.dark .icon-interactive:active {
+  transform: scale(0.85);
+  transition-duration: 0.05s;
+}
+
+/* Social link cards — Light: warm glow lift, Dark: sharp offset */
+.social-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.social-interactive:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.1);
+}
+.dark .social-interactive:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0px 0px rgba(255, 255, 255, 0.06);
+}
+.social-interactive:active {
+  transform: translateY(-2px);
+  transition-duration: 0.1s;
+}
+.dark .social-interactive:active {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.04);
+  transition-duration: 0.05s;
+}
+
+/* Ripple-style focus ring for accessibility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-custom);
+}
+.dark .focus-ring:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* Subtle pulse for attention-grabbing elements */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+.pulse-subtle {
+  animation: subtle-pulse 2.5s ease-in-out infinite;
+}
+
 /* Remove previous SaaS AI patterns (glows, heavy gradients) */
 
