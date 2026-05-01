@@ -22,7 +22,7 @@ export function Team() {
     [
       {
         name: 'Emre Kürt',
-        role: 'Player Boy',
+        role: 'Play Boy',
         linkedin: '#',
         image: 'emre_kürt.jpeg'
       },
