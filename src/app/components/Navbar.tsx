@@ -72,8 +72,8 @@ export function Navbar() {
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           )}
-          <Button asLink href="/katil" variant="primary" className="rounded-dynamic px-6 font-bold shadow-dynamic hidden sm:flex">
-            Üye Ol
+          <Button asLink href="/auth" variant="primary" className="rounded-dynamic px-6 font-bold shadow-dynamic hidden sm:flex">
+            Giriş / Üye Ol
           </Button>
         </div>
       </div>
