@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
-import { Github, Linkedin, Mail, Globe, Smartphone, Gamepad2, Link2, ArrowRight, Instagram } from 'lucide-react';
-import { Badge } from '../components/Badge';
+import { Github, Linkedin, Instagram } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export function Team() {
@@ -90,16 +89,14 @@ export function Team() {
                       <div className="h-px w-full bg-slate-200 dark:bg-slate-800 mb-5 mt-auto" />
 
                       <div className="flex items-center gap-5">
-                        <a href={member.linkedin} className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                        <a href={member.linkedin || '#'} className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
                           <Linkedin className="w-5 h-5" />
                         </a>
-                        <a href="#" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                        <a href={member.instagram || '#'} className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
                           <Instagram className="w-5 h-5" />
                         </a>
-                        <a href="#" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
-                          <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-current">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.007 3.692h-1.92z" />
-                          </svg>
+                        <a href={member.github || '#'} className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                          <Github className="w-5 h-5" />
                         </a>
                       </div>
                     </div>

@@ -3,6 +3,13 @@ import { MapPin, Mail, Clock, Instagram, Linkedin, Youtube, Send, ChevronDown, A
 import { Button } from '../components/Button';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
 
 export function Contact() {
   const [openFaq, setOpenFaq] = useState<string | undefined>(undefined);
@@ -146,90 +153,127 @@ export function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="col-span-1 lg:col-span-5 bg-surface border border-default rounded-dynamic p-8 md:p-10 shadow-dynamic relative overflow-hidden"
+            className="col-span-1 lg:col-span-5 bg-[#F8FAFC] dark:bg-[#0D1117] border border-slate-300 dark:border-slate-800 rounded-xl overflow-hidden shadow-2xl relative"
           >
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[var(--brand-primary)] rounded-full blur-[100px] opacity-10" />
-            <h3 className="text-3xl font-bold mb-8 tracking-tight">Mesaj Gönder</h3>
+            {/* IDE Header */}
+            <div className="flex items-center px-4 py-3 bg-[#E2E8F0] dark:bg-[#161b22] border-b border-slate-300 dark:border-slate-800">
+              <div className="flex gap-2 mr-4">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-black/10 dark:border-transparent"></div>
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-black/10 dark:border-transparent"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-black/10 dark:border-transparent"></div>
+              </div>
+              <div className="text-xs font-mono text-slate-500 dark:text-slate-400">~/contact/send-message.ts</div>
+            </div>
 
-            {isSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center py-12 text-center relative z-10"
-              >
-                <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle className="w-10 h-10" />
-                </div>
-                <h3 className="text-3xl font-bold text-primary mb-3">Mesajınız Alındı!</h3>
-                <p className="text-muted font-medium mb-8 max-w-[320px]">
-                  Teşekkür ederiz. En kısa sürede sizinle iletişime geçeceğiz.
-                </p>
-                <Button onClick={() => setIsSubmitted(false)} variant="secondary" className="font-bold border-default px-8">
-                  Yeni Mesaj Gönder
-                </Button>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-bold mb-2 text-primary">Ad</label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                      placeholder="Adınız"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold mb-2 text-primary">Soyad</label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                      placeholder="Soyadınız"
-                    />
-                  </div>
-                </div>
+            <div className="flex relative w-full">
+              {/* Line Numbers */}
+              <div className="hidden sm:flex absolute inset-y-0 left-0 w-12 flex-col items-end pr-3 text-slate-400 dark:text-slate-600 font-mono text-xs pt-8 pb-8 md:pt-10 md:pb-10 bg-[#E2E8F0]/30 dark:bg-[#161b22]/30 border-r border-slate-300 dark:border-slate-800 select-none opacity-50 overflow-hidden">
+                {Array.from({ length: 30 }).map((_, i) => (
+                  <div key={i} className="leading-8">{i + 1}</div>
+                ))}
+              </div>
 
-                <div>
-                  <label className="block text-sm font-bold mb-2 text-primary">E-posta</label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
-                    placeholder="ornek@email.com"
-                  />
-                </div>
+              {/* Form Content */}
+              <div className="flex-1 pl-16 pr-8 py-8 md:pl-20 md:pr-10 md:py-10 relative z-10">
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center justify-center py-12 text-center"
+                  >
+                    <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
+                      <CheckCircle className="w-10 h-10" />
+                    </div>
+                    <h3 className="text-2xl font-bold font-mono text-slate-800 dark:text-slate-200 mb-3">status: 200 OK</h3>
+                    <p className="text-slate-500 dark:text-slate-400 font-mono text-sm mb-8 max-w-[320px]">
+                      // Mesajınız ulaştı. En kısa sürede döneceğiz.
+                    </p>
+                    <Button onClick={() => setIsSubmitted(false)} variant="secondary" className="font-bold border-slate-300 dark:border-slate-700 px-8 font-mono">
+                      reset()
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="group">
+                        <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                          <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">firstName</span>: string;
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full px-4 py-3 bg-white dark:bg-[#161b22] border border-slate-300 dark:border-slate-700 rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm"
+                          placeholder="'Adınız'"
+                        />
+                      </div>
+                      <div className="group">
+                        <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                          <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">lastName</span>: string;
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full px-4 py-3 bg-white dark:bg-[#161b22] border border-slate-300 dark:border-slate-700 rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm"
+                          placeholder="'Soyadınız'"
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <label className="block text-sm font-bold mb-2 text-primary">Konu</label>
-                  <select className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium text-primary">
-                    <option>Üyelik Hakkında</option>
-                    <option>Etkinlikler</option>
-                    <option>Sponsorluk Görüşmesi</option>
-                    <option>Proje İş Birliği</option>
-                    <option>Medya / Basın</option>
-                    <option>Diğer</option>
-                  </select>
-                </div>
+                    <div className="group">
+                      <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                        <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">email</span>: EmailAddress;
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        className="w-full px-4 py-3 bg-white dark:bg-[#161b22] border border-slate-300 dark:border-slate-700 rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm"
+                        placeholder="'ornek@email.com'"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block text-sm font-bold mb-2 text-primary">Mesaj</label>
-                  <textarea
-                    className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
-                    rows={6}
-                    required
-                    placeholder="Mesajınızı buraya detaylıca yazın..."
-                  />
-                </div>
+                    <div className="group">
+                      <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                        <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">subject</span>: Topic;
+                      </label>
+                      <Select defaultValue="uyelik">
+                        <SelectTrigger className="w-full px-4 py-3 bg-white dark:bg-[#161b22] border border-slate-300 dark:border-slate-700 rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm h-auto">
+                          <SelectValue placeholder="Konu Seçin" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white dark:bg-[#161b22] border-slate-300 dark:border-slate-700 font-mono text-sm shadow-xl rounded-lg overflow-hidden">
+                          <SelectItem value="uyelik" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Üyelik Hakkında</SelectItem>
+                          <SelectItem value="etkinlik" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Etkinlikler</SelectItem>
+                          <SelectItem value="sponsorluk" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Sponsorluk Görüşmesi</SelectItem>
+                          <SelectItem value="proje" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Proje İş Birliği</SelectItem>
+                          <SelectItem value="medya" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Medya / Basın</SelectItem>
+                          <SelectItem value="diger" className="focus:bg-slate-100 dark:focus:bg-slate-800 focus:text-[var(--brand-primary)] cursor-pointer py-2.5">Diğer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg">
-                  {isSubmitting ? 'Gönderiliyor...' : (
-                    <>Mesajı Gönder <Send className="w-5 h-5 ml-2" /></>
-                  )}
-                </Button>
-              </form>
-            )}
+                    <div className="group">
+                      <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                        <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">async function</span> <span className="text-[#D85A30] dark:text-[#E27756]">sendMessage</span>() {'{'}
+                      </label>
+                      <textarea
+                        className="w-full px-4 py-3 bg-white dark:bg-[#161b22] border border-slate-300 dark:border-slate-700 rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm resize-none mb-2"
+                        rows={5}
+                        required
+                        placeholder="// Mesajınızı buraya detaylıca yazın..."
+                      />
+                      <div className="text-slate-600 dark:text-slate-400 font-mono text-xs">{'}'}</div>
+                    </div>
+
+                    <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-lg py-4 font-bold shadow-md font-mono" size="lg">
+                      {isSubmitting ? 'await send()...' : (
+                        <div className="flex items-center justify-center">
+                          execute() <Send className="w-4 h-4 ml-2" />
+                        </div>
+                      )}
+                    </Button>
+                  </form>
+                )}
+              </div>
+            </div>
           </motion.div>
 
           {/* Right Column - Map & FAQ */}
@@ -262,41 +306,7 @@ export function Contact() {
               </div>
             </div>
 
-            {/* FAQ */}
-            <div className="bg-surface border border-default rounded-dynamic p-6 shadow-dynamic">
-              <h3 className="text-xl font-bold mb-6 tracking-tight">Sıkça Sorulan Sorular</h3>
 
-              <Accordion.Root
-                type="single"
-                collapsible
-                value={openFaq}
-                onValueChange={setOpenFaq}
-                className="space-y-3"
-              >
-                {faqs.map((faq) => (
-                  <Accordion.Item
-                    key={faq.id}
-                    value={faq.id}
-                    className="border border-default rounded-xl overflow-hidden bg-elevated data-[state=open]:border-[var(--brand-primary)] transition-colors"
-                  >
-                    <Accordion.Header>
-                      <Accordion.Trigger className="w-full flex items-center justify-between p-4 text-left text-sm font-bold hover:bg-page transition-colors group">
-                        <span className="text-primary">{faq.question}</span>
-                        <div className="w-6 h-6 rounded-full bg-page flex items-center justify-center border border-default group-hover:border-[var(--brand-primary)] transition-colors">
-                          <ChevronDown
-                            className={`w-4 h-4 text-muted group-hover:text-[var(--brand-primary)] transition-transform ${openFaq === faq.id ? 'rotate-180 text-[var(--brand-primary)]' : ''
-                              }`}
-                          />
-                        </div>
-                      </Accordion.Trigger>
-                    </Accordion.Header>
-                    <Accordion.Content className="px-4 pb-4 pt-1 text-sm text-muted font-medium leading-relaxed bg-elevated">
-                      {faq.answer}
-                    </Accordion.Content>
-                  </Accordion.Item>
-                ))}
-              </Accordion.Root>
-            </div>
           </motion.div>
         </div>
       </section>

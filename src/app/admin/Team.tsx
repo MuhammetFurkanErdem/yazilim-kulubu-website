@@ -1,4 +1,4 @@
-import { Plus, Search, Edit2, Trash2, Mail, Linkedin, Github } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Linkedin, Github, Instagram, UploadCloud, AlertTriangle } from "lucide-react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useState } from "react";
 export function Team() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<any>(null);
+  const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
 
   const [members, setMembers] = useState([
     { id: 1, name: "Ahmet Kaya", role: "Başkan", email: "ahmet@comu.edu.tr", image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" },
@@ -14,8 +15,13 @@ export function Team() {
   ]);
 
   const handleDelete = (id: number) => {
-    if (window.confirm("Bu üyeyi silmek istediğinize emin misiniz?")) {
-      setMembers(members.filter(m => m.id !== id));
+    setConfirmDelete(id);
+  };
+
+  const confirmDeleteMember = () => {
+    if (confirmDelete !== null) {
+      setMembers(members.filter(m => m.id !== confirmDelete));
+      setConfirmDelete(null);
     }
   };
 
@@ -79,23 +85,23 @@ export function Team() {
                   </td>
                   <td className="p-4">
                     <div className="flex items-center gap-2">
-                      <button className="text-muted hover:text-[var(--brand-primary)] transition-colors" title="Mail">
-                        <Mail className="w-4 h-4" />
+                      <button className="text-muted hover:text-[#0A66C2] transition-colors cursor-pointer" title="LinkedIn">
+                        <Linkedin className="w-4 h-4 pointer-events-none" />
                       </button>
-                      <button className="text-muted hover:text-[#0A66C2] transition-colors" title="LinkedIn">
-                        <Linkedin className="w-4 h-4" />
+                      <button className="text-muted hover:text-[#E1306C] transition-colors cursor-pointer" title="Instagram">
+                        <Instagram className="w-4 h-4 pointer-events-none" />
                       </button>
-                      <button className="text-muted hover:text-primary transition-colors" title="GitHub">
-                        <Github className="w-4 h-4" />
+                      <button className="text-muted hover:text-primary transition-colors cursor-pointer" title="GitHub">
+                        <Github className="w-4 h-4 pointer-events-none" />
                       </button>
                     </div>
                   </td>
                   <td className="p-4 flex items-center justify-end gap-2">
-                    <button onClick={() => handleEdit(member)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
-                      <Edit2 className="w-4 h-4" />
+                    <button onClick={() => handleEdit(member)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors cursor-pointer" title="Düzenle">
+                      <Edit2 className="w-4 h-4 pointer-events-none" />
                     </button>
-                    <button onClick={() => handleDelete(member.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
-                      <Trash2 className="w-4 h-4" />
+                    <button onClick={() => handleDelete(member.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors cursor-pointer" title="Sil">
+                      <Trash2 className="w-4 h-4 pointer-events-none" />
                     </button>
                   </td>
                 </tr>
@@ -114,7 +120,7 @@ export function Team() {
         <form className="space-y-5" onSubmit={(e) => { 
           e.preventDefault(); 
           if (selectedMember) {
-            setMembers(members.map(m => m.id === selectedMember.id ? { ...m, name: selectedMember.name } : m)); // Simple mockup
+            setMembers(members.map(m => m.id === selectedMember.id ? { ...m, name: selectedMember.name } : m));
           }
           setIsModalOpen(false); 
         }}>
@@ -129,44 +135,36 @@ export function Team() {
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">E-posta Adresi</label>
-            <input type="email" defaultValue={selectedMember?.email} placeholder="ornek@comu.edu.tr" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
-          </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Profil Fotoğrafı URL</label>
-            <input type="url" defaultValue={selectedMember?.image} placeholder="https://..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Bölüm</label>
-              <input type="text" placeholder="Örn: Bilgisayar Müh." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
-            </div>
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Sınıf / Dönem</label>
-              <input type="text" placeholder="Örn: 3. Sınıf" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+            <label className="text-sm font-bold text-primary">Profil Fotoğrafı</label>
+            <div className="w-full border-2 border-dashed border-default rounded-xl bg-page hover:bg-surface transition-colors">
+              <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
+                {selectedMember?.image ? (
+                  <img src={selectedMember.image} alt="Mevcut fotoğraf" className="w-16 h-16 rounded-full object-cover mb-1 border-2 border-[var(--brand-primary)]/30" />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-surface flex items-center justify-center border-2 border-dashed border-default mb-1">
+                    <UploadCloud className="w-7 h-7 text-muted" />
+                  </div>
+                )}
+                <span className="text-sm font-bold text-primary">Fotoğraf Seç veya Değiştir</span>
+                <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 2MB)</span>
+                <input type="file" accept="image/*" className="hidden" />
+              </label>
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Kısa Biyografi</label>
-            <textarea rows={3} placeholder="Üye hakkında kısa bilgi..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
-          </div>
-
-          <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Eğlenceli Bilgi (Fun Fact)</label>
-            <input type="text" placeholder="Örn: Günde 5 kupa kahve içerim..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">LinkedIn Linki (İsteğe bağlı)</label>
+              <label className="text-sm font-bold text-primary">LinkedIn</label>
               <input type="url" placeholder="https://linkedin.com/in/..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
             </div>
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">GitHub Linki (İsteğe bağlı)</label>
+              <label className="text-sm font-bold text-primary">Instagram</label>
+              <input type="url" placeholder="https://instagram.com/..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">GitHub</label>
               <input type="url" placeholder="https://github.com/..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
             </div>
           </div>
@@ -180,6 +178,27 @@ export function Team() {
             </Button>
           </div>
         </form>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={confirmDelete !== null}
+        onClose={() => setConfirmDelete(null)}
+        title="Üyeyi Sil"
+      >
+        <div className="space-y-6">
+          <div className="flex flex-col items-center text-center gap-4 py-4">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-2">
+              <AlertTriangle className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold text-primary">Emin misiniz?</h3>
+            <p className="text-muted">Bu ekip üyesini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+          </div>
+          <div className="flex items-center gap-3 w-full">
+            <Button variant="ghost" onClick={() => setConfirmDelete(null)} className="flex-1">İptal</Button>
+            <Button variant="primary" onClick={confirmDeleteMember} className="flex-1 bg-red-500 hover:bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]">Sil</Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );

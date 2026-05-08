@@ -1,4 +1,4 @@
-import { Plus, Search, Edit2, Trash2, Calendar as CalendarIcon, MapPin, UploadCloud } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Calendar as CalendarIcon, MapPin, UploadCloud, AlertTriangle } from "lucide-react";
 import { Button } from "../components/Button";
 import { Modal } from "../components/Modal";
 import { useState } from "react";
@@ -7,6 +7,7 @@ export function Events() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [eventStatus, setEventStatus] = useState('Yaklaşan');
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [confirmDelete, setConfirmDelete] = useState<number | null>(null);
 
   const [events, setEvents] = useState([
     { id: 1, title: "Web Geliştirme Eğitimi", date: "15 Ekim 2024", location: "Bilgisayar Müh. Lab 1", status: "Yaklaşan" },
@@ -15,8 +16,13 @@ export function Events() {
   ]);
 
   const handleDelete = (id: number) => {
-    if (window.confirm("Bu etkinliği silmek istediğinize emin misiniz?")) {
-      setEvents(events.filter(e => e.id !== id));
+    setConfirmDelete(id);
+  };
+
+  const confirmDeleteEvent = () => {
+    if (confirmDelete !== null) {
+      setEvents(events.filter(e => e.id !== confirmDelete));
+      setConfirmDelete(null);
     }
   };
 
@@ -33,23 +39,30 @@ export function Events() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-primary">Etkinlik Yönetimi</h1>
-        <Button variant="primary" className="flex items-center gap-2" onClick={handleAdd}>
-          <Plus className="w-4 h-4" /> Yeni Etkinlik Ekle
+        <h1 className="text-2xl font-bold text-primary flex items-center gap-2"><span className="text-[var(--brand-primary)]">&gt;_</span> Etkinlik Yönetimi</h1>
+        <Button variant="primary" className="flex items-center gap-2 font-mono" onClick={handleAdd}>
+          <Plus className="w-4 h-4" /> ./yeni-etkinlik.sh
         </Button>
       </div>
 
-      <div className="bg-page border border-default rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-page border border-default rounded-2xl shadow-sm overflow-hidden relative">
+        {/* Terminal Header Bar */}
+        <div className="w-full h-8 bg-surface border-b border-default flex items-center px-4 gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+          <span className="text-[10px] text-muted ml-4 font-mono">root@ygk-server:~/admin/events</span>
+        </div>
         {/* Toolbar */}
         <div className="p-4 border-b border-default flex gap-4">
           <div className="relative flex-1 max-w-md">
             <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input 
               type="text" 
-              placeholder="Etkinlik ara..." 
-              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
+              placeholder="> Etkinlik ara..." 
+              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono"
             />
           </div>
         </div>
@@ -90,11 +103,11 @@ export function Events() {
                     </span>
                   </td>
                   <td className="p-4 flex items-center justify-end gap-2">
-                    <button onClick={() => handleEdit(event)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors" title="Düzenle">
-                      <Edit2 className="w-4 h-4" />
+                    <button onClick={() => handleEdit(event)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors cursor-pointer" title="Düzenle">
+                      <Edit2 className="w-4 h-4 pointer-events-none" />
                     </button>
-                    <button onClick={() => handleDelete(event.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors" title="Sil">
-                      <Trash2 className="w-4 h-4" />
+                    <button onClick={() => handleDelete(event.id)} className="p-2 text-muted hover:text-red-500 bg-surface hover:bg-red-500/10 border border-default hover:border-red-500/20 rounded-lg transition-colors cursor-pointer" title="Sil">
+                      <Trash2 className="w-4 h-4 pointer-events-none" />
                     </button>
                   </td>
                 </tr>
@@ -108,7 +121,7 @@ export function Events() {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
-        title={selectedEvent ? "Etkinliği Düzenle" : "Yeni Etkinlik Ekle"}
+        title={selectedEvent ? ">_ Etkinliği Düzenle" : ">_ Yeni Etkinlik Ekle"}
       >
         <form className="space-y-5" onSubmit={(e) => { 
           e.preventDefault(); 
@@ -138,20 +151,9 @@ export function Events() {
             <input type="text" defaultValue={selectedEvent?.location} placeholder="Örn: Troia Kültür Merkezi" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Kontenjan</label>
-              <input type="number" placeholder="Örn: 60" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
-            </div>
-            <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Etkinlik Türü</label>
-              <select className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none">
-                <option value="workshop">Workshop</option>
-                <option value="hackathon">Hackathon</option>
-                <option value="talk">Söyleşi (Talk)</option>
-                <option value="social">Sosyal Etkinlik</option>
-              </select>
-            </div>
+          <div className="space-y-1">
+            <label className="text-sm font-bold text-primary font-mono">Kontenjan</label>
+            <input type="number" placeholder="Örn: 60" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono" />
           </div>
 
           <div className="space-y-1">
@@ -206,6 +208,27 @@ export function Events() {
             </Button>
           </div>
         </form>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={confirmDelete !== null}
+        onClose={() => setConfirmDelete(null)}
+        title="Etkinliği Sil"
+      >
+        <div className="space-y-6">
+          <div className="flex flex-col items-center text-center gap-4 py-4">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-2">
+              <AlertTriangle className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-bold text-primary">Emin misiniz?</h3>
+            <p className="text-muted">Bu etkinliği silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+          </div>
+          <div className="flex items-center gap-3 w-full">
+            <Button variant="ghost" onClick={() => setConfirmDelete(null)} className="flex-1">İptal</Button>
+            <Button variant="primary" onClick={confirmDeleteEvent} className="flex-1 bg-red-500 hover:bg-red-600 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]">Sil</Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );
