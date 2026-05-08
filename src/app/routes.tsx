@@ -8,7 +8,6 @@ import { EventDetail } from "./pages/EventDetail";
 import { Projects } from "./pages/Projects";
 import { Contact } from "./pages/Contact";
 import { Join } from "./pages/Join";
-import { Auth } from "./pages/Auth";
 import { NotFound } from "./pages/NotFound";
 
 // Admin Imports
@@ -35,10 +34,6 @@ export const router = createBrowserRouter([
       { path: "katil", Component: Join },
       { path: "*", Component: NotFound },
     ],
-  },
-  {
-    path: "/auth",
-    Component: Auth,
   },
   {
     path: "/admin",

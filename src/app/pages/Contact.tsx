@@ -243,9 +243,9 @@ export function Contact() {
             <div className="bg-surface border border-default rounded-dynamic overflow-hidden shadow-dynamic group">
               <div className="h-48 bg-page relative overflow-hidden flex items-center justify-center">
                 <img
-                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800"
-                  alt="Kampüs Haritası"
-                  className="absolute inset-0 w-full h-full object-cover filter contrast-125 dark:grayscale dark:contrast-150 transition-transform duration-700 group-hover:scale-110"
+                  src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800"
+                  alt="ÇOMÜ Terzioğlu Kampüsü"
+                  className="absolute inset-0 w-full h-full object-cover filter contrast-125 transition-all duration-700 group-hover:scale-110 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
                 />
                 <div className="absolute inset-0 bg-[var(--brand-primary)]/20 mix-blend-overlay"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />

@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Youtube, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../components/Button';
-import { Badge } from '../components/Badge';
 import { useState, useEffect, useRef } from 'react';
 import { NetworkBackground } from '../components/NetworkBackground';
 import { MatrixBackground } from '../components/MatrixBackground';
@@ -103,7 +102,7 @@ export function Home() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full sm:w-auto"
           >
-            <Button asLink href="/katil" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
+            <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
               Bize Katıl
             </Button>
             <Button asLink href="/iletisim" variant="secondary" size="lg" className="rounded-dynamic px-10 h-14 text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
@@ -183,9 +182,7 @@ export function Home() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge variant="brand" className="bg-surface/90 backdrop-blur text-primary border-default">
-                      {project.category}
-                    </Badge>
+                    {/* Badge removed completely per user request */}
                   </div>
                 </div>
 

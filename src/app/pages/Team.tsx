@@ -30,13 +30,13 @@ export function Team() {
         name: 'Selin Erdoğan',
         role: 'Reklam ve Tanıtım Koordinatörü',
         linkedin: '#',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=600'
+        image: ''
       },
       {
         name: 'Ozan Efe Akpınar',
         role: 'Etkinlik Koordinatörü',
         linkedin: '#',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600'
+        image: ''
       }
     ],
     [
@@ -44,13 +44,13 @@ export function Team() {
         name: 'Deniz Yıldız',
         role: 'Oyun Kolu Lideri',
         linkedin: '#',
-        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600'
+        image: ''
       },
       {
         name: 'Ece Kara',
         role: 'Web Kolu Lideri',
         linkedin: '#',
-        image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600'
+        image: ''
       }
     ]
   ];
@@ -82,7 +82,7 @@ export function Team() {
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="absolute inset-0 w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150"
+                        className="absolute inset-0 w-full h-full object-cover filter contrast-110 transition-all duration-500 group-hover:scale-105 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
                       />
                     </div>
 

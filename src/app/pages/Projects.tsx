@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { ArrowRight, Github, ExternalLink, User } from 'lucide-react';
-import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
 import { Modal } from '../components/Modal';
 import { useState } from 'react';
@@ -161,7 +160,7 @@ export function Projects() {
                 <div className="flex flex-wrap items-center gap-6">
                   {featuredProject.team.map((member, idx) => (
                     <div key={idx} className="flex items-center gap-3">
-                      <img src={member.image} alt={member.name} className="w-12 h-12 rounded-full object-cover border-2 border-default filter grayscale dark:contrast-150" />
+                      <img src={member.image} alt={member.name} className="w-12 h-12 rounded-full object-cover border-2 border-default filter transition-all duration-500 dark:grayscale dark:contrast-125 hover:grayscale-0 dark:hover:grayscale-0" />
                       <div>
                         <div className="text-sm font-bold text-primary">{member.name}</div>
                         <div className="text-xs text-muted font-medium">{member.role}</div>
@@ -189,7 +188,7 @@ export function Projects() {
                 <img
                   src={featuredProject.image}
                   alt="YGK Platform Mockup"
-                  className="w-full h-full object-cover filter contrast-110"
+                  className="w-full h-full object-cover filter contrast-110 transition-all duration-500 dark:grayscale dark:contrast-125 hover:grayscale-0 dark:hover:grayscale-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-[var(--brand-primary)]/20 to-transparent mix-blend-overlay"></div>
               </div>
@@ -221,7 +220,7 @@ export function Projects() {
                 <div className="h-40 bg-page border-b border-default flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 opacity-10 bg-[var(--brand-primary)]" style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQPSI4Ij4KPHJlY3Qgd2lkdGg9IjgiIGhlaWdodD0iOCIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPHBhdGggZD0iTTAgMEw4IDhaTTAgOEw4IDBaIiBzdHJva2U9IiMwMDAiIHN0cm9rZS1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')" }}></div>
                   <div className="text-7xl font-black text-muted opacity-20 transform -rotate-12 group-hover:scale-110 transition-transform duration-500">{project.name.substring(0, 3)}</div>
-                  <Badge variant={project.branch as any} className="absolute top-4 left-4 shadow-sm font-bold uppercase">{project.branch}</Badge>
+                  {/* Badge removed */}
                 </div>
 
                 {/* Content */}
@@ -325,10 +324,10 @@ export function Projects() {
               >
                 <div>
                   <div className="flex justify-between items-start mb-6">
-                    <Badge variant="member" className="shadow-sm font-bold bg-elevated border-default text-primary">
-                      <User className="w-3.5 h-3.5 mr-1" />
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-muted uppercase tracking-widest">
+                      <User className="w-3.5 h-3.5" />
                       Üye Projesi
-                    </Badge>
+                    </div>
                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <a href="https://github.com/ygk-comu" target="_blank" rel="noopener noreferrer" className="px-3 py-2 rounded-xl bg-page border border-default hover:border-[var(--brand-primary)] text-muted hover:text-[var(--brand-primary)] transition-all flex items-center gap-2 text-xs font-bold shadow-sm">
                         <Github className="w-3.5 h-3.5" />
@@ -345,13 +344,13 @@ export function Projects() {
 
                   <div className="flex flex-wrap gap-2 mb-8">
                     {project.tech.map(tech => (
-                      <Badge key={tech} variant="neutral" className="bg-page border-default text-muted font-bold text-xs">{tech}</Badge>
+                      <span key={tech} className="px-3 py-1 bg-page border border-default text-muted font-bold text-xs rounded-lg">{tech}</span>
                     ))}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 pt-6 border-t border-default">
-                  <img src={project.author.image} alt={project.author.name} className="w-12 h-12 rounded-full border-2 border-default object-cover filter grayscale dark:contrast-150" />
+                  <img src={project.author.image} alt={project.author.name} className="w-12 h-12 rounded-full border-2 border-default object-cover filter transition-all duration-500 dark:grayscale dark:contrast-125 hover:grayscale-0 dark:hover:grayscale-0" />
                   <div>
                     <div className="text-base font-bold text-primary">{project.author.name}</div>
                     <div className="text-sm font-medium text-muted">{project.author.dept}</div>

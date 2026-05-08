@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { Calendar, MapPin, Users, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 import { Link, useParams } from 'react-router';
-import { Badge } from '../components/Badge';
 
 export function EventDetail() {
   const { id } = useParams();
@@ -45,7 +44,6 @@ export function EventDetail() {
             className="max-w-4xl"
           >
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <Badge variant={event.variant as any} className="shadow-sm">{event.type}</Badge>
               <span className="px-3 py-1 bg-page border border-default rounded-full text-xs font-bold text-muted shadow-sm">
                 Tamamlandı
               </span>
@@ -109,7 +107,7 @@ export function EventDetail() {
                 <img
                   src={photo}
                   alt={`${event.name} Anısı ${idx + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover filter contrast-110 transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full object-cover filter contrast-110 transition-all duration-700 group-hover:scale-110 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white font-bold text-sm drop-shadow-md">

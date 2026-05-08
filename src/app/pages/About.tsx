@@ -1,12 +1,11 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Globe, Smartphone, Gamepad2, Target } from 'lucide-react';
+import { ArrowRight, Globe, Smartphone, Gamepad2, Target, MousePointerClick } from 'lucide-react';
 import { Button } from '../components/Button';
 import { useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 
 interface BranchData {
   name: string;
-  sub: string;
   icon: LucideIcon;
   desc: string;
   tech: string[];
@@ -17,7 +16,6 @@ interface BranchData {
 const branchesData: BranchData[] = [
   {
     name: 'Web Geliştirme',
-    sub: 'Frontend & Backend',
     icon: Globe,
     color: '#7F77DD',
     colorBg: 'rgba(127,119,221,0.13)',
@@ -26,7 +24,6 @@ const branchesData: BranchData[] = [
   },
   {
     name: 'Mobil Geliştirme',
-    sub: 'iOS & Android',
     icon: Smartphone,
     color: '#1D9E75',
     colorBg: 'rgba(29,158,117,0.13)',
@@ -35,7 +32,6 @@ const branchesData: BranchData[] = [
   },
   {
     name: 'Oyun Geliştirme',
-    sub: 'Game Jam & Prototip',
     icon: Gamepad2,
     color: '#D85A30',
     colorBg: 'rgba(216,90,48,0.13)',
@@ -44,7 +40,6 @@ const branchesData: BranchData[] = [
   },
   {
     name: 'Blockchain',
-    sub: 'Web3 & Akıllı Sözleşmeler',
     icon: Target,
     color: '#BA7517',
     colorBg: 'rgba(186,117,23,0.13)',
@@ -150,7 +145,7 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
               onClick={() => setActiveIndex(idx)}
               onHoverStart={() => setHoveredIndex(idx)}
               onHoverEnd={() => setHoveredIndex(null)}
-              className="absolute flex items-center justify-center rounded-full cursor-pointer focus:outline-none"
+              className="absolute flex items-center justify-center rounded-full cursor-pointer focus:outline-none group"
               style={{
                 width: 64,
                 height: 64,
@@ -160,7 +155,7 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
               animate={{
                 x: pos.x - 32,
                 y: pos.y - 32,
-                scale: isActive ? 1 : isHovered ? 0.92 : 0.78,
+                scale: isActive ? 1 : isHovered ? 0.95 : 0.82,
                 zIndex: isActive ? 10 : 1,
               }}
               transition={{ type: 'spring', stiffness: 55, damping: 15 }}
@@ -198,13 +193,25 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
                   opacity: isActive ? 1 : 0.55,
                 }}
               />
+
+              {/* Branch Name Label */}
+              <motion.div
+                className="absolute top-[110%] px-3 py-1.5 bg-surface border border-default rounded-md shadow-sm text-[11px] font-bold tracking-wide whitespace-nowrap pointer-events-none transition-all duration-300 flex items-center gap-1.5"
+                style={{
+                  color: isActive ? branch.color : 'var(--tw-text-opacity)',
+                  opacity: isActive || isHovered ? 1 : 0,
+                  transform: isActive || isHovered ? 'translateY(0)' : 'translateY(-10px)',
+                }}
+              >
+                {branch.name}
+              </motion.div>
             </motion.button>
           );
         })}
       </div>
 
       {/* Content panel */}
-      <div className="flex-1 min-w-0 max-w-md">
+      <div className="flex-1 min-w-0 max-w-md flex flex-col items-center text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
@@ -212,9 +219,10 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -16 }}
             transition={{ duration: 0.28, ease: 'easeOut' }}
+            className="flex flex-col items-center"
           >
             {/* Active indicator dot + name */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <span
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ backgroundColor: branches[activeIndex].color }}
@@ -231,11 +239,11 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
               {branches[activeIndex].name}
             </h3>
 
-            <p className="text-base text-muted leading-relaxed mb-7">
+            <p className="text-base text-muted leading-relaxed mb-7 max-w-sm">
               {branches[activeIndex].desc}
             </p>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               {branches[activeIndex].tech.map(tech => (
                 <span
                   key={tech}
@@ -247,7 +255,7 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
             </div>
 
             {/* Subtle step indicators */}
-            <div className="flex gap-2 mt-8">
+            <div className="flex justify-center gap-2 mt-8">
               {branches.map((b, i) => (
                 <button
                   key={i}
@@ -275,6 +283,15 @@ export function BranchesSection() {
       <div className="max-w-[960px] mx-auto">
         <div className="mb-16 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kollarımız</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 mt-2 bg-page border border-default rounded-full text-sm font-medium text-muted shadow-sm"
+          >
+            <MousePointerClick className="w-4 h-4 text-[var(--brand-primary)]" />
+            <span className="opacity-90">Detayları görmek için yörüngedeki ikonlara tıklayın</span>
+          </motion.div>
         </div>
 
         <OrbitalBranches branches={branchesData} />
@@ -325,13 +342,13 @@ export function About() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative group"
           >
             <div className="relative aspect-[4/3] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
                 alt="Ekip çalışması"
-                className="w-full h-full object-cover filter contrast-110 dark:grayscale dark:contrast-150 transition-all duration-300"
+                className="w-full h-full object-cover filter contrast-110 transition-all duration-500 group-hover:scale-105 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-page/80 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">

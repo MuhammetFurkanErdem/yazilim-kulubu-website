@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Code2, Linkedin, Instagram, Youtube } from 'lucide-react';
+import { Code2, Linkedin, Instagram, Youtube, Mail } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -15,23 +15,28 @@ export function Footer() {
               </div>
               <span className="text-lg font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
             </Link>
-            <div className="text-sm font-medium text-muted flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
-              <span>Çanakkale Onsekiz Mart Üniversitesi</span>
-              <span className="hidden sm:inline text-default">•</span>
-              <a href="mailto:ygk@comu.edu.tr" className="hover:text-[var(--brand-primary)] transition-colors">ygk@comu.edu.tr</a>
+            <div className="text-sm font-medium text-muted">
+              Çanakkale Onsekiz Mart Üniversitesi
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
-            <a href="https://instagram.com/ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="Instagram">
-              <Instagram className="w-4 h-4" />
+          {/* Contact & Social Links Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-5">
+            <a href="yazilimgelistirmecomu@gmail.com" className="flex items-center gap-3 text-muted hover:text-[var(--brand-primary)] transition-colors font-mono text-sm font-semibold">
+              <Mail className="w-5 h-5" />
+              yazilimgelistirmecomu
             </a>
-            <a href="https://youtube.com/@ygk_comu" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="YouTube">
-              <Youtube className="w-4 h-4" />
+            <a href="https://www.instagram.com/comuyazilimgelistirme/?hl=tr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-[var(--brand-primary)] transition-colors font-mono text-sm font-semibold">
+              <Instagram className="w-5 h-5" />
+              @comuyazilimgelistirme
             </a>
-            <a href="https://linkedin.com/company/ygk" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-page border border-default flex items-center justify-center text-muted icon-interactive focus-ring" title="LinkedIn">
-              <Linkedin className="w-4 h-4" />
+            <a href="https://www.youtube.com/@comuyazilimgelistirme" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-[var(--brand-primary)] transition-colors font-mono text-sm font-semibold">
+              <Youtube className="w-5 h-5" />
+              @comuyazilimgelistirme
+            </a>
+            <a href="https://www.linkedin.com/company/%C3%A7om%C3%BC-yaz%C4%B1l%C4%B1m-geli%C5%9Ftirme-kul%C3%BCb%C3%BC/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted hover:text-[var(--brand-primary)] transition-colors font-mono text-sm font-semibold">
+              <Linkedin className="w-5 h-5" />
+              çomü-yazılım-geliştirme-kulübü
             </a>
           </div>
 

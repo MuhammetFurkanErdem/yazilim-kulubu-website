@@ -12,11 +12,11 @@ export function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -31,11 +31,10 @@ export function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'h-20 bg-page/90 backdrop-blur-lg border-b border-default shadow-sm' 
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? 'h-20 bg-page/90 backdrop-blur-lg border-b border-default shadow-sm'
         : 'h-28 bg-transparent border-transparent'
-    }`}>
+      }`}>
       <div className="max-w-[1280px] mx-auto px-8 h-full flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
@@ -52,8 +51,8 @@ export function Navbar() {
               key={link.path}
               to={link.path}
               className={`text-base font-medium nav-link-animated ${location.pathname === link.path
-                  ? 'text-[var(--brand-primary)] active'
-                  : 'text-muted hover:text-primary'
+                ? 'text-[var(--brand-primary)] active'
+                : 'text-muted hover:text-primary'
                 }`}
             >
               {link.name}
@@ -72,9 +71,6 @@ export function Navbar() {
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           )}
-          <Button asLink href="/auth" variant="primary" className="rounded-dynamic px-6 font-bold shadow-dynamic hidden sm:flex">
-            Giriş / Üye Ol
-          </Button>
         </div>
       </div>
     </nav>
