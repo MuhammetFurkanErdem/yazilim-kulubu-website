@@ -155,7 +155,3 @@ Bu proje tüm kulüp üyelerinin katkılarına açıktır! Nasıl katkıda bulun
 3. Yaptığınız değişiklikleri commit'leyin (`git commit -m 'Harika bir özellik eklendi'`)
 4. Branch'inizi push'layın (`git push origin feature/YeniOzellik`)
 5. Bizim repomuza bir **Pull Request** açın!
-
-<div align="center">
-  <p>Kulüp ekibi tarafından ❤️ ve ☕ ile geliştirildi.</p>
-</div>
