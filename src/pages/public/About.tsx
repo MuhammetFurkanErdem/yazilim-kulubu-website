@@ -1,7 +1,9 @@
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react';
 import { ArrowRight, MousePointerClick } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect } from 'react';
+import { BlockchainBackground } from '@/components/layout/BlockchainBackground';
+import { MatrixBackground } from '@/components/layout/MatrixBackground';
 
 interface BranchData {
   name: string;
@@ -163,8 +165,7 @@ function TerminalContent({ branch }: { branch: BranchData }) {
   );
 }
 
-function OrbitalBranches({ branches }: { branches: BranchData[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+function OrbitalBranches({ branches, activeIndex, setActiveIndex }: { branches: BranchData[], activeIndex: number, setActiveIndex: (idx: number) => void }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const RADIUS = 148;
@@ -275,15 +276,101 @@ function OrbitalBranches({ branches }: { branches: BranchData[] }) {
 }
 
 export function BranchesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeBranch = branchesData[activeIndex];
+
   return (
-    <section className="py-16 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default">
-      <div className="max-w-[960px] mx-auto">
+    <section className="relative py-16 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default overflow-hidden transition-colors duration-500">
+      
+      {/* Dynamic Backgrounds Per Branch */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+        >
+          {/* 1. Web: Matrix / Code Rain */}
+          {activeBranch.name.includes('Web') && (
+            <div className="absolute inset-0 opacity-40">
+              <MatrixBackground colorHex={activeBranch.color} />
+            </div>
+          )}
+
+          {/* 2. Mobil: Glassmorphism Floating Orbs */}
+          {activeBranch.name.includes('Mobil') && (
+            <>
+              <motion.div
+                animate={{ x: [0, 100, -50, 0], y: [0, -100, 50, 0], scale: [1, 1.1, 0.9, 1] }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-[40%_60%_70%_30%] mix-blend-multiply dark:mix-blend-screen opacity-40 dark:opacity-20 blur-[80px]"
+                style={{ backgroundColor: activeBranch.color }}
+              />
+              <motion.div
+                animate={{ x: [0, -100, 100, 0], y: [0, 100, -100, 0], scale: [1, 0.9, 1.1, 1] }}
+                transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+                className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-[60%_40%_30%_70%] mix-blend-multiply dark:mix-blend-screen opacity-30 dark:opacity-15 blur-[100px]"
+                style={{ backgroundColor: activeBranch.color }}
+              />
+              <motion.div
+                animate={{ x: [0, 50, -50, 0], y: [0, 50, -50, 0], scale: [0.8, 1.1, 0.9, 0.8] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-20 dark:opacity-10 blur-[90px]"
+                style={{ backgroundColor: activeBranch.color }}
+              />
+              <div 
+                className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+                style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMDAwIiAvPgo8L3N2Zz4=')" }} 
+              />
+            </>
+          )}
+
+          {/* 3. Oyun: 3D Cyberpunk Neon Grid */}
+          {activeBranch.name.includes('Oyun') && (
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex justify-center" style={{ perspective: '800px' }}>
+              <div 
+                className="absolute top-[40%] w-[200%] h-[150%] opacity-20 dark:opacity-40"
+                style={{
+                  transformOrigin: 'top center',
+                  transform: 'rotateX(75deg)',
+                  maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+                }}
+              >
+                {/* GPU Accelerated translateY for buttery smooth infinite scroll */}
+                <motion.div
+                  animate={{ y: [0, 50] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0"
+                  style={{
+                    top: '-50px',
+                    height: 'calc(100% + 50px)',
+                    backgroundImage: `linear-gradient(to right, ${activeBranch.color}60 2px, transparent 2px), linear-gradient(to bottom, ${activeBranch.color}60 2px, transparent 2px)`,
+                    backgroundSize: '50px 50px',
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* 4. Blockchain: Connected Nodes Network */}
+          {activeBranch.name.includes('Blockchain') && (
+            <div className="absolute inset-0 opacity-60">
+              <BlockchainBackground colorHex={activeBranch.color} />
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="relative z-10 max-w-[960px] mx-auto">
         <div className="mb-10 sm:mb-16 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kollarımız</h2>
           <p className="mt-2 text-muted">Kol ikonlarına tıklayarak detayları görebilirsiniz.</p>
         </div>
 
-        <OrbitalBranches branches={branchesData} />
+        <OrbitalBranches branches={branchesData} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
 
         <div className="mt-10 sm:mt-16 flex justify-center">
           <Button asLink href="/ekibimiz" variant="secondary" className="rounded-dynamic border-default">
@@ -341,14 +428,10 @@ export function About() {
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
                 alt="Ekip çalışması"
-                className="w-full h-full object-cover filter contrast-110 transition-all duration-500 group-hover:scale-105 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-page/80 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
-                <div>
-                  <div className="text-white font-bold text-xl drop-shadow-md">Takım Çalışması</div>
-                  <div className="text-white/80 text-sm font-medium drop-shadow-md">Hackathon 2023 - 1.lik Ödülü</div>
-                </div>
               </div>
             </div>
           </motion.div>

@@ -2,10 +2,13 @@ import { motion } from 'motion/react';
 import { Github, Linkedin, Instagram, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/api/config';
+import { withTimeout } from '@/utils/promise';
+import { DatabaseError } from '@/components/shared/DatabaseError';
 
 export function Team() {
   const [members, setMembers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchMembers();
@@ -13,12 +16,17 @@ export function Team() {
 
   const fetchMembers = async () => {
     setIsLoading(true);
+    setError(null);
     try {
-      const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: true });
-      if (error) throw error;
+      const { data, error: dbError } = await withTimeout<any>(
+        supabase.from('profiles').select('*').order('created_at', { ascending: true }),
+        5000
+      );
+      if (dbError) throw dbError;
       setMembers(data || []);
-    } catch (error) {
-      console.error("Üyeler çekilemedi:", error);
+    } catch (err: any) {
+      console.error("Üyeler çekilemedi:", err);
+      setError("Bağlantı Hatası: Ekip üyeleri veritabanından yüklenemedi. Lütfen internet bağlantınızı veya API ayarlarını kontrol edin.");
     } finally {
       setIsLoading(false);
     }
@@ -33,18 +41,19 @@ export function Team() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-page pt-24 flex items-center justify-center">
+        <DatabaseError message={error} onRetry={fetchMembers} />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
       {/* Leadership Section */}
       <section className="pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight">Ekibimiz</h1>
-            <p className="text-base sm:text-xl text-muted font-medium max-w-2xl mx-auto">
-              Kulübümüzü ileriye taşıyan, projeler üreten ve topluluğumuzu büyüten harika ekibimizle tanışın.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {members.map((member, idx) => (
               <motion.div
@@ -61,7 +70,7 @@ export function Team() {
                     <img
                       src={member.avatar_url}
                       alt={`${member.first_name} ${member.last_name}`}
-                      className="absolute inset-0 w-full h-full object-cover filter contrast-110 transition-all duration-500 group-hover:scale-105 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
+                      className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <div className="text-4xl font-bold text-muted opacity-50">
@@ -78,26 +87,20 @@ export function Team() {
                   <div className="h-px w-full bg-slate-200 dark:bg-slate-800 mb-5 mt-auto" />
 
                   <div className="flex items-center gap-5">
-                    {member.linkedin_url ? (
+                    {member.linkedin_url && member.linkedin_url.trim() !== '' && (
                       <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Linkedin className="w-5 h-5" />
                       </a>
-                    ) : (
-                      <div className="w-5 h-5 text-muted opacity-20"><Linkedin className="w-5 h-5" /></div>
                     )}
-                    {member.instagram_url ? (
+                    {member.instagram_url && member.instagram_url.trim() !== '' && (
                       <a href={member.instagram_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Instagram className="w-5 h-5" />
                       </a>
-                    ) : (
-                      <div className="w-5 h-5 text-muted opacity-20"><Instagram className="w-5 h-5" /></div>
                     )}
-                    {member.github_url ? (
+                    {member.github_url && member.github_url.trim() !== '' && (
                       <a href={member.github_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Github className="w-5 h-5" />
                       </a>
-                    ) : (
-                      <div className="w-5 h-5 text-muted opacity-20"><Github className="w-5 h-5" /></div>
                     )}
                   </div>
                 </div>

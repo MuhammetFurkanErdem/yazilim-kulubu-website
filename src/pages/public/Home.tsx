@@ -6,6 +6,8 @@ import { NetworkBackground } from '@/components/layout/NetworkBackground';
 import { MatrixBackground } from '@/components/layout/MatrixBackground';
 import { GlowingOrbsBackground } from '@/components/layout/GlowingOrbsBackground';
 
+import { supabase } from '@/api/config';
+
 function CountUp({ target, suffix, label, delay = 0 }: { target: number; suffix: string; label: string; delay?: number }) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -53,6 +55,35 @@ export function Home() {
   const [animatedText, setAnimatedText] = useState('');
   const words = ['işbirliği yap,', 'öğren,', 'inşa et,'];
   const [wordIndex, setWordIndex] = useState(0);
+  const [settings, setSettings] = useState({
+    instagram: 'https://www.instagram.com/comuyazilimgelistirme/?hl=tr',
+    youtube: 'https://www.youtube.com/@comuyazilimgelistirme',
+    linkedin: 'https://www.linkedin.com/company/%C3%A7om%C3%BC-yaz%C4%B1l%C4%B1m-geli%C5%9Ftirme-kul%C3%BCb%C3%BC/'
+  });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const { data, error } = await supabase.from('site_settings').select('*');
+        if (error) throw error;
+        
+        if (data && data.length > 0) {
+          const settingsMap: any = {};
+          data.forEach(item => {
+            settingsMap[item.key] = item.value;
+          });
+          setSettings(prev => ({
+            instagram: settingsMap['social_instagram'] || prev.instagram,
+            youtube: settingsMap['social_youtube'] || prev.youtube,
+            linkedin: settingsMap['social_linkedin'] || prev.linkedin
+          }));
+        }
+      } catch (error) {
+        console.error("Home ayarları çekilemedi:", error);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     const word = words[wordIndex];
@@ -83,7 +114,8 @@ export function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-6xl md:text-8xl font-black leading-[1.1] tracking-tighter mb-8"
           >
-            Kod yaz, <span className="text-[var(--brand-primary)]">{animatedText}</span><br />
+            Kod yaz,
+            <span className="text-[var(--brand-primary)]">{animatedText}</span><br />
             değişim yarat.
           </motion.h1>
 
@@ -117,9 +149,9 @@ export function Home() {
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium"
           >
-            <a href="#" className="icon-interactive flex items-center gap-2"><Instagram className="w-5 h-5" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-2"><Youtube className="w-5 h-5" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
+            <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Instagram className="w-5 h-5" /></a>
+            <a href={settings.youtube} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Youtube className="w-5 h-5" /></a>
+            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
           </motion.div>
         </div>
       </section>
@@ -179,7 +211,7 @@ export function Home() {
                   <img
                     src={project.image}
                     alt={project.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
                     {/* Badge removed completely per user request */}

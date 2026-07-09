@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 
-export function MatrixBackground() {
+export function MatrixBackground({ colorHex = '#534AB7' }: { colorHex?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
 
@@ -31,20 +31,25 @@ export function MatrixBackground() {
 
     const draw = () => {
       const isDark = document.documentElement.classList.contains('dark');
-      
+
       // Semi-transparent background to create trail effect (increased fade for less noise)
       ctx.fillStyle = isDark ? 'rgba(10, 10, 10, 0.1)' : 'rgba(250, 250, 250, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Parse hex color to rgb
+      const r = parseInt(colorHex.slice(1, 3), 16) || 83;
+      const g = parseInt(colorHex.slice(3, 5), 16) || 74;
+      const b = parseInt(colorHex.slice(5, 7), 16) || 183;
+
       // Set text color and font
       // In light mode, make text almost solid so it stands out against white background
-      ctx.fillStyle = isDark ? 'rgba(83, 74, 183, 0.55)' : 'rgba(83, 74, 183, 0.95)'; 
+      ctx.fillStyle = isDark ? `rgba(${r}, ${g}, ${b}, 0.55)` : `rgba(${r}, ${g}, ${b}, 0.95)`;
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
         // Random character
         const text = characters[Math.floor(Math.random() * characters.length)];
-        
+
         // Draw character (add sparsity by randomly skipping some draws)
         if (Math.random() > 0.3) {
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -54,7 +59,7 @@ export function MatrixBackground() {
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.99) {
           drops[i] = 0;
         }
-        
+
         // Move drop down
         drops[i]++;
       }
@@ -66,12 +71,12 @@ export function MatrixBackground() {
       clearInterval(intervalId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [theme]);
+  }, [theme, colorHex]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-60" 
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 dark:opacity-60"
     />
   );
 }

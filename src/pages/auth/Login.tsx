@@ -24,7 +24,7 @@ export function Login() {
       });
 
       if (error) throw error;
-      
+
       if (data.session) {
         navigate('/admin');
       }
@@ -54,7 +54,7 @@ export function Login() {
               <Terminal className="w-8 h-8 text-[var(--brand-primary)]" />
             </div>
           </div>
-          
+
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-primary mb-2 tracking-tight">Yönetim Paneli</h1>
             <p className="text-sm font-medium text-muted">Yetkili erişimi için lütfen giriş yapın.</p>
@@ -131,7 +131,7 @@ export function Login() {
               </Button>
             </div>
           </form>
-          
+
           <div className="mt-8 text-center">
             <p className="text-xs font-medium text-muted">
               Sadece kulüp yönetim kurulu üyeleri giriş yapabilir.

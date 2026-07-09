@@ -4,6 +4,8 @@ import { Button } from '@/components/shared/Button';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { supabase } from '@/api/config';
+import { withTimeout } from '@/utils/promise';
+import { DatabaseError } from '@/components/shared/DatabaseError';
 
 // Ticket Card Component for Upcoming Events
 function TicketCard({ event }: { event: any }) {
@@ -141,7 +143,7 @@ function PastEventsTimeline({ events }: { events: any[] }) {
                         <img
                           src={event.image_url}
                           alt={event.title}
-                          className="absolute inset-0 w-full h-full object-cover filter contrast-110 transition-all duration-700 group-hover:scale-105 dark:grayscale dark:contrast-125 dark:group-hover:grayscale-0"
+                          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                         />
                       ) : (
                         <span className="text-muted font-bold opacity-50">Görsel Yok</span>
@@ -172,6 +174,7 @@ export function Events() {
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [pastEvents, setPastEvents] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -179,15 +182,19 @@ export function Events() {
 
   const fetchEvents = async () => {
     setIsLoading(true);
+    setError(null);
     try {
-      const { data, error } = await supabase.from('events').select('*').order('date', { ascending: true });
-      if (error) throw error;
-      
+      const { data, error: dbError } = await withTimeout<any>(
+        supabase.from('events').select('*').order('date', { ascending: true }),
+        5000
+      );
+      if (dbError) throw dbError;
+
       if (data) {
         const featured = data.find(e => e.type === 'featured');
         const upcoming = data.filter(e => e.type === 'upcoming');
         const past = data.filter(e => e.type === 'past').sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        
+
         setFeaturedEvent(featured);
         setUpcomingEvents(upcoming);
         setPastEvents(past);
@@ -196,8 +203,9 @@ export function Events() {
           startCountdown(new Date(featured.date));
         }
       }
-    } catch (error) {
-      console.error("Etkinlikler çekilemedi:", error);
+    } catch (err: any) {
+      console.error("Etkinlikler çekilemedi:", err);
+      setError("Bağlantı Hatası: Etkinlikler veritabanından yüklenemedi. Lütfen internet bağlantınızı veya API ayarlarını kontrol edin.");
     } finally {
       setIsLoading(false);
     }
@@ -232,87 +240,100 @@ export function Events() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-page pt-24 flex items-center justify-center">
+        <DatabaseError message={error} onRetry={fetchEvents} />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
       {/* Featured Event (Büyük Etkinlik) */}
       {featuredEvent && (
-        <section className="pt-24 pb-8 sm:pb-12 px-4 sm:px-8 lg:px-20 bg-page">
+        <section className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page">
           <div className="max-w-[1280px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative grid grid-cols-1 lg:grid-cols-12 gap-6 bg-surface border border-[var(--brand-primary)] rounded-dynamic overflow-hidden shadow-sm"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center"
             >
               {/* Left - Details */}
-              <div className="col-span-1 lg:col-span-7 p-6 md:p-10 flex flex-col justify-center">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-1 bg-[var(--brand-primary)] text-white text-xs font-bold rounded-full uppercase tracking-wider shadow-[0_0_10px_var(--brand-primary)]">Öne Çıkan Etkinlik</span>
+              <div className="col-span-1 lg:col-span-6 flex flex-col justify-center">
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-primary)] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[var(--brand-primary)]"></span>
+                  </span>
+                  <span className="text-sm font-bold text-[var(--brand-primary)] tracking-widest uppercase">
+                    ÇOK YAKINDA ...
+                  </span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 tracking-tight">{featuredEvent.title}</h2>
-                <p className="text-base text-muted leading-relaxed font-medium mb-8">
+                <h2 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 tracking-tight">{featuredEvent.title}</h2>
+                <p className="text-base sm:text-xl text-muted leading-relaxed font-medium mb-6 sm:mb-8">
                   {featuredEvent.description}
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="flex items-center gap-3 text-sm bg-page border border-default rounded-xl p-3">
-                    <div className="w-8 h-8 rounded-full bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-8">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
                       <Calendar className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-muted font-medium text-[10px] uppercase tracking-wider mb-0.5">Tarih / Saat</div>
+                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Tarih / Saat</div>
                       <div className="font-bold text-primary">{new Date(featuredEvent.date).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 text-sm bg-page border border-default rounded-xl p-3">
-                    <div className="w-8 h-8 rounded-full bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)]">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-muted font-medium text-[10px] uppercase tracking-wider mb-0.5">Yer</div>
+                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Yer</div>
                       <div className="font-bold text-primary line-clamp-1">{featuredEvent.location || 'Belirtilmemiş'}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 text-sm bg-page border border-default rounded-xl p-3">
-                    <div className="w-8 h-8 rounded-full bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)]">
+                  <div className="flex items-center gap-3 text-sm">
+                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
                       <Users className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-muted font-medium text-[10px] uppercase tracking-wider mb-0.5">Kontenjan</div>
+                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Kontenjan</div>
                       <div className="font-bold text-primary">{featuredEvent.capacity ? `${featuredEvent.capacity} Kişi` : 'Sınırsız'}</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Mini Countdown */}
-                <div className="bg-elevated border border-[var(--brand-primary)]/30 rounded-2xl p-4 mb-8 shadow-sm relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-primary)] rounded-full blur-[80px] opacity-10" />
+                {/* Countdown */}
+                <div className="mb-10">
                   <div className="text-[10px] text-muted font-bold tracking-widest mb-3 font-mono">GERİ SAYIM</div>
-                  <div className="flex items-center gap-2 md:gap-4">
+                  <div className="flex flex-wrap items-center gap-3">
                     {[
                       { label: 'GÜN', value: countdown.days },
                       { label: 'SAAT', value: countdown.hours },
                       { label: 'DAK', value: countdown.mins },
                       { label: 'SAN', value: countdown.secs }
                     ].map((unit, idx) => (
-                      <div key={idx} className="flex-1 text-center bg-surface border border-default rounded-xl py-2 shadow-sm z-10">
-                        <div className="text-xl font-black font-mono text-primary mb-0.5">
+                      <div key={idx} className="flex items-baseline gap-1.5 bg-surface border border-default px-4 py-2.5 rounded-xl shadow-sm">
+                        <span className="text-2xl font-black font-mono text-primary">
                           {String(unit.value).padStart(2, '0')}
-                        </div>
-                        <div className="text-[9px] text-muted font-bold tracking-widest uppercase">{unit.label}</div>
+                        </span>
+                        <span className="text-xs font-semibold text-muted font-mono">{unit.label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center gap-3 z-10 relative">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
                   {featuredEvent.registration_url && (
-                    <Button href={featuredEvent.registration_url} target="_blank" rel="noopener noreferrer" variant="primary" size="md" className="w-full sm:w-auto px-6 rounded-xl shadow-dynamic font-bold">
+                    <Button href={featuredEvent.registration_url} target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="w-full sm:w-auto px-8 rounded-xl shadow-dynamic font-bold">
                       Hemen Kayıt Ol <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   )}
                   <Link to={`/etkinlikler/${featuredEvent.id}`} className="w-full sm:w-auto">
-                    <Button variant="secondary" size="md" className="w-full px-6 rounded-xl font-bold bg-elevated hover:bg-page">
+                    <Button variant="secondary" size="lg" className="w-full sm:w-auto px-8 rounded-xl font-bold bg-surface hover:bg-elevated border-default">
                       Detayları İncele
                     </Button>
                   </Link>
@@ -320,22 +341,28 @@ export function Events() {
               </div>
 
               {/* Right - Poster Image */}
-              <div className="col-span-1 lg:col-span-5 relative min-h-[300px] lg:min-h-full flex items-center justify-center bg-page">
-                {featuredEvent.image_url ? (
-                  <img
-                    src={featuredEvent.image_url}
-                    alt={featuredEvent.title}
-                    className="absolute inset-0 w-full h-full object-cover filter contrast-125 transition-all duration-700 group-hover:scale-105 dark:grayscale dark:contrast-125 hover:grayscale-0 dark:hover:grayscale-0"
-                  />
-                ) : (
-                  <span className="text-muted font-bold opacity-50 z-10 relative">Görsel Eklenmemiş</span>
-                )}
-                <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-10">
-                  <div className="inline-block bg-black/60 backdrop-blur-md border border-white/20 rounded-xl px-4 py-2 font-bold text-white tracking-widest text-xs shadow-2xl">
-                    {new Date(featuredEvent.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }).toUpperCase()}
+              <div className="col-span-1 lg:col-span-6 relative">
+                <div className="relative rounded-dynamic overflow-hidden border border-default shadow-dynamic aspect-[4/3] bg-surface group">
+                  {featuredEvent.image_url ? (
+                    <img
+                      src={featuredEvent.image_url}
+                      alt={featuredEvent.title}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted font-bold">Görsel Yok</div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[var(--brand-primary)]/20 to-transparent mix-blend-overlay"></div>
+
+                  {/* Premium floating date badge on top-left of the poster image */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <div className="inline-block bg-black/60 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 font-bold text-white tracking-widest text-xs shadow-2xl">
+                      {new Date(featuredEvent.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }).toUpperCase()}
+                    </div>
                   </div>
                 </div>
+                {/* Glow decoration behind image */}
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[var(--brand-primary)] rounded-full blur-[80px] opacity-20 -z-10" />
               </div>
             </motion.div>
           </div>
@@ -346,9 +373,9 @@ export function Events() {
       {upcomingEvents.length > 0 && (
         <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default overflow-hidden">
           <div className="max-w-[1000px] mx-auto">
-            <div className="mb-10 sm:mb-16 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 tracking-tight">Yaklaşan Etkinlikler</h2>
-              <p className="text-base sm:text-xl text-muted font-medium">Biletini al, yerini garantile.</p>
+            <div className="mb-8 text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Yaklaşan Etkinlikler</h2>
+              <p className="text-sm sm:text-base text-muted font-medium">Biletini al, yerini garantile.</p>
             </div>
 
             <div className="space-y-8">
@@ -363,9 +390,9 @@ export function Events() {
       {/* Past Events */}
       <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto">
-          <div className="mb-10 sm:mb-16 text-center md:text-left">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Geçmiş Etkinlikler</h2>
-            <p className="text-base sm:text-xl text-muted font-medium">Başarıyla tamamladığımız ve iz bırakan etkinlikler</p>
+          <div className="mb-8 text-center md:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Geçmiş Etkinlikler</h2>
+            <p className="text-sm sm:text-base text-muted font-medium">Başarıyla tamamladığımız ve iz bırakan etkinlikler</p>
           </div>
 
           {/* Animated Timeline */}

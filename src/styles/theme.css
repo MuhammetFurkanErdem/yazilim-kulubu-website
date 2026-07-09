@@ -17,6 +17,7 @@
   /* ÇOMÜ Blue/Purple */
   --brand-hover: #3C3489;
   --brand-text: #FFFFFF;
+  --brand-glow: rgba(83, 74, 183, 0.25);
 
   --radius-custom: 1rem;
   /* Rounded corners for light mode */
@@ -30,27 +31,28 @@
 .dark {
   /* DARK MODE (Deep Space / Neon) */
   --bg-page: #090A10;
-  --bg-surface: #111522;
-  --bg-elevated: #1A2033;
+  --bg-surface: rgba(17, 21, 34, 0.75);
+  --bg-elevated: rgba(26, 32, 51, 0.65);
 
   --text-primary: #F8FAFC;
   --text-muted: #94A3B8;
   --text-subtle: #64748B;
 
-  --border-default: #1F2937;
-  --border-strong: #374151;
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
 
   --brand-primary: #9D84FF;
   --brand-hover: #B5A1FF;
   --brand-text: #090A10;
+  --brand-glow: rgba(157, 132, 255, 0.15);
 
-  --radius-custom: 0px;
-  /* Sharp corners for brutalism */
-  --shadow-custom: 4px 4px 0px 0px rgba(157, 132, 255, 0.15);
-  /* Sharp brutalist shadow tinted purple */
+  --radius-custom: 0.75rem;
+  /* Rounded corners matching the refined/warm style */
+  --shadow-custom: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 20px 0 rgba(157, 132, 255, 0.05);
+  /* Soft shadow for depth in dark mode with a touch of violet glow */
 
-  --font-sans: 'Space Grotesk', system-ui, sans-serif;
-  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Outfit', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -89,8 +91,18 @@
   background-color: var(--bg-surface);
 }
 
+.dark .bg-surface {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
 .bg-elevated {
   background-color: var(--bg-elevated);
+}
+
+.dark .bg-elevated {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .text-primary {
@@ -115,7 +127,7 @@
 
 /* ===== Interactive Animation System ===== */
 
-/* Button press & hover — Light: soft scale + glow, Dark: brutalist translate + hard shadow */
+/* Button press & hover */
 .btn-interactive {
   position: relative;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,27 +136,16 @@
 
 .btn-interactive:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px -5px rgba(83, 74, 183, 0.25);
+  box-shadow: 0 8px 25px -5px var(--brand-glow);
 }
 
 .btn-interactive:active {
   transform: translateY(0) scale(0.97);
-  box-shadow: 0 2px 8px -2px rgba(83, 74, 183, 0.2);
+  box-shadow: 0 2px 8px -2px var(--brand-glow);
   transition-duration: 0.1s;
 }
 
-.dark .btn-interactive:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px 0px rgba(157, 132, 255, 0.25);
-}
-
-.dark .btn-interactive:active {
-  transform: translate(1px, 1px) scale(1);
-  box-shadow: 1px 1px 0px 0px rgba(157, 132, 255, 0.15);
-  transition-duration: 0.05s;
-}
-
-/* Card hover — Light: lift + soft shadow bloom, Dark: brutalist offset + border flash */
+/* Card hover */
 .card-interactive {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -152,25 +153,13 @@
 
 .card-interactive:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px -8px rgba(83, 74, 183, 0.12);
-  border-color: var(--brand-primary);
-}
-
-.dark .card-interactive:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0px 0px rgba(157, 132, 255, 0.2);
+  box-shadow: 0 12px 40px -8px var(--brand-glow);
   border-color: var(--brand-primary);
 }
 
 .card-interactive:active {
   transform: translateY(-1px);
   transition-duration: 0.1s;
-}
-
-.dark .card-interactive:active {
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px 0px rgba(157, 132, 255, 0.1);
-  transition-duration: 0.05s;
 }
 
 /* Nav link underline animation */
@@ -200,12 +189,6 @@
   transform: translateY(-1px);
 }
 
-.dark .nav-link-animated::after {
-  height: 2px;
-  border-radius: 0;
-  background: var(--brand-primary);
-}
-
 .dark .nav-link-animated:hover {
   transform: translateY(-2px);
 }
@@ -215,7 +198,7 @@
   width: 100%;
 }
 
-/* Icon button hover — spin/bounce for light, snap for dark */
+/* Icon button hover */
 .icon-interactive {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -231,17 +214,7 @@
   transition-duration: 0.1s;
 }
 
-.dark .icon-interactive:hover {
-  transform: rotate(0deg) scale(1.15);
-  color: var(--brand-primary);
-}
-
-.dark .icon-interactive:active {
-  transform: scale(0.85);
-  transition-duration: 0.05s;
-}
-
-/* Social link cards — Light: warm glow lift, Dark: sharp offset */
+/* Social link cards */
 .social-interactive {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -249,23 +222,12 @@
 
 .social-interactive:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.1);
-}
-
-.dark .social-interactive:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 8px 8px 0px 0px rgba(157, 132, 255, 0.15);
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.15);
 }
 
 .social-interactive:active {
   transform: translateY(-2px);
   transition-duration: 0.1s;
-}
-
-.dark .social-interactive:active {
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px 0px rgba(157, 132, 255, 0.1);
-  transition-duration: 0.05s;
 }
 
 /* Ripple-style focus ring for accessibility */

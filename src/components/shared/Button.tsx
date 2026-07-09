@@ -7,6 +7,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   href?: string;
   asLink?: boolean;
+  target?: string;
+  rel?: string;
 }
 
 export function Button({ 
@@ -16,14 +18,16 @@ export function Button({
   className = '',
   href,
   asLink = false,
+  target,
+  rel,
   ...props 
 }: ButtonProps) {
-  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-bold btn-interactive focus-ring';
+  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-dynamic font-bold btn-interactive focus-ring';
   
   const variantClasses = {
-    primary: 'bg-[#534AB7] text-white hover:bg-[#7F77DD] hover:shadow-lg hover:shadow-[#534AB7]/30',
-    secondary: 'bg-transparent border border-[#534AB7] text-[#7F77DD] hover:bg-[#534AB7]/10 hover:border-[#7F77DD]',
-    ghost: 'bg-transparent text-[#6B7280] hover:text-white hover:bg-[#374151]',
+    primary: 'bg-[var(--brand-primary)] text-[var(--brand-text)] hover:bg-[var(--brand-hover)] hover:shadow-lg hover:shadow-[var(--brand-primary)]/20',
+    secondary: 'bg-transparent border border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/10 hover:border-[var(--brand-hover)]',
+    ghost: 'bg-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]',
     destructive: 'bg-[#D4183D] text-white hover:bg-[#B01435]'
   };
 
@@ -45,7 +49,7 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} target="_blank" rel="noopener noreferrer">
+      <a href={href} className={classes} target={target || "_blank"} rel={rel || "noopener noreferrer"}>
         {children}
       </a>
     );

@@ -21,7 +21,7 @@
 Bu platform sayesinde:
 - 📅 **Etkinlik Yönetimi:** Kulüp içi eğitimler, hackathonlar ve seminerler takip edilebilir.
 - 💻 **Proje Vitrini:** Üyelerin geliştirdiği projeler ve başarılar herkesle paylaşılır.
-- 🤝 **Üye Katılımı:** Yeni üyelerin kayıt olması ve kulüp kollarında (Web, Mobil, Yapay Zeka vb.) görev alması kolaylaşır.
+- 🤝 **Üye Katılımı:** Yeni üyelerin kayıt olması ve kulüp kollarında görev alması kolaylaşır.
 - 📰 **Duyurular:** Önemli haberler anında kullanıcılara iletilir.
 
 ---
