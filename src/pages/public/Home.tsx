@@ -6,8 +6,6 @@ import { NetworkBackground } from '@/components/layout/NetworkBackground';
 import { MatrixBackground } from '@/components/layout/MatrixBackground';
 import { GlowingOrbsBackground } from '@/components/layout/GlowingOrbsBackground';
 
-import { supabase } from '@/api/config';
-
 function CountUp({ target, suffix, label, delay = 0 }: { target: number; suffix: string; label: string; delay?: number }) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -55,53 +53,48 @@ export function Home() {
   const [animatedText, setAnimatedText] = useState('');
   const words = ['işbirliği yap,', 'öğren,', 'inşa et,'];
   const [wordIndex, setWordIndex] = useState(0);
-  const [settings, setSettings] = useState({
-    instagram: 'https://www.instagram.com/comuyazilimgelistirme/?hl=tr',
-    youtube: 'https://www.youtube.com/@comuyazilimgelistirme',
-    linkedin: 'https://www.linkedin.com/company/%C3%A7om%C3%BC-yaz%C4%B1l%C4%B1m-geli%C5%9Ftirme-kul%C3%BCb%C3%BC/'
-  });
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const { data, error } = await supabase.from('site_settings').select('*');
-        if (error) throw error;
-        
-        if (data && data.length > 0) {
-          const settingsMap: any = {};
-          data.forEach(item => {
-            settingsMap[item.key] = item.value;
-          });
-          setSettings(prev => ({
-            instagram: settingsMap['social_instagram'] || prev.instagram,
-            youtube: settingsMap['social_youtube'] || prev.youtube,
-            linkedin: settingsMap['social_linkedin'] || prev.linkedin
-          }));
+    const currentWord = words[wordIndex];
+
+    if (!isDeleting && animatedText === currentWord) {
+      const timeout = setTimeout(() => {
+        setIsDeleting(true);
+      }, 1500);
+      return () => clearTimeout(timeout);
+    }
+
+    if (isDeleting && animatedText === '') {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setAnimatedText(prev => {
+        if (isDeleting) {
+          return prev.slice(0, -1);
+        } else {
+          return currentWord.slice(0, prev.length + 1);
         }
-      } catch (error) {
-        console.error("Home ayarları çekilemedi:", error);
-      }
-    };
-    fetchSettings();
-  }, []);
+      });
+    }, isDeleting ? 60 : 100);
 
-  useEffect(() => {
-    const word = words[wordIndex];
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i <= word.length) {
-        setAnimatedText(word.slice(0, i));
-        i++;
-      } else {
-        setTimeout(() => {
-          setWordIndex((prev) => (prev + 1) % words.length);
-        }, 1500);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, [wordIndex]);
+    return () => clearTimeout(timeout);
+  }, [animatedText, isDeleting, wordIndex]);
+
   return (
     <div className="min-h-screen">
+      <style>{`
+        @keyframes cursor-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .typewriter-cursor {
+          animation: cursor-blink 0.8s infinite;
+        }
+      `}</style>
       {/* Centered Hero Section */}
       <section className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-page transition-colors duration-300 text-center px-8 pt-20">
         <NetworkBackground />
@@ -114,8 +107,11 @@ export function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-6xl md:text-8xl font-black leading-[1.1] tracking-tighter mb-8"
           >
-            Kod yaz,
-            <span className="text-[var(--brand-primary)]">{animatedText}</span><br />
+            Kod yaz,<br />
+            <span className="text-[var(--brand-primary)] relative inline-flex items-center">
+              {animatedText}
+              <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[var(--brand-primary)] ml-1 typewriter-cursor align-middle" />
+            </span><br />
             değişim yarat.
           </motion.h1>
 
@@ -123,7 +119,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl text-muted mb-12 max-w-[650px] leading-relaxed font-medium"
+            className="text-xl md:text-[23px] text-muted mb-12 max-w-[650px] leading-relaxed font-medium"
           >
             Projeler inşa et, arkadaşlıklar kur ve geleceği bizimle kodla. ÇOMÜ'nün en büyük geliştirici topluluğuna bugün katıl!
           </motion.p>
@@ -149,9 +145,9 @@ export function Home() {
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium"
           >
-            <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Instagram className="w-5 h-5" /></a>
-            <a href={settings.youtube} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Youtube className="w-5 h-5" /></a>
-            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" className="icon-interactive flex items-center gap-2"><Linkedin className="w-5 h-5" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Instagram className="w-6 h-6" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Youtube className="w-6 h-6" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Linkedin className="w-6 h-6" /></a>
           </motion.div>
         </div>
       </section>

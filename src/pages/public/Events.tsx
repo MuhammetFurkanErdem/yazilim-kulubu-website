@@ -126,36 +126,37 @@ function PastEventsTimeline({ events }: { events: any[] }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-              className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 w-full ${isEven ? 'md:flex-row-reverse' : ''}`}
+              className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 w-full group ${isEven ? 'md:flex-row-reverse' : ''}`}
             >
               {/* Timeline Dot */}
-              <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-5 h-5 rounded-full bg-page border-4 border-[var(--brand-primary)] z-20 shadow-[0_0_10px_var(--brand-primary)]" />
+              <div className="absolute left-[20px] md:left-1/2 top-1/2 -translate-y-1/2 md:-translate-x-1/2 w-5 h-5 rounded-full bg-page border-4 border-[var(--brand-primary)] z-20 shadow-[0_0_10px_var(--brand-primary)] group-hover:shadow-[0_0_20px_var(--brand-primary)] group-hover:scale-125 transition-all duration-300" />
 
               {/* Empty space for alternating layout */}
               <div className="hidden md:block md:w-1/2" />
 
               {/* Event Card */}
               <div className="w-full md:w-1/2 pl-16 md:pl-0">
-                <Link to={`/etkinlikler/${event.id}`} className="block group">
+                <Link to={`/etkinlikler/${event.id}`} className="block">
                   <div className="bg-surface border border-default rounded-dynamic overflow-hidden card-interactive shadow-sm p-2 flex flex-col group-hover:border-[var(--brand-primary)] transition-all">
                     <div className="relative h-48 rounded-2xl overflow-hidden mb-4 bg-page flex items-center justify-center">
                       {event.image_url ? (
                         <img
                           src={event.image_url}
                           alt={event.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                          className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
                         />
                       ) : (
                         <span className="text-muted font-bold opacity-50">Görsel Yok</span>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <h3 className="text-xl font-black text-white drop-shadow-md line-clamp-2">{event.title}</h3>
-                      </div>
                     </div>
-                    <div className="px-4 pb-4 pt-1 flex items-center justify-between text-sm font-bold text-muted">
+                    <div className="px-4 pb-2">
+                      <h3 className="text-lg font-black text-primary line-clamp-2 transition-colors group-hover:text-[var(--brand-primary)]">{event.title}</h3>
+                    </div>
+                    <div className="px-4 pb-4 pt-2 mt-auto flex items-center justify-between text-xs font-bold text-muted">
                       <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[var(--brand-primary)]" /> {formattedDate}</span>
-                      <span className="flex items-center gap-2"><Users className="w-4 h-4 text-[var(--brand-primary)]" /> {event.capacity ? `${event.capacity} Kişi` : 'Genel'}</span>
+                      <span className="flex items-center gap-1 group-hover:text-[var(--brand-primary)] transition-colors">
+                        Detaylar <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                      </span>
                     </div>
                   </div>
                 </Link>

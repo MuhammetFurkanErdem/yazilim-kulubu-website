@@ -28,7 +28,7 @@ export function Settings() {
     try {
       const { data, error } = await supabase.from('site_settings').select('*');
       if (error) throw error;
-      
+
       if (data && data.length > 0) {
         const settingsMap: any = {};
         data.forEach(item => {
@@ -62,7 +62,7 @@ export function Settings() {
 
       const { error } = await supabase.from('site_settings').upsert(updates);
       if (error) throw error;
-      
+
       alert("Ayarlar başarıyla kaydedildi!");
     } catch (error: any) {
       console.error("Ayarlar kaydedilemedi:", error);
@@ -115,21 +115,20 @@ export function Settings() {
           <span className="text-[var(--brand-primary)]">&gt;_</span> Sistem Ayarları
         </h1>
         <Button variant="primary" className="flex items-center gap-2 font-mono" onClick={handleSaveSettings} disabled={isSaving}>
-          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 
+          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {isSaving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
         </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Sol Sütun - Sosyal & İletişim */}
         <div className="lg:col-span-2 space-y-8">
-          
+
           {/* İletişim Bilgileri */}
           <div className="bg-page border border-default rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6 border-b border-default bg-surface/50">
               <div className="flex items-center gap-3 mb-1">
-                <Globe className="w-5 h-5 text-[var(--brand-primary)]" />
                 <h2 className="text-lg font-bold text-primary">Genel İletişim Bilgileri</h2>
               </div>
               <p className="text-sm text-muted">Sitenin footer ve iletişim kısımlarında görünecek bilgiler.</p>
@@ -139,23 +138,11 @@ export function Settings() {
                 <label className="text-sm font-bold text-primary flex items-center gap-2">
                   <Mail className="w-4 h-4 text-muted" /> Resmi E-posta Adresi
                 </label>
-                <input 
-                  type="email" 
-                  value={settings.email} 
-                  onChange={e => setSettings({...settings, email: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" 
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-sm font-bold text-primary flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-muted" /> WhatsApp Topluluk Linki
-                </label>
-                <input 
-                  type="url" 
-                  value={settings.whatsapp} 
-                  onChange={e => setSettings({...settings, whatsapp: e.target.value})}
-                  placeholder="https://chat.whatsapp.com/..." 
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" 
+                <input
+                  type="email"
+                  value={settings.email}
+                  onChange={e => setSettings({ ...settings, email: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
                 />
               </div>
             </div>
@@ -165,40 +152,39 @@ export function Settings() {
           <div className="bg-page border border-default rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6 border-b border-default bg-surface/50">
               <h2 className="text-lg font-bold text-primary">Sosyal Medya Linkleri</h2>
-              <p className="text-sm text-muted">Ziyaretçilerin kulübünüzü takip etmesi için yönlendirme bağlantıları.</p>
             </div>
             <div className="p-6 space-y-5">
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-primary flex items-center gap-2">
                   <Instagram className="w-4 h-4 text-muted" /> Instagram URL
                 </label>
-                <input 
-                  type="url" 
-                  value={settings.instagram} 
-                  onChange={e => setSettings({...settings, instagram: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" 
+                <input
+                  type="url"
+                  value={settings.instagram}
+                  onChange={e => setSettings({ ...settings, instagram: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
                 />
               </div>
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-primary flex items-center gap-2">
                   <Youtube className="w-4 h-4 text-muted" /> YouTube URL
                 </label>
-                <input 
-                  type="url" 
-                  value={settings.youtube} 
-                  onChange={e => setSettings({...settings, youtube: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" 
+                <input
+                  type="url"
+                  value={settings.youtube}
+                  onChange={e => setSettings({ ...settings, youtube: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
                 />
               </div>
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-primary flex items-center gap-2">
                   <Linkedin className="w-4 h-4 text-muted" /> LinkedIn URL
                 </label>
-                <input 
-                  type="url" 
-                  value={settings.linkedin} 
-                  onChange={e => setSettings({...settings, linkedin: e.target.value})}
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" 
+                <input
+                  type="url"
+                  value={settings.linkedin}
+                  onChange={e => setSettings({ ...settings, linkedin: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
                 />
               </div>
             </div>
@@ -208,7 +194,7 @@ export function Settings() {
 
         {/* Sağ Sütun - Güvenlik */}
         <div className="space-y-8">
-          
+
           {/* Admin Bilgileri */}
           <div className="bg-page border border-default rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6 border-b border-default bg-surface/50">
@@ -221,27 +207,27 @@ export function Settings() {
             <div className="p-6 space-y-5">
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-primary">Yeni Şifre</label>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   value={passwordForm.newPassword}
-                  onChange={e => setPasswordForm({...passwordForm, newPassword: e.target.value})}
-                  placeholder="Yeni şifrenizi girin" 
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-red-500" 
+                  onChange={e => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                  placeholder="Yeni şifrenizi girin"
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-red-500"
                 />
               </div>
               <div className="space-y-1.5">
                 <label className="text-sm font-bold text-primary">Yeni Şifre (Tekrar)</label>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   value={passwordForm.confirmPassword}
-                  onChange={e => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
-                  placeholder="Yeni şifrenizi doğrulayın" 
-                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-red-500" 
+                  onChange={e => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                  placeholder="Yeni şifrenizi doğrulayın"
+                  className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-red-500"
                 />
               </div>
               <div className="pt-2">
-                <Button 
-                  variant="secondary" 
+                <Button
+                  variant="secondary"
                   onClick={handleChangePassword}
                   disabled={isChangingPassword || !passwordForm.newPassword}
                   className="w-full border-red-500/20 text-red-500 hover:bg-red-500/10"
