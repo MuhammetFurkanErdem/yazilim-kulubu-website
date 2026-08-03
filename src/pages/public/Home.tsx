@@ -96,7 +96,7 @@ export function Home() {
         }
       `}</style>
       {/* Centered Hero Section */}
-      <section className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-page transition-colors duration-300 text-center px-8 pt-20">
+      <section className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-page transition-colors duration-300 text-center px-4 sm:px-8 pt-20">
         <NetworkBackground />
 
         <div className="relative z-10 max-w-[900px] mx-auto flex flex-col items-center">
@@ -105,21 +105,21 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-black leading-[1.1] tracking-tighter mb-8"
+            className="text-[3.1rem] xs:text-5xl sm:text-6xl md:text-8xl font-black leading-[1.12] tracking-tighter mb-8"
           >
-            Kod yaz,<br />
-            <span className="text-[var(--brand-primary)] relative inline-flex items-center">
+            <span className="whitespace-nowrap">Kod yaz,</span><br />
+            <span className="text-[var(--brand-primary)] relative inline-flex items-center whitespace-nowrap">
               {animatedText}
               <span className="inline-block w-[3px] md:w-[5px] h-[0.9em] bg-[var(--brand-primary)] ml-1 typewriter-cursor align-middle" />
             </span><br />
-            değişim yarat.
+            <span className="whitespace-nowrap">değişim yarat.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-[23px] text-muted mb-12 max-w-[650px] leading-relaxed font-medium"
+            className="text-base sm:text-lg md:text-[22px] text-muted mb-8 sm:mb-12 max-w-[650px] leading-relaxed font-medium px-2 sm:px-0"
           >
             Projeler inşa et, arkadaşlıklar kur ve geleceği bizimle kodla. ÇOMÜ'nün en büyük geliştirici topluluğuna bugün katıl!
           </motion.p>
@@ -128,12 +128,12 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center gap-4 mb-10 sm:mb-16 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center gap-3.5 sm:gap-4 mb-8 sm:mb-14 w-full sm:w-auto max-w-[340px] sm:max-w-none"
           >
-            <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
+            <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-8 sm:px-10 h-12 sm:h-14 text-base sm:text-lg w-full sm:w-auto font-bold">
               Bize Katıl
             </Button>
-            <Button asLink href="/iletisim" variant="secondary" size="lg" className="rounded-dynamic px-10 h-14 text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
+            <Button asLink href="/iletisim" variant="secondary" size="lg" className="rounded-dynamic px-8 sm:px-10 h-12 sm:h-14 text-base sm:text-lg border-default w-full sm:w-auto font-bold bg-surface hover:bg-elevated transition-colors">
               İletişime Geç
             </Button>
           </motion.div>
@@ -143,11 +143,11 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium mt-2 mb-10 sm:mb-6"
+            className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium mb-6 sm:mb-8"
           >
-            <a href="#" className="icon-interactive flex items-center gap-3"><Instagram className="w-6 h-6" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-3"><Youtube className="w-6 h-6" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-3"><Linkedin className="w-6 h-6" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Instagram className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Youtube className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href="#" className="icon-interactive flex items-center gap-3"><Linkedin className="w-5 h-5 sm:w-6 sm:h-6" /></a>
           </motion.div>
         </div>
       </section>

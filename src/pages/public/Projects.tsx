@@ -166,9 +166,9 @@ ${formData.description}
                       rel="noopener noreferrer" 
                       variant="primary" 
                       size="lg" 
-                      className={`${featuredProject.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-dynamic font-bold`}
+                      className={`${featuredProject.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-dynamic font-bold whitespace-nowrap`}
                     >
-                      Canlı Demo <ExternalLink className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
+                      <span className="whitespace-nowrap">Canlı Demo</span> <ExternalLink className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
                     </Button>
                   )}
                   {featuredProject.github_url && (
@@ -178,9 +178,9 @@ ${formData.description}
                       rel="noopener noreferrer" 
                       variant="secondary" 
                       size="lg" 
-                      className={`${featuredProject.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-bold bg-surface hover:bg-elevated border-default shadow-sm`}
+                      className={`${featuredProject.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-bold bg-surface hover:bg-elevated border-default shadow-sm whitespace-nowrap`}
                     >
-                      GitHub <Github className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
+                      <span className="whitespace-nowrap">GitHub</span> <Github className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
                     </Button>
                   )}
                 </div>
@@ -282,9 +282,9 @@ ${formData.description}
                           rel="noopener noreferrer" 
                           variant="primary" 
                           size="lg" 
-                          className={`${project.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)] font-bold`}
+                          className={`${project.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)] font-bold whitespace-nowrap`}
                         >
-                          Projeyi İncele <ExternalLink className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
+                          <span className="whitespace-nowrap">Projeyi İncele</span> <ExternalLink className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
                         </Button>
                       )}
                       {project.github_url && (
@@ -294,9 +294,9 @@ ${formData.description}
                           rel="noopener noreferrer" 
                           variant="secondary" 
                           size="lg" 
-                          className={`${project.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-surface hover:bg-elevated border-default font-bold shadow-sm`}
+                          className={`${project.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-surface hover:bg-elevated border-default font-bold shadow-sm whitespace-nowrap`}
                         >
-                          Kaynak Kod <Github className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
+                          <span className="whitespace-nowrap">Kaynak Kod</span> <Github className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
                         </Button>
                       )}
                     </div>
