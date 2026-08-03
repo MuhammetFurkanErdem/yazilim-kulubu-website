@@ -44,7 +44,6 @@ Aşağıda projenin hem önyüzünde hem de arka planında kullanılan modern te
 > **Uygulama İçi Görünüm (Örnek Demo)**
 > <br/>
 > ![Uygulama GIF](https://cdn.dribbble.com/users/121337/screenshots/5885287/media/6b9d62d226a4b1219b6eb8b7c07b4d1b.gif)
-> *(Yukarıdaki görsel projenin dinamik yapısını yansıtan bir animasyondur. İlgili kısımlara kendi uygulama içi GIF'lerinizi de sonradan ekleyebilirsiniz.)*
 
 ---
 
