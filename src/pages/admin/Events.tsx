@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { eventService } from "@/api/services/events";
 import { storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/api/config";
 
 export function Events() {
   const { user } = useAuth();
