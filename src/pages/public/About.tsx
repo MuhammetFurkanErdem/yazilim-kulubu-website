@@ -100,31 +100,33 @@ function TerminalInner({ branch }: { branch: BranchData }) {
   const [linesRevealed, setLinesRevealed] = useState(0);
 
   return (
-    <>
-      {/* Command Line */}
-      <div className="mb-6 text-slate-500 dark:text-slate-400">
-        <span className="text-[var(--brand-primary)] font-bold mr-2">$</span>
-        <TypewriterText text={branch.cmd} delay={0} onComplete={() => setLinesRevealed(1)} />
-      </div>
+    <div className="flex flex-col justify-between h-full flex-1">
+      <div>
+        {/* Command Line */}
+        <div className="mb-6 text-slate-500 dark:text-slate-400">
+          <span className="text-[var(--brand-primary)] font-bold mr-2">$</span>
+          <TypewriterText text={branch.cmd} delay={0} onComplete={() => setLinesRevealed(1)} />
+        </div>
 
-      {/* Description Lines */}
-      <div className="space-y-3 mb-8 min-h-[90px]">
-        {branch.descLines.map((line, idx) => (
-          <div key={idx} className="text-slate-700 dark:text-slate-300 font-medium tracking-wide">
-            {linesRevealed > idx && (
-              <TypewriterText
-                text={line}
-                delay={100}
-                onComplete={() => setLinesRevealed(prev => Math.max(prev, idx + 2))}
-              />
-            )}
-          </div>
-        ))}
+        {/* Description Lines */}
+        <div className="space-y-4 mb-8 min-h-[110px]">
+          {branch.descLines.map((line, idx) => (
+            <div key={idx} className="text-slate-700 dark:text-slate-300 font-medium tracking-wide leading-relaxed">
+              {linesRevealed > idx && (
+                <TypewriterText
+                  text={line}
+                  delay={100}
+                  onComplete={() => setLinesRevealed(prev => Math.max(prev, idx + 2))}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Tech Stack */}
       <motion.div
-        className="flex flex-wrap gap-3"
+        className="flex flex-wrap gap-3 mt-auto pt-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: linesRevealed > branch.descLines.length ? 1 : 0 }}
         transition={{ duration: 0.5 }}
@@ -138,7 +140,7 @@ function TerminalInner({ branch }: { branch: BranchData }) {
           </span>
         ))}
       </motion.div>
-    </>
+    </div>
   );
 }
 
@@ -158,118 +160,8 @@ function TerminalContent({ branch }: { branch: BranchData }) {
       </div>
 
       {/* Terminal Body */}
-      <div className="p-6 font-mono text-sm text-left flex-1 transition-colors duration-300">
+      <div className="p-8 md:p-10 font-mono text-sm md:text-base text-left flex-1 transition-colors duration-300 min-h-[330px] md:min-h-[370px] flex flex-col">
         <TerminalInner key={branch.name} branch={branch} />
-      </div>
-    </div>
-  );
-}
-
-function OrbitalBranches({ branches, activeIndex, setActiveIndex }: { branches: BranchData[], activeIndex: number, setActiveIndex: (idx: number) => void }) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const RADIUS = 148;
-  const CENTER = 180;
-  const ORBIT_SIZE = CENTER * 2;
-
-  const getPos = (idx: number) => {
-    const step = 360 / branches.length;
-    const offset = -activeIndex * step;
-    const deg = idx * step + offset - 90;
-    const rad = (deg * Math.PI) / 180;
-    return {
-      x: CENTER + Math.cos(rad) * RADIUS,
-      y: CENTER + Math.sin(rad) * RADIUS,
-    };
-  };
-
-  return (
-    <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
-
-      {/* Orbital diagram */}
-      <div className="relative flex-shrink-0" style={{ width: ORBIT_SIZE, height: ORBIT_SIZE }}>
-        {/* Outer decorative ring */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox={`0 0 ${ORBIT_SIZE} ${ORBIT_SIZE}`}
-        >
-          {/* Subtle orbit path */}
-          <circle
-            cx={CENTER} cy={CENTER} r={RADIUS}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-default opacity-20"
-          />
-        </svg>
-
-        {/* Orbital nodes */}
-        {branches.map((branch, idx) => {
-          const pos = getPos(idx);
-          const isActive = idx === activeIndex;
-          const isHovered = hoveredIndex === idx;
-
-          return (
-            <motion.button
-              key={idx}
-              onClick={() => setActiveIndex(idx)}
-              onHoverStart={() => setHoveredIndex(idx)}
-              onHoverEnd={() => setHoveredIndex(null)}
-              className="absolute flex items-center justify-center rounded-full cursor-pointer focus:outline-none group"
-              style={{
-                width: 64,
-                height: 64,
-                top: 0,
-                left: 0,
-              }}
-              animate={{
-                x: pos.x - 32,
-                y: pos.y - 32,
-                scale: isActive ? 1 : isHovered ? 0.95 : 0.82,
-                zIndex: isActive ? 10 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 55, damping: 15 }}
-              aria-label={branch.name}
-            >
-
-              {/* Node background */}
-              <motion.div
-                className="absolute inset-0 rounded-full border transition-all duration-300"
-                style={{
-                  backgroundColor: 'var(--bg-page)',
-                  borderColor: isActive ? branch.color : 'var(--tw-border-color)',
-                  borderWidth: isActive ? 1.5 : 1,
-                  opacity: 1,
-                }}
-              />
-
-              {/* Icon Image */}
-              <img
-                src={branch.image}
-                alt={branch.name}
-                className={`relative z-10 w-8 h-8 object-contain transition-all duration-300 ${isActive ? 'grayscale-0 opacity-100' : 'grayscale opacity-50'
-                  } ${branch.darkInvert ? 'dark:invert' : ''}`}
-              />
-
-              {/* Branch Name Label */}
-              <motion.div
-                className="absolute top-[110%] px-3 py-1.5 bg-surface border border-default rounded-md shadow-sm text-[11px] font-bold tracking-wide whitespace-nowrap pointer-events-none transition-all duration-300 flex items-center gap-1.5"
-                style={{
-                  color: isActive ? branch.color : 'var(--tw-text-opacity)',
-                  opacity: isActive || isHovered ? 1 : 0,
-                  transform: isActive || isHovered ? 'translateY(0)' : 'translateY(-10px)',
-                }}
-              >
-                {branch.name}
-              </motion.div>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* Content panel */}
-      <div className="flex-1 min-w-0 max-w-lg w-full flex flex-col items-center">
-        <TerminalContent branch={branches[activeIndex]} />
       </div>
     </div>
   );
@@ -277,11 +169,20 @@ function OrbitalBranches({ branches, activeIndex, setActiveIndex }: { branches: 
 
 export function BranchesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const activeBranch = branchesData[activeIndex];
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % branchesData.length);
+    }, 10000);  // terminalin tam halinin ekranda ne kadar süre kalacağı
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
   return (
     <section className="relative py-16 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default overflow-hidden transition-colors duration-500">
-      
+
       {/* Dynamic Backgrounds Per Branch */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -320,9 +221,9 @@ export function BranchesSection() {
                 className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-20 dark:opacity-10 blur-[90px]"
                 style={{ backgroundColor: activeBranch.color }}
               />
-              <div 
+              <div
                 className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-                style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMDAwIiAvPgo8L3N2Zz4=')" }} 
+                style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMDAwIiAvPgo8L3N2Zz4=')" }}
               />
             </>
           )}
@@ -330,7 +231,7 @@ export function BranchesSection() {
           {/* 3. Oyun: 3D Cyberpunk Neon Grid */}
           {activeBranch.name.includes('Oyun') && (
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex justify-center" style={{ perspective: '800px' }}>
-              <div 
+              <div
                 className="absolute top-[40%] w-[200%] h-[150%] opacity-20 dark:opacity-40"
                 style={{
                   transformOrigin: 'top center',
@@ -365,12 +266,33 @@ export function BranchesSection() {
       </AnimatePresence>
 
       <div className="relative z-10 max-w-[960px] mx-auto">
-        <div className="mb-10 sm:mb-16 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kollarımız</h2>
-          <p className="mt-2 text-muted">Kol ikonlarına tıklayarak detayları görebilirsiniz.</p>
+        <div className="mb-6 sm:mb-8 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">Kollarımız</h2>
         </div>
 
-        <OrbitalBranches branches={branchesData} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+        {/* Centered and enlarged terminal */}
+        <div
+          className="w-full max-w-2xl mx-auto flex flex-col items-center"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <TerminalContent branch={branchesData[activeIndex]} />
+        </div>
+
+        {/* Indicator Dots */}
+        <div className="flex items-center justify-center gap-3 mt-8">
+          {branchesData.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveIndex(idx)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${idx === activeIndex
+                ? 'w-8 bg-[var(--brand-primary)]'
+                : 'w-2.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600'
+                }`}
+              aria-label={`Slayt ${idx + 1}`}
+            />
+          ))}
+        </div>
 
         <div className="mt-10 sm:mt-16 flex justify-center">
           <Button asLink href="/ekibimiz" variant="secondary" className="rounded-dynamic border-default">
@@ -393,6 +315,7 @@ export function About() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="order-2 lg:order-1"
           >
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 tracking-tight">Sıralarda Değil, Projelerde Büyüyoruz.</h2>
             <div className="space-y-5 text-base sm:text-lg text-muted leading-relaxed font-medium">
@@ -422,7 +345,7 @@ export function About() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative group"
+            className="order-1 lg:order-2 relative group w-full max-w-md mx-auto lg:max-w-none"
           >
             <div className="relative aspect-[4/3] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
               <img

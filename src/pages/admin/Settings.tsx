@@ -109,7 +109,7 @@ export function Settings() {
   }
 
   return (
-    <div className="space-y-8 max-w-5xl font-mono">
+    <div className="space-y-8 max-w-5xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
           <span className="text-[var(--brand-primary)]">&gt;_</span> Sistem Ayarları

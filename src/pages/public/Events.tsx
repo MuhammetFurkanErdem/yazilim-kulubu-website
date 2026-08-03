@@ -71,13 +71,14 @@ function TicketCard({ event }: { event: any }) {
           <div className="font-mono text-[10px] font-bold text-muted tracking-widest mb-4 hidden md:block" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
             ADMIT ONE
           </div>
-          {event.registration_url ? (
-            <Button href={event.registration_url} target="_blank" rel="noopener noreferrer" variant="primary" size="sm" className="w-full shadow-dynamic font-bold">Kayıt Ol</Button>
-          ) : (
+          <div className="flex flex-col gap-2 w-full">
             <Link to={`/etkinlikler/${event.id}`} className="w-full">
               <Button variant="secondary" size="sm" className="w-full shadow-sm font-bold bg-page border-default">İncele</Button>
             </Link>
-          )}
+            {event.registration_url && (
+              <Button href={event.registration_url} target="_blank" rel="noopener noreferrer" variant="primary" size="sm" className="w-full shadow-dynamic font-bold">Kayıt Ol</Button>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>
@@ -262,7 +263,7 @@ export function Events() {
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center"
             >
               {/* Left - Details */}
-              <div className="col-span-1 lg:col-span-6 flex flex-col justify-center">
+              <div className="col-span-1 lg:col-span-6 flex flex-col justify-center order-2 lg:order-1">
                 <div className="mb-6 flex items-center gap-3">
                   <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-primary)] opacity-75"></span>
@@ -277,51 +278,22 @@ export function Events() {
                   {featuredEvent.description}
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-8">
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Tarih / Saat</div>
-                      <div className="font-bold text-primary">{new Date(featuredEvent.date).toLocaleString('tr-TR', { dateStyle: 'short', timeStyle: 'short' })}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Yer</div>
-                      <div className="font-bold text-primary line-clamp-1">{featuredEvent.location || 'Belirtilmemiş'}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-9 h-9 rounded-xl bg-surface border border-default flex items-center justify-center text-[var(--brand-primary)] flex-shrink-0">
-                      <Users className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-muted font-bold text-[10px] uppercase tracking-wider mb-0.5">Kontenjan</div>
-                      <div className="font-bold text-primary">{featuredEvent.capacity ? `${featuredEvent.capacity} Kişi` : 'Sınırsız'}</div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Countdown */}
                 <div className="mb-10">
                   <div className="text-[10px] text-muted font-bold tracking-widest mb-3 font-mono">GERİ SAYIM</div>
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-[340px] sm:max-w-md">
                     {[
                       { label: 'GÜN', value: countdown.days },
                       { label: 'SAAT', value: countdown.hours },
                       { label: 'DAK', value: countdown.mins },
                       { label: 'SAN', value: countdown.secs }
                     ].map((unit, idx) => (
-                      <div key={idx} className="flex items-baseline gap-1.5 bg-surface border border-default px-4 py-2.5 rounded-xl shadow-sm">
-                        <span className="text-2xl font-black font-mono text-primary">
+                      <div key={idx} className="flex flex-col sm:flex-row items-center sm:items-baseline justify-center gap-1 bg-surface border border-default px-2 py-2 sm:px-4 sm:py-2.5 rounded-xl shadow-sm">
+                        <span className="text-xl sm:text-2xl font-black font-mono text-primary">
                           {String(unit.value).padStart(2, '0')}
                         </span>
-                        <span className="text-xs font-semibold text-muted font-mono">{unit.label}</span>
+                        <span className="text-[9px] sm:text-xs font-semibold text-muted font-mono">{unit.label}</span>
                       </div>
                     ))}
                   </div>
@@ -342,7 +314,7 @@ export function Events() {
               </div>
 
               {/* Right - Poster Image */}
-              <div className="col-span-1 lg:col-span-6 relative">
+              <div className="col-span-1 lg:col-span-6 relative order-1 lg:order-2 w-full max-w-md mx-auto lg:max-w-none">
                 <div className="relative rounded-dynamic overflow-hidden border border-default shadow-dynamic aspect-[4/3] bg-surface group">
                   {featuredEvent.image_url ? (
                     <img

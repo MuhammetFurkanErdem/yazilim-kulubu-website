@@ -25,7 +25,7 @@ export function AdminLayout() {
   ];
 
   return (
-    <div className="min-h-screen bg-page flex font-mono transition-colors duration-300">
+    <div className="min-h-screen bg-page flex transition-colors duration-300">
       {/* Sidebar */}
       <aside className="w-64 bg-surface border-r border-default flex flex-col transition-colors duration-300">
         {/* Brand */}
@@ -33,7 +33,7 @@ export function AdminLayout() {
           <div className="w-8 h-8 flex items-center justify-center text-[var(--brand-primary)]">
             <Code2 className="w-6 h-6" />
           </div>
-          <span className="font-bold tracking-tighter text-[var(--brand-primary)] text-sm">root@ygk:~#</span>
+          <span className="font-bold tracking-tighter text-[var(--brand-primary)] text-sm font-mono">root@ygk:~#</span>
         </div>
 
         {/* Navigation */}
@@ -65,7 +65,7 @@ export function AdminLayout() {
             className="flex items-center gap-3 px-4 py-3 rounded-md font-medium text-muted hover:bg-page hover:text-red-500 transition-all text-sm"
           >
             <LogOut className="w-4 h-4" />
-            <span className="opacity-90">exit()</span>
+            <span className="opacity-90 font-mono">exit()</span>
           </Link>
         </div>
       </aside>
@@ -75,17 +75,19 @@ export function AdminLayout() {
         {/* Topbar */}
         <header className="h-20 bg-surface border-b border-default px-8 flex items-center justify-between transition-colors duration-300">
           <h1 className="text-lg font-bold text-primary flex items-center gap-2">
-            <span className="text-[var(--brand-primary)] font-normal">&gt; ./</span>
-            {menuItems.find(i => i.path === location.pathname)?.name.toLowerCase() || "dashboard"}
+            <span className="text-[var(--brand-primary)] font-normal font-mono">&gt; ./</span>
+            <span className="font-mono">
+              {menuItems.find(i => i.path === location.pathname)?.name.toLowerCase() || "dashboard"}
+            </span>
             <span className="w-2 h-4 bg-[var(--brand-primary)] animate-pulse inline-block opacity-70 ml-1"></span>
           </h1>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 pl-4">
               <div className="text-right hidden sm:block">
-                <div className="text-xs font-bold text-[var(--brand-primary)]">root_user</div>
-                <div className="text-[10px] text-muted">UID: 0</div>
+                <div className="text-xs font-bold text-[var(--brand-primary)] font-mono">root_user</div>
+                <div className="text-[10px] text-muted font-mono">UID: 0</div>
               </div>
-              <div className="w-9 h-9 rounded-md bg-page border border-default text-[var(--brand-primary)] flex items-center justify-center font-bold text-sm">
+              <div className="w-9 h-9 rounded-md bg-page border border-default text-[var(--brand-primary)] flex items-center justify-center font-bold text-sm font-mono">
                 #
               </div>
             </div>

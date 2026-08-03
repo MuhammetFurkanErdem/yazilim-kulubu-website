@@ -14,6 +14,7 @@ export function Projects() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [formData, setFormData] = useState({
     title: '',
@@ -155,8 +156,16 @@ export function Projects() {
     }
   };
 
+  const filteredProjects = projects.filter(project => {
+    const titleMatch = (project.title || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const descMatch = (project.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const techStackArray = Array.isArray(project.tech_stack) ? project.tech_stack : [];
+    const techMatch = techStackArray.some((tech: string) => tech.toLowerCase().includes(searchQuery.toLowerCase()));
+    return titleMatch || descMatch || techMatch;
+  });
+
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary flex items-center gap-2"><span className="text-[var(--brand-primary)]">&gt;_</span> Projeler Yönetimi</h1>
         <Button variant="primary" className="flex items-center gap-2 font-mono" onClick={handleAdd}>
@@ -178,7 +187,9 @@ export function Projects() {
             <input
               type="text"
               placeholder="> Proje ara..."
-              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
             />
           </div>
         </div>
@@ -194,6 +205,11 @@ export function Projects() {
                <span className="text-4xl opacity-20">📁</span>
                <p>Henüz proje eklenmemiş.</p>
             </div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-muted gap-4">
+              <Search className="w-12 h-12 opacity-20 text-muted" />
+              <p>Aranan kriterlere uygun proje bulunamadı.</p>
+            </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
@@ -206,7 +222,7 @@ export function Projects() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-default">
-                {projects.map((project) => (
+                {filteredProjects.map((project) => (
                   <tr key={project.id} className="hover:bg-surface/50 transition-colors">
                     <td className="p-4 font-bold text-sm text-primary">
                       <div className="flex items-center gap-3">

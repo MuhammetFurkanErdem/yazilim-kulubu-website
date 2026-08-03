@@ -128,7 +128,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center gap-4 mb-10 sm:mb-16 w-full sm:w-auto"
           >
             <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="rounded-dynamic shadow-dynamic px-10 h-14 text-lg w-full sm:w-auto font-bold">
               Bize Katıl
@@ -143,7 +143,7 @@ export function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium"
+            className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium mt-2 mb-10 sm:mb-6"
           >
             <a href="#" className="icon-interactive flex items-center gap-3"><Instagram className="w-6 h-6" /></a>
             <a href="#" className="icon-interactive flex items-center gap-3"><Youtube className="w-6 h-6" /></a>

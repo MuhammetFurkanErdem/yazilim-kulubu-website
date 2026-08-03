@@ -139,7 +139,7 @@ export function Contact() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-xs font-bold text-muted uppercase tracking-widest mb-1">Adres</div>
-                    <div className="text-sm font-high text-primary">Terzioğlu Kampüsü<br />17100 Merkez/Çanakkale</div>
+                    <div className="text-sm font-medium text-primary">Terzioğlu Kampüsü<br />17100 Merkez/Çanakkale</div>
                   </div>
                 </div>
 

@@ -12,6 +12,7 @@ export function Team() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedMember, setSelectedMember] = useState<any>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [formData, setFormData] = useState({
     first_name: '',
@@ -52,11 +53,17 @@ export function Team() {
   const confirmDeleteMember = async () => {
     if (confirmDelete !== null) {
       try {
+        // Ilgili tablolardaki foreign key referanslarini temizle
+        await supabase.from('events').update({ created_by: null }).eq('created_by', confirmDelete);
+        await supabase.from('projects').update({ created_by: null }).eq('created_by', confirmDelete);
+        await supabase.from('project_members').delete().eq('profile_id', confirmDelete);
+
         const { error } = await supabase.from('profiles').delete().eq('id', confirmDelete);
         if (error) throw error;
         setMembers(members.filter(m => m.id !== confirmDelete));
-      } catch (error) {
+      } catch (error: any) {
         console.error("Silinirken hata oluştu:", error);
+        alert("Silinirken hata oluştu: " + (error.message || error));
       } finally {
         setConfirmDelete(null);
       }
@@ -120,8 +127,6 @@ export function Team() {
         const { error } = await supabase.from('profiles').update(payload).eq('id', selectedMember.id);
         if (error) throw error;
       } else {
-        // Yeni bir profil manuel eklenirse auth'a bağlı olmadığı için rastgele bir UUID verebiliriz veya auth ile davet edilebilir.
-        // Şimdilik sadece profiles tablosuna satır ekliyoruz. (Eğer profil RLS'si buna izin veriyorsa. Vermiyorsa auth'tan eklenmesi gerekir.)
         const { error } = await supabase.from('profiles').insert([{ ...payload, id: crypto.randomUUID() }]);
         if (error) throw error;
       }
@@ -130,14 +135,26 @@ export function Team() {
       setIsModalOpen(false);
     } catch (error: any) {
       console.error("Kaydedilirken hata oluştu:", error);
-      alert("Bir hata oluştu: " + error.message);
+      if (error?.message?.includes('profiles_id_fkey')) {
+        alert("Veritabanı kısıtlaması hatası: 'profiles' tablosundaki 'profiles_id_fkey' kısıtlaması kaldırılmalıdır. Lütfen Supabase SQL Editor üzerinden 'ALTER TABLE public.profiles DROP CONSTRAINT profiles_id_fkey;' komutunu çalıştırın.");
+      } else {
+        alert("Bir hata oluştu: " + (error.message || error));
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const filteredMembers = members.filter(member => {
+    const fullName = `${member.first_name || ''} ${member.last_name || ''}`.toLowerCase();
+    const position = (member.position || '').toLowerCase();
+    const department = (member.department || '').toLowerCase();
+    const query = searchQuery.toLowerCase();
+    return fullName.includes(query) || position.includes(query) || department.includes(query);
+  });
+
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary flex items-center gap-2"><span className="text-[var(--brand-primary)]">&gt;_</span> Ekip Yönetimi</h1>
         <Button variant="primary" className="flex items-center gap-2 font-mono" onClick={handleAdd}>
@@ -159,7 +176,9 @@ export function Team() {
             <input 
               type="text" 
               placeholder="> İsim veya rol ara..." 
-              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
             />
           </div>
         </div>
@@ -174,6 +193,11 @@ export function Team() {
              <div className="flex flex-col items-center justify-center h-64 text-muted gap-4">
                <p>Henüz ekip üyesi bulunmuyor.</p>
              </div>
+          ) : filteredMembers.length === 0 ? (
+             <div className="flex flex-col items-center justify-center h-64 text-muted gap-4">
+               <Search className="w-12 h-12 opacity-20 text-muted" />
+               <p>Aranan kriterlere uygun üye bulunamadı.</p>
+             </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
@@ -186,7 +210,7 @@ export function Team() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-default">
-                {members.map((member) => (
+                {filteredMembers.map((member) => (
                   <tr key={member.id} className="hover:bg-surface/50 transition-colors">
                     <td className="p-4 flex items-center gap-3">
                       {member.avatar_url ? (

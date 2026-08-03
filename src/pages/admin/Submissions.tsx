@@ -21,6 +21,7 @@ export function Submissions() {
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   const [confirmAction, setConfirmAction] = useState<{ id: string; action: "approved" | "rejected" } | null>(null);
   const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchApplications();
@@ -63,9 +64,15 @@ export function Submissions() {
     }
   };
 
-  const filteredApps = filterStatus === "all"
-    ? applications
-    : applications.filter(a => a.status === filterStatus);
+  const filteredApps = applications.filter(a => {
+    const statusMatch = filterStatus === "all" || a.status === filterStatus;
+    const searchMatch = 
+      (a.full_name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+      (a.email || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+      (a.message || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+      (a.department || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return statusMatch && searchMatch;
+  });
 
   const pendingCount = applications.filter(a => a.status === "pending").length;
 
@@ -88,7 +95,7 @@ export function Submissions() {
   };
 
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
@@ -117,7 +124,9 @@ export function Submissions() {
             <input
               type="text"
               placeholder="> Başvuru ara..."
-              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
             />
           </div>
           <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">

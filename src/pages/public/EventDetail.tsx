@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Calendar, MapPin, Users, ArrowLeft, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Calendar, MapPin, Users, ArrowLeft, ArrowRight, Clock, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/api/config';
@@ -46,7 +46,8 @@ export function EventDetail() {
     );
   }
 
-  const formattedDate = new Date(event.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const formattedDate = new Date(event.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const formattedTime = new Date(event.date).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
   return (
     <div className="min-h-screen bg-page">
@@ -82,6 +83,11 @@ export function EventDetail() {
               </div>
               <div className="hidden sm:block w-1 h-1 rounded-full bg-default"></div>
               <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-[var(--brand-primary)]" />
+                Saat: {formattedTime}
+              </div>
+              <div className="hidden sm:block w-1 h-1 rounded-full bg-default"></div>
+              <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-[var(--brand-primary)]" />
                 {event.location || 'Belirtilmemiş'}
               </div>
@@ -91,6 +97,19 @@ export function EventDetail() {
                 {event.capacity ? `${event.capacity} Kişi` : 'Sınırsız'} Kontenjan
               </div>
             </div>
+
+            {event.registration_url && event.type !== 'past' && (
+              <div className="mt-8">
+                <a
+                  href={event.registration_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[var(--brand-primary)] text-white font-bold rounded-xl shadow-dynamic hover:bg-[var(--brand-primary-hover)] transition-all transform hover:-translate-y-0.5 duration-200"
+                >
+                  Kayıt Ol <ArrowRight className="w-4 h-4 ml-1" />
+                </a>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>

@@ -14,6 +14,7 @@ export function Events() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Form State
   const [formData, setFormData] = useState({
@@ -171,8 +172,14 @@ export function Events() {
     }
   };
 
+  const filteredEvents = events.filter(event => 
+    (event.title || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+    (event.location || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (event.description || '').toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="space-y-6 font-mono">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-primary flex items-center gap-2"><span className="text-[var(--brand-primary)]">&gt;_</span> Etkinlik Yönetimi</h1>
         <Button variant="primary" className="flex items-center gap-2 font-mono" onClick={handleAdd}>
@@ -194,7 +201,9 @@ export function Events() {
             <input
               type="text"
               placeholder="> Etkinlik ara..."
-              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] font-mono"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]"
             />
           </div>
         </div>
@@ -210,6 +219,11 @@ export function Events() {
               <CalendarIcon className="w-12 h-12 opacity-20" />
               <p>Henüz etkinlik eklenmemiş.</p>
             </div>
+          ) : filteredEvents.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-64 text-muted gap-4">
+              <Search className="w-12 h-12 opacity-20" />
+              <p>Aranan kriterlere uygun etkinlik bulunamadı.</p>
+            </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
@@ -222,7 +236,7 @@ export function Events() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-default">
-                {events.map((event) => {
+                {filteredEvents.map((event) => {
                   const displayDate = new Date(event.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
                   return (

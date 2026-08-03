@@ -133,7 +133,7 @@ ${formData.description}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center"
             >
               {/* Left - Details */}
-              <div className="col-span-1 lg:col-span-6">
+              <div className="col-span-1 lg:col-span-6 order-2 lg:order-1">
                 <div className="mb-6 flex items-center gap-3">
                   <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-primary)] opacity-75"></span>
@@ -158,24 +158,36 @@ ${formData.description}
                   </div>
                 )}
 
-                <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex flex-row items-center gap-3 w-full">
                   {featuredProject.demo_url && (
-                    <Button href={featuredProject.demo_url} target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="w-full sm:w-auto px-8 rounded-xl shadow-dynamic font-bold">
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Canlı Demo
+                    <Button 
+                      href={featuredProject.demo_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      variant="primary" 
+                      size="lg" 
+                      className={`${featuredProject.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-dynamic font-bold`}
+                    >
+                      Canlı Demo <ExternalLink className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
                     </Button>
                   )}
                   {featuredProject.github_url && (
-                    <Button href={featuredProject.github_url} target="_blank" rel="noopener noreferrer" variant="secondary" size="lg" className="w-full sm:w-auto px-8 rounded-xl font-bold bg-surface hover:bg-elevated border-default">
-                      <Github className="w-5 h-5 mr-2" />
-                      GitHub Reposu
+                    <Button 
+                      href={featuredProject.github_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      variant="secondary" 
+                      size="lg" 
+                      className={`${featuredProject.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl font-bold bg-surface hover:bg-elevated border-default shadow-sm`}
+                    >
+                      GitHub <Github className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
                     </Button>
                   )}
                 </div>
               </div>
 
               {/* Right - Realistic Mockup Image */}
-              <div className="col-span-1 lg:col-span-6 relative">
+              <div className="col-span-1 lg:col-span-6 relative order-1 lg:order-2 w-full max-w-md mx-auto lg:max-w-none">
                 <div className="relative rounded-dynamic overflow-hidden border border-default shadow-dynamic aspect-video bg-surface">
                   {featuredProject.image_url ? (
                     <img
@@ -251,26 +263,40 @@ ${formData.description}
                       </div>
                     </div>
 
-                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 tracking-tight leading-tight">{project.title}</h3>
-                    <p className="text-base sm:text-lg text-muted mb-8 leading-relaxed font-medium">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-4 tracking-tight leading-tight">{project.title}</h3>
+                    <p className="text-sm sm:text-base text-muted mb-6 leading-relaxed font-medium">
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 mb-10">
+                    <div className="flex flex-wrap gap-2 mb-8">
                       {project.tech_stack && project.tech_stack.map((tech: string, i: number) => (
                         <span key={i} className="px-4 py-2 bg-surface border border-default text-primary text-sm font-bold rounded-xl shadow-sm">{tech}</span>
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex flex-row items-center gap-3 w-full">
                       {project.demo_url && (
-                        <Button href={project.demo_url} target="_blank" rel="noopener noreferrer" variant="primary" size="lg" className="rounded-xl shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)] font-bold px-8">
-                          Projeyi İncele <ExternalLink className="w-5 h-5 ml-2" />
+                        <Button 
+                          href={project.demo_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          variant="primary" 
+                          size="lg" 
+                          className={`${project.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)] font-bold`}
+                        >
+                          Projeyi İncele <ExternalLink className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
                         </Button>
                       )}
                       {project.github_url && (
-                        <Button href={project.github_url} target="_blank" rel="noopener noreferrer" variant="secondary" size="lg" className="rounded-xl bg-surface hover:bg-elevated border-default font-bold px-6 shadow-sm">
-                          Kaynak Kod <Github className="w-5 h-5 ml-2" />
+                        <Button 
+                          href={project.github_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          variant="secondary" 
+                          size="lg" 
+                          className={`${project.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-[13px] sm:text-base px-3 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-surface hover:bg-elevated border-default font-bold shadow-sm`}
+                        >
+                          Kaynak Kod <Github className="w-4 h-4 sm:w-5 h-5 ml-1.5 sm:ml-2" />
                         </Button>
                       )}
                     </div>
