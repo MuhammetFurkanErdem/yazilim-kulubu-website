@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { projectService } from "@/api/services/projects";
 import { storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/api/config";
 
 export function Projects() {
   const { user } = useAuth();
@@ -107,8 +108,6 @@ export function Projects() {
         .map(t => t.trim())
         .filter(t => t !== '');
 
-      const { supabase } = await import('@/api/config');
-
       // Verify if user's profile exists in profiles table before setting created_by
       let createdBy: string | null = user.id;
       const { data: profileCheck } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
@@ -129,9 +128,6 @@ export function Projects() {
       };
 
       if (selectedProject) {
-        // Update method is not fully defined for full payload in projectService, using supabase directly or we can just call updateProjectStatus if we only update status.
-        // Actually we need a full update function. I'll use the supabase client directly for full update here for simplicity.
-        const { supabase } = await import('@/api/config');
         await supabase.from('projects').update(projectPayload).eq('id', selectedProject.id);
       } else {
         await projectService.createProject(projectPayload as any);

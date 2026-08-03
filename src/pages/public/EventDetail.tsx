@@ -3,6 +3,7 @@ import { Calendar, MapPin, Users, ArrowLeft, ArrowRight, Clock, Image as ImageIc
 import { Link, useParams } from 'react-router';
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/api/config';
+import { SmartImage } from '@/components/shared/SmartImage';
 
 export function EventDetail() {
   const { id } = useParams();
@@ -84,7 +85,7 @@ export function EventDetail() {
         {/* Photo Background (Recognizable with subtle blur & dark overlay) */}
         {event.image_url && (
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <img
+            <SmartImage
               src={event.image_url}
               alt=""
               className="w-full h-full object-cover filter blur-[3px] scale-105 opacity-45 dark:opacity-35 transition-all duration-700"
@@ -190,7 +191,7 @@ export function EventDetail() {
                   transition={{ delay: idx * 0.1, duration: 0.5 }}
                   className="group relative rounded-dynamic overflow-hidden border border-default bg-page aspect-[4/3] shadow-sm hover:shadow-dynamic transition-all cursor-pointer"
                 >
-                  <img
+                  <SmartImage
                     src={photo}
                     alt={`${event.title} Anısı ${idx + 1}`}
                     className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
@@ -258,12 +259,8 @@ export function EventDetail() {
 
               {/* Main Image */}
               <div className="w-full h-full flex items-center justify-center p-2 sm:p-6 overflow-hidden">
-                <motion.img
+                <SmartImage
                   key={lightboxIndex}
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
-                  transition={{ duration: 0.25 }}
                   src={event.gallery_urls[lightboxIndex]}
                   alt={`Görsel ${lightboxIndex + 1}`}
                   className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border border-white/10"

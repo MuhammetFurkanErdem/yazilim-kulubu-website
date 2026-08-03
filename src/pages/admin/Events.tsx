@@ -6,6 +6,8 @@ import { eventService } from "@/api/services/events";
 import { storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/api/config";
+import { SmartImage } from "@/components/shared/SmartImage";
+import { ImageCropperModal } from "@/components/shared/ImageCropperModal";
 
 export function Events() {
   const { user } = useAuth();
@@ -16,6 +18,44 @@ export function Events() {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Cropper State
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [cropperSrc, setCropperSrc] = useState<string | null>(null);
+  const [cropperTargetType, setCropperTargetType] = useState<'cover' | 'gallery'>('cover');
+  const [cropperAspect, setCropperAspect] = useState<number>(16 / 9);
+
+  const handleCoverSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) {
+      const processed = await storageService.processImage(f);
+      const url = URL.createObjectURL(processed);
+      setCropperSrc(url);
+      setCropperTargetType('cover');
+      setCropperAspect(16 / 9);
+      setCropperOpen(true);
+    }
+  };
+
+  const handleGallerySelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const f = e.target.files[0];
+      const processed = await storageService.processImage(f);
+      const url = URL.createObjectURL(processed);
+      setCropperSrc(url);
+      setCropperTargetType('gallery');
+      setCropperAspect(4 / 3);
+      setCropperOpen(true);
+    }
+  };
+
+  const handleCropComplete = (croppedFile: File) => {
+    if (cropperTargetType === 'cover') {
+      setImageFile(croppedFile);
+    } else {
+      setGalleryFiles(prev => [...prev, croppedFile]);
+    }
+  };
 
   // Form State
   const [formData, setFormData] = useState({
@@ -252,7 +292,7 @@ export function Events() {
                       <td className="p-4 font-bold text-sm text-primary">
                         <div className="flex items-center gap-3">
                           {event.image_url ? (
-                            <img src={event.image_url} alt={event.title} className="w-10 h-10 rounded-lg object-cover border border-default" />
+                            <SmartImage src={event.image_url} alt={event.title} className="w-10 h-10 rounded-lg object-cover border border-default" />
                           ) : (
                             <div className="w-10 h-10 rounded-lg bg-surface border border-default flex items-center justify-center">
                               <CalendarIcon className="w-4 h-4 text-muted" />
@@ -359,7 +399,7 @@ export function Events() {
             <label className="text-sm font-bold text-primary">Kapak Görseli</label>
             {imageFile || selectedEvent?.image_url ? (
               <div className="w-full relative h-40 border-2 border-default rounded-xl overflow-hidden bg-surface group">
-                <img
+                <SmartImage
                   src={imageFile ? URL.createObjectURL(imageFile) : selectedEvent?.image_url}
                   alt="Kapak"
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-50 transition-opacity"
@@ -381,8 +421,8 @@ export function Events() {
                 <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-8 h-8 text-[var(--brand-primary)] opacity-80" />
                   <span className="text-sm font-bold text-primary">Görsel Seç</span>
-                  <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 5MB)</span>
-                  <input type="file" accept="image/*" className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
+                  <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF</span>
+                  <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" className="hidden" onChange={handleCoverSelect} />
                 </label>
               </div>
             )}
@@ -403,7 +443,7 @@ export function Events() {
                   <div className="flex gap-2 flex-wrap mb-4">
                     {existingGalleryUrls.map((url, i) => (
                       <div key={'ext-' + i} className="relative w-16 h-16 rounded-lg overflow-hidden group">
-                        <img src={url} alt="Galeri" className="w-full h-full object-cover" />
+                        <SmartImage src={url} alt="Galeri" className="w-full h-full object-cover" />
                         <button type="button" onClick={() => setExistingGalleryUrls(existingGalleryUrls.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                           <Trash2 className="w-4 h-4 text-red-400" />
                         </button>
@@ -411,7 +451,7 @@ export function Events() {
                     ))}
                     {galleryFiles.map((f, i) => (
                       <div key={'new-' + i} className="relative w-16 h-16 rounded-lg overflow-hidden group">
-                        <img src={URL.createObjectURL(f)} alt="Yeni" className="w-full h-full object-cover" />
+                        <SmartImage src={URL.createObjectURL(f)} alt="Yeni" className="w-full h-full object-cover" />
                         <button type="button" onClick={() => setGalleryFiles(galleryFiles.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                           <Trash2 className="w-4 h-4 text-red-400" />
                         </button>
@@ -422,12 +462,8 @@ export function Events() {
 
                 <label className="flex flex-col items-center justify-center py-4 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-6 h-6 text-muted" />
-                  <span className="text-xs font-bold text-primary">Galeriye Fotoğraf Ekle</span>
-                  <input type="file" accept="image/*" multiple className="hidden" onChange={e => {
-                    if (e.target.files) {
-                      setGalleryFiles([...galleryFiles, ...Array.from(e.target.files)]);
-                    }
-                  }} />
+                  <span className="text-xs font-bold text-primary">Galeriye Fotoğraf Ekle (PNG, JPG, HEIC)</span>
+                  <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" multiple className="hidden" onChange={handleGallerySelect} />
                 </label>
               </div>
             </div>
@@ -463,6 +499,15 @@ export function Events() {
           </div>
         </div>
       </Modal>
+
+      {/* Image Cropper Modal */}
+      <ImageCropperModal
+        isOpen={cropperOpen}
+        imageSrc={cropperSrc}
+        aspectRatio={cropperAspect}
+        onClose={() => setCropperOpen(false)}
+        onCropComplete={handleCropComplete}
+      />
     </div>
   );
 }
