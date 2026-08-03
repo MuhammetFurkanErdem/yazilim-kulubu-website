@@ -89,7 +89,6 @@ erDiagram
     }
     USERS ||--o{ ROLES : "has"
 ```
-*(GitHub üzerinde bu kod bloğu otomatik olarak şık bir veritabanı görseline dönüşmektedir.)*
 
 ---
 
