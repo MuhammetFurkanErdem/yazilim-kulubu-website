@@ -127,6 +127,13 @@ export function Events() {
 
       const combinedDate = new Date(`${formData.date}T${formData.time}:00`).toISOString();
 
+      // Verify if user's profile exists in profiles table before setting created_by
+      let createdBy: string | null = user.id;
+      const { data: profileCheck } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+      if (!profileCheck) {
+        createdBy = null;
+      }
+
       const eventPayload = {
         title: formData.title,
         date: combinedDate,
@@ -137,7 +144,7 @@ export function Events() {
         capacity: formData.capacity ? parseInt(formData.capacity) : null,
         registration_url: formData.type !== 'past' ? formData.registration_url : null,
         gallery_urls: formData.type === 'past' ? finalGalleryUrls : [],
-        created_by: user.id
+        created_by: createdBy
       };
 
       if (selectedEvent) {

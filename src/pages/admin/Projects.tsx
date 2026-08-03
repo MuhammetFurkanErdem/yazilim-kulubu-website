@@ -107,6 +107,15 @@ export function Projects() {
         .map(t => t.trim())
         .filter(t => t !== '');
 
+      const { supabase } = await import('@/api/config');
+
+      // Verify if user's profile exists in profiles table before setting created_by
+      let createdBy: string | null = user.id;
+      const { data: profileCheck } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+      if (!profileCheck) {
+        createdBy = null;
+      }
+
       const projectPayload = {
         title: formData.title,
         description: formData.description,
@@ -116,7 +125,7 @@ export function Projects() {
         github_url: formData.github_url,
         tech_stack: techArray,
         image_url: imageUrl,
-        created_by: user.id
+        created_by: createdBy
       };
 
       if (selectedProject) {
