@@ -78,52 +78,63 @@ export function EventDetail() {
   const formattedTime = new Date(event.date).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <div className="min-h-screen bg-page">
-      {/* Clean Header */}
-      <section className="relative mt-12 pt-12 pb-24 bg-surface border-b border-default overflow-hidden">
-        {/* Subtle accent background */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--brand-primary)]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--brand-primary)]/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+    <div className="min-h-screen bg-page pt-24 sm:pt-22">
+      {/* Clean Header with Background Photo */}
+      <section className="relative pt-32 sm:pt-48 pb-16 sm:pb-20 border-b border-default overflow-hidden bg-surface">
+        {/* Photo Background (Recognizable with subtle blur & dark overlay) */}
+        {event.image_url && (
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <img
+              src={event.image_url}
+              alt=""
+              className="w-full h-full object-cover filter blur-[3px] scale-105 opacity-45 dark:opacity-35 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-page via-page/70 to-black/60" />
+          </div>
+        )}
 
-        <div className="relative z-10 w-full max-w-[1280px] mx-auto px-8 lg:px-20">
+        {/* Accent Ambient Glow */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--brand-primary)]/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--brand-primary)]/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+        <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-20">
           <Link
             to="/etkinlikler"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-muted hover:text-[var(--brand-primary)] mb-8 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white mb-8 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Etkinliklere Dön
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
-            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${
-              event.type === 'featured' ? 'bg-[var(--brand-primary)] text-white shadow-lg shadow-[var(--brand-primary)]/30' :
-              event.type === 'upcoming' ? 'bg-green-500/10 text-green-500 border border-green-500/20' :
-              'bg-surface border border-default text-muted'
-            }`}>
+            <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${event.type === 'featured' ? 'bg-[var(--brand-primary)] text-white shadow-lg shadow-[var(--brand-primary)]/30' :
+              event.type === 'upcoming' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                'bg-surface/80 border border-default text-muted'
+              }`}>
               {event.type === 'featured' ? 'Öne Çıkan' : event.type === 'upcoming' ? 'Yaklaşan Etkinlik' : 'Geçmiş Etkinlik'}
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 text-primary max-w-4xl leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 text-primary max-w-4xl leading-tight">
             {event.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-6 sm:gap-8 text-sm font-semibold text-muted">
-            <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-sm font-semibold text-muted">
+            <div className="flex items-center gap-2.5 bg-page/70 border border-default/60 px-3.5 py-2 rounded-xl backdrop-blur-md">
               <Calendar className="w-5 h-5 text-[var(--brand-primary)]" />
               <span>{formattedDate}</span>
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 bg-page/70 border border-default/60 px-3.5 py-2 rounded-xl backdrop-blur-md">
               <Clock className="w-5 h-5 text-[var(--brand-primary)]" />
               <span>{formattedTime}</span>
             </div>
             {event.location && (
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 bg-page/70 border border-default/60 px-3.5 py-2 rounded-xl backdrop-blur-md">
                 <MapPin className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span>{event.location}</span>
               </div>
             )}
             {event.capacity && (
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 bg-page/70 border border-default/60 px-3.5 py-2 rounded-xl backdrop-blur-md">
                 <Users className="w-5 h-5 text-[var(--brand-primary)]" />
                 <span>{event.capacity} Kişilik Kontenjan</span>
               </div>
@@ -145,25 +156,10 @@ export function EventDetail() {
         </div>
       </section>
 
-      {/* Main Image */}
-      {event.image_url && (
-        <section className="px-8 lg:px-20 -mt-12 relative z-20">
-          <div className="max-w-[1280px] mx-auto">
-            <div className="relative aspect-[21/9] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
-              <img
-                src={event.image_url}
-                alt={event.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Content Section */}
-      <section className="py-16 sm:py-24 px-8 lg:px-20 bg-page">
+      {/* Description Section */}
+      <section className="py-16 sm:py-24 px-6 sm:px-8 lg:px-20 bg-page">
         <div className="max-w-[800px] mx-auto">
-          <p className="text-xl md:text-2xl text-primary leading-relaxed font-medium">
+          <p className="text-lg sm:text-2xl text-primary leading-relaxed font-medium whitespace-pre-line">
             {event.description || 'Detaylı açıklama bulunmuyor.'}
           </p>
         </div>
@@ -171,14 +167,14 @@ export function EventDetail() {
 
       {/* Photo Gallery */}
       {event.gallery_urls && event.gallery_urls.length > 0 && (
-        <section className="py-24 px-8 lg:px-20 bg-page">
+        <section className="py-16 sm:py-24 px-6 sm:px-8 lg:px-20 bg-surface border-t border-default">
           <div className="max-w-[1280px] mx-auto">
             <div className="flex items-center justify-between mb-12">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight mb-2">Etkinlik Galerisi</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Etkinlik Galerisi</h2>
                 <p className="text-muted font-medium">O günden geriye kalan güzel anılarımız</p>
               </div>
-              <div className="w-12 h-12 bg-surface border border-default rounded-full flex items-center justify-center text-[var(--brand-primary)]">
+              <div className="w-12 h-12 bg-page border border-default rounded-full flex items-center justify-center text-[var(--brand-primary)]">
                 <ImageIcon className="w-6 h-6" />
               </div>
             </div>
@@ -192,7 +188,7 @@ export function EventDetail() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1, duration: 0.5 }}
-                  className="group relative rounded-dynamic overflow-hidden border border-default bg-surface aspect-[4/3] shadow-sm hover:shadow-dynamic transition-all cursor-pointer"
+                  className="group relative rounded-dynamic overflow-hidden border border-default bg-page aspect-[4/3] shadow-sm hover:shadow-dynamic transition-all cursor-pointer"
                 >
                   <img
                     src={photo}
@@ -200,7 +196,7 @@ export function EventDetail() {
                     className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5" />
-                  
+
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-xl transform scale-90 group-hover:scale-100 transition-transform">
                       <ZoomIn className="w-6 h-6" />
@@ -228,7 +224,7 @@ export function EventDetail() {
             onClick={() => setLightboxIndex(null)}
           >
             {/* Lightbox Header Bar */}
-            <div 
+            <div
               className="w-full max-w-6xl flex items-center justify-between z-10 py-2"
               onClick={e => e.stopPropagation()}
             >
@@ -245,7 +241,7 @@ export function EventDetail() {
             </div>
 
             {/* Lightbox Image View & Prev/Next Arrows */}
-            <div 
+            <div
               className="relative w-full max-w-6xl flex-1 flex items-center justify-between my-4 px-2 sm:px-12"
               onClick={e => e.stopPropagation()}
             >
@@ -287,7 +283,7 @@ export function EventDetail() {
             </div>
 
             {/* Lightbox Footer Instruction */}
-            <div 
+            <div
               className="text-white/50 text-xs font-mono font-medium pb-2 text-center"
               onClick={e => e.stopPropagation()}
             >

@@ -4,6 +4,7 @@ import { Button } from '@/components/shared/Button';
 import { useState, useEffect } from 'react';
 import { BlockchainBackground } from '@/components/layout/BlockchainBackground';
 import { MatrixBackground } from '@/components/layout/MatrixBackground';
+import { supabase } from '@/api/config';
 
 interface BranchData {
   name: string;
@@ -305,6 +306,40 @@ export function BranchesSection() {
 }
 
 export function About() {
+  const [aboutData, setAboutData] = useState({
+    title: 'Sıralarda Değil, Projelerde Büyüyoruz.',
+    mission: 'Yazılım Geliştirme Kulübü, kod yazmanın sadece dersliklerde değil, bir ekip ruhuyla ve gerçek projelerle öğrenileceğine inanan öğrenciler tarafından kuruldu. Amacımız; kendi ufak projelerinden ulusal yarışmalara kadar uzanan bu yolda, beraber üretecek ekip arkadaşı bulmakta zorlanan herkesi tek bir çatı altında toplamak.',
+    target: 'Bugün 800’e yakın üyemizle; Oyun Geliştirme, Web, Mobil ve Blockchain kollarında sadece teoriyi değil, pratiği konuşuyoruz. ÇOMÜ’nün teknik potansiyelini Game Jam’ler, Hackathon’lar ve workshoplarla sokağa, teknoparklara ve yarışma arenalarına taşıyoruz.',
+    vision: 'Bizler sadece öğrenmiyoruz; Çanakkale’den küresel teknoloji dünyasına uzanacak bir topluluğun temellerini beraber atıyoruz.',
+    imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200'
+  });
+
+  useEffect(() => {
+    fetchAboutData();
+  }, []);
+
+  const fetchAboutData = async () => {
+    try {
+      const { data, error } = await supabase.from('site_settings').select('*');
+      if (error) return;
+      if (data && data.length > 0) {
+        const settingsMap: any = {};
+        data.forEach(item => {
+          settingsMap[item.key] = item.value;
+        });
+        setAboutData(prev => ({
+          title: settingsMap['about_title'] || prev.title,
+          mission: settingsMap['about_mission'] || prev.mission,
+          target: settingsMap['about_target'] || prev.target,
+          vision: settingsMap['about_vision'] || prev.vision,
+          imageUrl: settingsMap['about_image_url'] || prev.imageUrl
+        }));
+      }
+    } catch (e) {
+      console.error("About data fetch error:", e);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
       {/* Who We Are Section */}
@@ -317,25 +352,19 @@ export function About() {
             viewport={{ once: true }}
             className="order-2 lg:order-1"
           >
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 tracking-tight">Sıralarda Değil, Projelerde Büyüyoruz.</h2>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 tracking-tight">{aboutData.title}</h2>
             <div className="space-y-5 text-base sm:text-lg text-muted leading-relaxed font-medium">
               <p>
                 <span className="font-mono text-[var(--brand-primary)] font-bold mr-2">[misyon]</span>
-                Yazılım Geliştirme Kulübü, kod yazmanın sadece dersliklerde değil,
-                bir ekip ruhuyla ve gerçek projelerle öğrenileceğine inanan öğrenciler tarafından kuruldu.
-                Amacımız; kendi ufak projelerinden ulusal yarışmalara kadar uzanan bu yolda,
-                beraber üretecek ekip arkadaşı bulmakta zorlanan herkesi tek bir çatı altında toplamak.
+                {aboutData.mission}
               </p>
               <p>
                 <span className="font-mono text-[var(--brand-primary)] font-bold mr-2">[hedef]</span>
-                Bugün 800’e yakın üyemizle; Oyun Geliştirme, Web, Mobil ve Blockchain kollarında sadece teoriyi değil,
-                pratiği konuşuyoruz. ÇOMÜ’nün teknik potansiyelini Game Jam’ler, Hackathon’lar ve workshoplarla
-                sokağa, teknoparklara ve yarışma arenalarına taşıyoruz.
+                {aboutData.target}
               </p>
               <p>
                 <span className="font-mono text-[var(--brand-primary)] font-bold mr-2">[vizyon]</span>
-                Bizler sadece öğrenmiyoruz; Çanakkale’den küresel teknoloji dünyasına
-                uzanacak bir topluluğun temellerini beraber atıyoruz.
+                {aboutData.vision}
               </p>
             </div>
           </motion.div>
@@ -349,13 +378,11 @@ export function About() {
           >
             <div className="relative aspect-[4/3] rounded-dynamic overflow-hidden border border-default shadow-dynamic bg-surface">
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
-                alt="Ekip çalışması"
+                src={aboutData.imageUrl}
+                alt="Hakkımızda Ekip Görseli"
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-page/80 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
-              </div>
             </div>
           </motion.div>
         </div>
