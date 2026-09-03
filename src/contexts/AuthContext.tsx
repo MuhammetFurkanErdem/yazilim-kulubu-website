@@ -33,8 +33,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
+        setIsLoading(true);
+        setProfile(null);
         fetchProfile(session.user.id);
       } else {
+        setProfile(null);
         setIsLoading(false);
       }
     });
@@ -44,6 +47,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
+        setIsLoading(true);
+        setProfile(null);
         fetchProfile(session.user.id);
       } else {
         setProfile(null);
@@ -64,6 +69,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (error) {
         console.error('Profil çekilemedi:', error);
+        setProfile(null);
       } else {
         setProfile(data);
       }

@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function ProtectedRoute() {
-  const { session, isLoading } = useAuth();
+  const { session, profile, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -15,6 +15,10 @@ export function ProtectedRoute() {
 
   if (!session) {
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
+  }
+
+  if (!profile || profile.role !== 'admin') {
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;
