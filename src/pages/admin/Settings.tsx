@@ -2,7 +2,7 @@ import { Save, Globe, Lock, Mail, Instagram, Youtube, Linkedin, Loader2, FileTex
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect } from "react";
 import { supabase } from "@/api/config";
-import { storageService } from "@/api/services/storage";
+import { IMAGE_INPUT_ACCEPT, storageService } from "@/api/services/storage";
 
 export function Settings() {
   const [isLoading, setIsLoading] = useState(true);
@@ -236,7 +236,7 @@ export function Settings() {
                     <span>{aboutImageFile ? aboutImageFile.name : 'Yeni Görsel Seç...'}</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept={IMAGE_INPUT_ACCEPT}
                       onChange={e => e.target.files && setAboutImageFile(e.target.files[0])}
                       className="hidden"
                     />

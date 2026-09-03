@@ -3,7 +3,7 @@ import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
 import { useState, useEffect } from "react";
 import { projectService } from "@/api/services/projects";
-import { storageService } from "@/api/services/storage";
+import { IMAGE_INPUT_ACCEPT, storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/api/config";
 
@@ -358,8 +358,8 @@ export function Projects() {
                 <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-8 h-8 text-[var(--brand-primary)] opacity-80" />
                   <span className="text-sm font-bold text-primary">Görsel Seç</span>
-                  <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 5MB)</span>
-                  <input type="file" accept="image/*" className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
+                  <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF (Max 5MB)</span>
+                  <input type="file" accept={IMAGE_INPUT_ACCEPT} className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
                 </label>
               </div>
             )}

@@ -3,7 +3,7 @@ import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
 import { useState, useEffect } from "react";
 import { supabase } from "@/api/config";
-import { storageService } from "@/api/services/storage";
+import { IMAGE_INPUT_ACCEPT, storageService } from "@/api/services/storage";
 
 export function Team() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -319,8 +319,8 @@ export function Team() {
                   </div>
                 )}
                 <span className="text-sm font-bold text-primary">Fotoğraf Seç veya Değiştir</span>
-                <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 2MB)</span>
-                <input type="file" accept="image/*" className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
+                <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF (Max 5MB)</span>
+                <input type="file" accept={IMAGE_INPUT_ACCEPT} className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
               </label>
             </div>
           </div>

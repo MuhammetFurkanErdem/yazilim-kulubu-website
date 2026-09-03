@@ -3,7 +3,7 @@ import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
 import { useState, useEffect } from "react";
 import { eventService } from "@/api/services/events";
-import { storageService } from "@/api/services/storage";
+import { IMAGE_INPUT_ACCEPT, storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/api/config";
 import { SmartImage } from "@/components/shared/SmartImage";
@@ -28,24 +28,34 @@ export function Events() {
   const handleCoverSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (f) {
-      const processed = await storageService.processImage(f);
-      const url = URL.createObjectURL(processed);
-      setCropperSrc(url);
-      setCropperTargetType('cover');
-      setCropperAspect(16 / 9);
-      setCropperOpen(true);
+      try {
+        const processed = await storageService.processImage(f);
+        const url = URL.createObjectURL(processed);
+        setCropperSrc(url);
+        setCropperTargetType('cover');
+        setCropperAspect(16 / 9);
+        setCropperOpen(true);
+      } catch (error: any) {
+        alert(error?.message || 'Görsel doğrulanamadı.');
+        e.target.value = '';
+      }
     }
   };
 
   const handleGallerySelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const f = e.target.files[0];
-      const processed = await storageService.processImage(f);
-      const url = URL.createObjectURL(processed);
-      setCropperSrc(url);
-      setCropperTargetType('gallery');
-      setCropperAspect(4 / 3);
-      setCropperOpen(true);
+      try {
+        const processed = await storageService.processImage(f);
+        const url = URL.createObjectURL(processed);
+        setCropperSrc(url);
+        setCropperTargetType('gallery');
+        setCropperAspect(4 / 3);
+        setCropperOpen(true);
+      } catch (error: any) {
+        alert(error?.message || 'Görsel doğrulanamadı.');
+        e.target.value = '';
+      }
     }
   };
 
@@ -421,8 +431,8 @@ export function Events() {
                 <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-8 h-8 text-[var(--brand-primary)] opacity-80" />
                   <span className="text-sm font-bold text-primary">Görsel Seç</span>
-                  <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF</span>
-                  <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" className="hidden" onChange={handleCoverSelect} />
+                  <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF (Max 5MB)</span>
+                  <input type="file" accept={IMAGE_INPUT_ACCEPT} className="hidden" onChange={handleCoverSelect} />
                 </label>
               </div>
             )}
@@ -462,8 +472,8 @@ export function Events() {
 
                 <label className="flex flex-col items-center justify-center py-4 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-6 h-6 text-muted" />
-                  <span className="text-xs font-bold text-primary">Galeriye Fotoğraf Ekle (PNG, JPG, HEIC)</span>
-                  <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" multiple className="hidden" onChange={handleGallerySelect} />
+                  <span className="text-xs font-bold text-primary">Galeriye Fotoğraf Ekle (PNG, JPG, WEBP, HEIC — Max 5MB)</span>
+                  <input type="file" accept={IMAGE_INPUT_ACCEPT} multiple className="hidden" onChange={handleGallerySelect} />
                 </label>
               </div>
             </div>
