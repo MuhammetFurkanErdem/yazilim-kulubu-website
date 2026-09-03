@@ -67,12 +67,12 @@ export function Contact() {
         'diger': 'Diğer'
       };
 
-      const finalMessage = `[Konu: ${subjectMap[formData.subject]}]\n\n${formData.message}`;
+      const finalMessage = `[Konu: ${subjectMap[formData.subject]}]\n\n${formData.message.trim()}`;
 
       const { error } = await supabase.from('applications').insert([
         {
-          full_name: formData.fullName,
-          email: formData.email,
+          full_name: formData.fullName.trim(),
+          email: formData.email.trim().toLowerCase(),
           message: finalMessage,
           type: 'contact',
           status: 'pending'
@@ -84,7 +84,11 @@ export function Contact() {
       setIsSubmitted(true);
     } catch (error: any) {
       console.error("Mesaj gönderilemedi:", error);
-      alert("Bir hata oluştu: " + error.message);
+      alert(
+        ['submission_rate_limit', 'duplicate_submission', 'submission_capacity_limit'].includes(error?.message)
+          ? "Bu e-posta adresinden kısa süre içinde zaten başvuru gönderilmiş. Lütfen daha sonra tekrar deneyin."
+          : "Mesajınız gönderilemedi. Alanları kontrol edip tekrar deneyin."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -213,6 +217,8 @@ export function Contact() {
                   <input
                     type="text"
                     required
+                    minLength={2}
+                    maxLength={120}
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm"
@@ -227,6 +233,7 @@ export function Contact() {
                   <input
                     type="email"
                     required
+                    maxLength={254}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm"
@@ -261,6 +268,8 @@ export function Contact() {
                     className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm resize-none"
                     rows={4}
                     required
+                    minLength={10}
+                    maxLength={9500}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="// Mesajınızı buraya yazın..."

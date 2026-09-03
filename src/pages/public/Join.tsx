@@ -23,10 +23,10 @@ export function Join() {
     try {
       const { error } = await supabase.from('applications').insert([
         {
-          full_name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          department: `${formData.department} - ${formData.grade} (${formData.branch})`,
-          message: formData.message,
+          full_name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+          email: formData.email.trim().toLowerCase(),
+          department: `${formData.department.trim()} - ${formData.grade} (${formData.branch})`,
+          message: formData.message.trim(),
           type: 'join',
           status: 'pending'
         }
@@ -46,7 +46,11 @@ export function Join() {
       });
     } catch (error: any) {
       console.error("Başvuru gönderilemedi:", error);
-      alert("Bir hata oluştu: " + error.message);
+      alert(
+        ['submission_rate_limit', 'duplicate_submission', 'submission_capacity_limit'].includes(error?.message)
+          ? "Bu e-posta adresinden kısa süre içinde zaten başvuru gönderilmiş. Lütfen daha sonra tekrar deneyin."
+          : "Başvurunuz gönderilemedi. Alanları kontrol edip tekrar deneyin."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -116,6 +120,7 @@ export function Join() {
                     <input
                       type="text"
                       required
+                      maxLength={60}
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                       className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
@@ -127,6 +132,7 @@ export function Join() {
                     <input
                       type="text"
                       required
+                      maxLength={60}
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                       className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
@@ -140,6 +146,7 @@ export function Join() {
                   <input
                     type="email"
                     required
+                    maxLength={254}
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
@@ -153,6 +160,7 @@ export function Join() {
                     <input
                       type="text"
                       required
+                      maxLength={120}
                       value={formData.department}
                       onChange={(e) => setFormData({...formData, department: e.target.value})}
                       className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60"
@@ -198,6 +206,8 @@ export function Join() {
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
                     rows={4}
                     required
+                    minLength={10}
+                    maxLength={10000}
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     placeholder="Neden YGK'ya katılmak istiyorsun? Hangi projelere ilgin var?"

@@ -22,6 +22,7 @@ export function Projects() {
 
   const [formData, setFormData] = useState({
     fullName: '',
+    email: '',
     department: '',
     projectName: '',
     techStack: '',
@@ -76,8 +77,9 @@ ${formData.description}
       `.trim();
 
       const { error } = await supabase.from('applications').insert([{
-        full_name: formData.fullName,
-        department: formData.department,
+        full_name: formData.fullName.trim(),
+        email: formData.email.trim().toLowerCase(),
+        department: formData.department.trim(),
         message: message,
         type: 'project',
         status: 'pending'
@@ -88,6 +90,7 @@ ${formData.description}
       setIsSubmitted(true);
       setFormData({
         fullName: '',
+        email: '',
         department: '',
         projectName: '',
         techStack: '',
@@ -97,7 +100,11 @@ ${formData.description}
       });
     } catch (error: any) {
       console.error("Proje gönderilemedi:", error);
-      alert("Bir hata oluştu: " + error.message);
+      alert(
+        ['submission_rate_limit', 'duplicate_submission', 'submission_capacity_limit'].includes(error?.message)
+          ? "Bu e-posta adresinden kısa süre içinde zaten başvuru gönderilmiş. Lütfen daha sonra tekrar deneyin."
+          : "Projeniz gönderilemedi. Alanları kontrol edip tekrar deneyin."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -436,38 +443,43 @@ ${formData.description}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-bold text-primary">Adın Soyadın</label>
-                <input value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+                <input value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" minLength={2} maxLength={120} required />
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-bold text-primary">Bölüm / Sınıf</label>
-                <input value={formData.department} onChange={e => setFormData({ ...formData, department: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+                <input value={formData.department} onChange={e => setFormData({ ...formData, department: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={160} required />
               </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">E-posta Adresin</label>
+              <input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={254} required />
             </div>
 
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">Projenin Adı</label>
-              <input value={formData.projectName} onChange={e => setFormData({ ...formData, projectName: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              <input value={formData.projectName} onChange={e => setFormData({ ...formData, projectName: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={120} required />
             </div>
 
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">Kullanılan Teknolojiler</label>
-              <input value={formData.techStack} onChange={e => setFormData({ ...formData, techStack: e.target.value })} type="text" placeholder="Python, Fast API, PostgreSQL (virgülle ayırın)" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+              <input value={formData.techStack} onChange={e => setFormData({ ...formData, techStack: e.target.value })} type="text" placeholder="Python, Fast API, PostgreSQL (virgülle ayırın)" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={500} required />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-bold text-primary">GitHub Linki</label>
-                <input value={formData.githubUrl} onChange={e => setFormData({ ...formData, githubUrl: e.target.value })} type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" required />
+                <input value={formData.githubUrl} onChange={e => setFormData({ ...formData, githubUrl: e.target.value })} type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} required />
               </div>
               <div className="space-y-1">
                 <label className="text-sm font-bold text-primary">Canlı Demo (Varsa)</label>
-                <input value={formData.demoUrl} onChange={e => setFormData({ ...formData, demoUrl: e.target.value })} type="url" placeholder="https://..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
+                <input value={formData.demoUrl} onChange={e => setFormData({ ...formData, demoUrl: e.target.value })} type="url" placeholder="https://..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} />
               </div>
             </div>
 
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">Proje Hakkında Kısa Bilgi</label>
-              <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} rows={4} placeholder="Projen ne işe yarıyor? Neden geliştirdin?" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
+              <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} rows={4} placeholder="Projen ne işe yarıyor? Neden geliştirdin?" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" minLength={10} maxLength={5000} required></textarea>
             </div>
 
             <div className="pt-2">
