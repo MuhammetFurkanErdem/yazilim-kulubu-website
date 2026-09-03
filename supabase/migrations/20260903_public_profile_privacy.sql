@@ -26,7 +26,7 @@ returns table (
   display_order bigint,
   first_name text,
   last_name text,
-  position text,
+  "position" text,
   avatar_url text,
   linkedin_url text,
   instagram_url text,
