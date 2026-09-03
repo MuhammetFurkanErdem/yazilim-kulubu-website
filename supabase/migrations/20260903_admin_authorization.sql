@@ -27,7 +27,9 @@ alter table public.profiles enable row level security;
 alter table public.project_members enable row level security;
 alter table public.projects enable row level security;
 alter table public.site_settings enable row level security;
-alter table storage.objects enable row level security;
+
+-- storage.objects is managed by Supabase and already has RLS enabled.
+-- Hosted projects do not allow application migrations to ALTER this table.
 
 -- Remove the existing policies that treat every signed-in user as an admin.
 drop policy if exists "Enable all for authenticated users on applications" on public.applications;
@@ -70,7 +72,6 @@ revoke all privileges on table public.profiles from anon, authenticated;
 revoke all privileges on table public.project_members from anon, authenticated;
 revoke all privileges on table public.projects from anon, authenticated;
 revoke all privileges on table public.site_settings from anon, authenticated;
-revoke all privileges on table storage.objects from anon, authenticated;
 
 -- Exact table privileges required by the current application.
 grant insert on table public.applications to anon;
@@ -92,9 +93,6 @@ grant select, insert, update, delete on table public.projects to authenticated;
 
 grant select on table public.site_settings to anon;
 grant select, insert, update, delete on table public.site_settings to authenticated;
-
-grant select on table storage.objects to anon, authenticated;
-grant insert, update, delete on table storage.objects to authenticated;
 
 -- Public forms may create only pending, recognized application types.
 create policy "Public can submit applications"
