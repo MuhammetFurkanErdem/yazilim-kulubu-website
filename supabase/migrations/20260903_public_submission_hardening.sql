@@ -27,7 +27,8 @@ alter table public.applications
     check (char_length(btrim(full_name)) between 2 and 120) not valid,
   add constraint applications_email_format_check
     check (
-      char_length(email) <= 254
+      email is not null
+      and char_length(email) <= 254
       and email ~* '^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$'
     ) not valid,
   add constraint applications_department_length_check
@@ -45,9 +46,9 @@ alter table public.page_views
 
 alter table public.page_views
   add constraint page_views_path_check
-    check (char_length(path) between 1 and 200 and path like '/%') not valid,
+    check (path is not null and char_length(path) between 1 and 200 and path like '/%') not valid,
   add constraint page_views_session_id_check
-    check (char_length(session_id) between 8 and 128) not valid;
+    check (session_id is not null and char_length(session_id) between 8 and 128) not valid;
 
 create index if not exists applications_email_created_at_idx
   on public.applications (lower(email), created_at desc);
@@ -78,6 +79,12 @@ begin
   new.department := nullif(btrim(new.department), '');
   new.message := btrim(new.message);
   new.created_at := now();
+
+  if new.email is null then
+    raise exception using
+      errcode = '23514',
+      message = 'invalid_submission';
+  end if;
 
   -- Serialize requests for the same address so concurrent inserts cannot
   -- race past the limit.
@@ -151,6 +158,12 @@ begin
   new.path := btrim(new.path);
   new.session_id := btrim(new.session_id);
   new.created_at := now();
+
+  if new.session_id is null then
+    raise exception using
+      errcode = '23514',
+      message = 'invalid_page_view';
+  end if;
 
   perform pg_catalog.pg_advisory_xact_lock(
     pg_catalog.hashtextextended(new.session_id, 20260903)
