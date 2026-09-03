@@ -5,8 +5,20 @@ import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
 import { DatabaseError } from '@/components/shared/DatabaseError';
 
+type PublicTeamMember = {
+  public_id: string;
+  display_order: number;
+  first_name: string | null;
+  last_name: string | null;
+  position: string | null;
+  avatar_url: string | null;
+  linkedin_url: string | null;
+  instagram_url: string | null;
+  github_url: string | null;
+};
+
 export function Team() {
-  const [members, setMembers] = useState<any[]>([]);
+  const [members, setMembers] = useState<PublicTeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,8 +30,11 @@ export function Team() {
     setIsLoading(true);
     setError(null);
     try {
-      const { data, error: dbError } = await withTimeout<any>(
-        supabase.from('profiles').select('*').order('created_at', { ascending: true }),
+      const { data, error: dbError } = await withTimeout<{
+        data: PublicTeamMember[] | null;
+        error: any;
+      }>(
+        supabase.rpc('get_public_team_members'),
         5000
       );
       if (dbError) throw dbError;
@@ -57,7 +72,7 @@ export function Team() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {members.map((member, idx) => (
               <motion.div
-                key={member.id}
+                key={member.public_id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

@@ -22,6 +22,7 @@ export function Team() {
     linkedin_url: '',
     github_url: '',
     instagram_url: '',
+    is_public: true,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -80,6 +81,7 @@ export function Team() {
       linkedin_url: member.linkedin_url || '',
       github_url: member.github_url || '',
       instagram_url: member.instagram_url || '',
+      is_public: member.is_public !== false,
     });
     setImageFile(null);
     setIsModalOpen(true);
@@ -95,6 +97,7 @@ export function Team() {
       linkedin_url: '',
       github_url: '',
       instagram_url: '',
+      is_public: true,
     });
     setImageFile(null);
     setIsModalOpen(true);
@@ -115,12 +118,15 @@ export function Team() {
         first_name: formData.first_name,
         last_name: formData.last_name,
         position: formData.position,
-        role: 'member', // Default sistem yetkisi
+        // Preserve an existing admin role when editing that person's public
+        // team profile. New display-only members still default to "member".
+        role: selectedMember?.role || 'member',
         department: formData.department,
         linkedin_url: formData.linkedin_url,
         github_url: formData.github_url,
         instagram_url: formData.instagram_url,
         avatar_url: avatarUrl,
+        is_public: formData.is_public,
       };
 
       if (selectedMember) {
@@ -206,6 +212,7 @@ export function Team() {
                   <th className="p-4 text-xs font-bold text-muted uppercase tracking-wider">Rol</th>
                   <th className="p-4 text-xs font-bold text-muted uppercase tracking-wider">Bölüm</th>
                   <th className="p-4 text-xs font-bold text-muted uppercase tracking-wider">İletişim</th>
+                  <th className="p-4 text-xs font-bold text-muted uppercase tracking-wider">Yayın</th>
                   <th className="p-4 text-xs font-bold text-muted uppercase tracking-wider text-right">İşlemler</th>
                 </tr>
               </thead>
@@ -250,6 +257,11 @@ export function Team() {
                           </a>
                         )}
                       </div>
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${member.is_public !== false ? 'bg-green-500/10 text-green-600 border-green-500/20' : 'bg-slate-500/10 text-muted border-default'}`}>
+                        {member.is_public !== false ? 'Sitede' : 'Gizli'}
+                      </span>
                     </td>
                     <td className="p-4 flex items-center justify-end gap-2">
                       <button onClick={() => handleEdit(member)} className="p-2 text-muted hover:text-[var(--brand-primary)] bg-surface hover:bg-page border border-default rounded-lg transition-colors cursor-pointer" title="Düzenle">
@@ -327,6 +339,19 @@ export function Team() {
               <input type="url" value={formData.github_url} onChange={e => setFormData({...formData, github_url: e.target.value})} placeholder="https://github.com/..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
             </div>
           </div>
+
+          <label className="flex items-start gap-3 rounded-xl border border-default bg-page p-4 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.is_public}
+              onChange={e => setFormData({...formData, is_public: e.target.checked})}
+              className="mt-1 h-4 w-4 accent-[var(--brand-primary)]"
+            />
+            <span>
+              <span className="block text-sm font-bold text-primary">Sitede göster</span>
+              <span className="block text-xs text-muted mt-1">Kapalı olduğunda bu profil yalnızca yönetim panelinde görünür.</span>
+            </span>
+          </label>
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-default">
             <Button variant="ghost" type="button" onClick={() => setIsModalOpen(false)}>

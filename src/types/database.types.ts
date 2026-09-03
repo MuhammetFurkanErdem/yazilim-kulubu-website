@@ -91,8 +91,13 @@ export interface Database {
           created_at: string | null
           department: string | null
           first_name: string | null
+          github_url: string | null
           id: string
+          instagram_url: string | null
+          is_public: boolean
           last_name: string | null
+          linkedin_url: string | null
+          position: string | null
           role: 'member' | 'admin' | null
         }
         Insert: {
@@ -100,8 +105,13 @@ export interface Database {
           created_at?: string | null
           department?: string | null
           first_name?: string | null
+          github_url?: string | null
           id: string
+          instagram_url?: string | null
+          is_public?: boolean
           last_name?: string | null
+          linkedin_url?: string | null
+          position?: string | null
           role?: 'member' | 'admin' | null
         }
         Update: {
@@ -109,8 +119,13 @@ export interface Database {
           created_at?: string | null
           department?: string | null
           first_name?: string | null
+          github_url?: string | null
           id?: string
+          instagram_url?: string | null
+          is_public?: boolean
           last_name?: string | null
+          linkedin_url?: string | null
+          position?: string | null
           role?: 'member' | 'admin' | null
         }
       }
