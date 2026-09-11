@@ -18,7 +18,7 @@ export function Badge({ variant = 'brand', children, className = '' }: BadgeProp
   };
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-transparent border-l-2 text-[10px] font-bold uppercase tracking-widest font-mono shadow-sm backdrop-blur-sm ${variantClasses[variant]} ${className}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border border-transparent border-l-2 text-xs font-bold uppercase tracking-wider font-mono shadow-sm backdrop-blur-sm ${variantClasses[variant]} ${className}`}>
       {children}
     </span>
   );

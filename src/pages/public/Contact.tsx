@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { MapPin, Mail, Clock, Instagram, Linkedin, Youtube, Send, ChevronDown, ArrowRight, CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import {
   Select,
   SelectContent,
@@ -171,18 +172,18 @@ export function Contact() {
             <div className="pt-8 border-t border-default">
               <div className="text-xs font-bold text-muted uppercase tracking-widest mb-4">Hızlı Bağlantılar</div>
               <div className="space-y-3">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" className="flex min-h-[44px] items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   Üyelik Başvurusu
                 </a>
-                <a href="/projeler" className="flex items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
+                <Link to="/projeler" className="flex min-h-[44px] items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   Proje Gönder
-                </a>
-                <a href="/etkinlikler" className="flex items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
+                </Link>
+                <Link to="/etkinlikler" className="flex min-h-[44px] items-center gap-2 text-sm font-medium text-muted hover:text-[var(--brand-primary)] transition-colors group">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   Etkinlik Kaydı
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>

@@ -101,7 +101,7 @@ export function EventDetail() {
         <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-20">
           <Link
             to="/etkinlikler"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white mb-8 transition-colors group"
+            className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-white/80 hover:text-white mb-8 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Etkinliklere Dön
           </Link>
@@ -234,6 +234,7 @@ export function EventDetail() {
               </div>
               <button
                 onClick={() => setLightboxIndex(null)}
+                aria-label="Görsel galerisini kapat"
                 className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center transition-all cursor-pointer"
                 title="Kapat (ESC)"
               >
@@ -250,6 +251,7 @@ export function EventDetail() {
               {event.gallery_urls.length > 1 && (
                 <button
                   onClick={handlePrevPhoto}
+                  aria-label="Önceki görsel"
                   className="absolute left-2 sm:left-4 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 shadow-2xl cursor-pointer"
                   title="Önceki Görsel (← Sol Ok)"
                 >
@@ -271,6 +273,7 @@ export function EventDetail() {
               {event.gallery_urls.length > 1 && (
                 <button
                   onClick={handleNextPhoto}
+                  aria-label="Sonraki görsel"
                   className="absolute right-2 sm:right-4 z-20 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all hover:scale-110 shadow-2xl cursor-pointer"
                   title="Sonraki Görsel (→ Sağ Ok)"
                 >

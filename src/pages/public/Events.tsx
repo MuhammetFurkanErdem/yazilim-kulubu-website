@@ -31,7 +31,7 @@ function TicketCard({ event }: { event: any }) {
         <div className="relative z-10 flex flex-col md:flex-row gap-6">
           <div className="flex-shrink-0 w-20 h-20 bg-page border border-default rounded-2xl flex flex-col items-center justify-center text-primary group-hover:bg-[var(--brand-primary)] group-hover:text-white transition-colors">
             <div className="text-3xl font-black">{day}</div>
-            <div className="text-[10px] font-bold tracking-widest uppercase">{month}</div>
+            <div className="text-xs font-bold tracking-wider uppercase">{month}</div>
           </div>
           <div className="flex-1">
             <h3 className="text-2xl font-bold mb-2 group-hover:text-[var(--brand-primary)] transition-colors">{event.title}</h3>
@@ -68,7 +68,7 @@ function TicketCard({ event }: { event: any }) {
           <Ticket className="w-32 h-32 rotate-45" />
         </div>
         <div className="z-10 text-center flex flex-col items-center w-full">
-          <div className="font-mono text-[10px] font-bold text-muted tracking-widest mb-4 hidden md:block" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+          <div className="font-mono text-xs font-bold text-muted tracking-wider mb-4 hidden md:block" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
             ADMIT ONE
           </div>
           <div className="flex flex-col gap-2 w-full">
@@ -295,7 +295,7 @@ export function Events() {
 
                 {/* Countdown */}
                 <div className="mb-10">
-                  <div className="text-[10px] text-muted font-bold tracking-widest mb-3 font-mono">GERİ SAYIM</div>
+                  <div className="text-xs text-muted font-bold tracking-wider mb-3 font-mono">GERİ SAYIM</div>
                   <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-[340px] sm:max-w-md">
                     {[
                       { label: 'GÜN', value: countdown.days },
@@ -307,7 +307,7 @@ export function Events() {
                         <span className="text-xl sm:text-2xl font-black font-mono text-primary">
                           {String(unit.value).padStart(2, '0')}
                         </span>
-                        <span className="text-[9px] sm:text-xs font-semibold text-muted font-mono">{unit.label}</span>
+                        <span className="text-xs font-semibold text-muted font-mono">{unit.label}</span>
                       </div>
                     ))}
                   </div>

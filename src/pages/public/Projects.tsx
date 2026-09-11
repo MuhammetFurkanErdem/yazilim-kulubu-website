@@ -413,7 +413,7 @@ ${formData.description}
 
                 {/* Content Area - Borderless */}
                 <div className="flex-1 flex flex-col px-2">
-                  <div className="flex items-center gap-2 mb-3 text-[10px] font-black text-muted uppercase tracking-widest">
+                  <div className="flex items-center gap-2 mb-3 text-xs font-black text-muted uppercase tracking-wider">
                     <User className="w-3.5 h-3.5 text-[var(--brand-primary)]" />
                     ÜYE PROJESİ
                   </div>

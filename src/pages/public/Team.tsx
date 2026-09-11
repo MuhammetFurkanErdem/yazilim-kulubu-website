@@ -113,17 +113,17 @@ export function Team() {
 
                   <div className="flex items-center gap-5">
                     {member.linkedin_url && member.linkedin_url.trim() !== '' && (
-                      <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                      <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.first_name ?? ''} ${member.last_name ?? ''} LinkedIn profili`.trim()} className="touch-target inline-flex items-center justify-center rounded-xl text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Linkedin className="w-5 h-5" />
                       </a>
                     )}
                     {member.instagram_url && member.instagram_url.trim() !== '' && (
-                      <a href={member.instagram_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                      <a href={member.instagram_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.first_name ?? ''} ${member.last_name ?? ''} Instagram profili`.trim()} className="touch-target inline-flex items-center justify-center rounded-xl text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Instagram className="w-5 h-5" />
                       </a>
                     )}
                     {member.github_url && member.github_url.trim() !== '' && (
-                      <a href={member.github_url} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-[var(--brand-primary)] icon-interactive">
+                      <a href={member.github_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.first_name ?? ''} ${member.last_name ?? ''} GitHub profili`.trim()} className="touch-target inline-flex items-center justify-center rounded-xl text-muted hover:text-[var(--brand-primary)] icon-interactive">
                         <Github className="w-5 h-5" />
                       </a>
                     )}

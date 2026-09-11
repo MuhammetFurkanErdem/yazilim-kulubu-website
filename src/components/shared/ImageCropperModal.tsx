@@ -66,7 +66,8 @@ export function ImageCropperModal({
           </h3>
           <button
             onClick={onClose}
-            className="p-2 text-muted hover:text-primary rounded-lg transition-colors cursor-pointer"
+            aria-label="Görsel düzenleyiciyi kapat"
+            className="touch-target inline-flex items-center justify-center text-muted hover:text-primary rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,7 +98,7 @@ export function ImageCropperModal({
               min={1}
               max={3}
               step={0.05}
-              aria-labelledby="Zoom"
+              aria-label="Yakınlaştırma"
               onChange={(e) => setZoom(Number(e.target.value))}
               className="w-full h-1.5 bg-page rounded-lg appearance-none cursor-pointer accent-[var(--brand-primary)]"
             />
@@ -111,7 +112,7 @@ export function ImageCropperModal({
             <button
               type="button"
               onClick={() => setCurrentAspect(16 / 9)}
-              className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`min-h-[44px] px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                 currentAspect === 16 / 9
                   ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
                   : 'bg-page text-muted border-default hover:text-primary'
@@ -122,7 +123,7 @@ export function ImageCropperModal({
             <button
               type="button"
               onClick={() => setCurrentAspect(4 / 3)}
-              className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`min-h-[44px] px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                 currentAspect === 4 / 3
                   ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
                   : 'bg-page text-muted border-default hover:text-primary'
@@ -133,7 +134,7 @@ export function ImageCropperModal({
             <button
               type="button"
               onClick={() => setCurrentAspect(1 / 1)}
-              className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`min-h-[44px] px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                 currentAspect === 1 / 1
                   ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
                   : 'bg-page text-muted border-default hover:text-primary'
@@ -144,7 +145,7 @@ export function ImageCropperModal({
             <button
               type="button"
               onClick={() => setCurrentAspect(undefined)}
-              className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+              className={`min-h-[44px] px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                 currentAspect === undefined
                   ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
                   : 'bg-page text-muted border-default hover:text-primary'

@@ -22,7 +22,7 @@ export function Button({
   rel,
   ...props 
 }: ButtonProps) {
-  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-dynamic font-bold btn-interactive focus-ring';
+  const baseClasses = 'inline-flex min-h-[44px] items-center justify-center gap-2 rounded-dynamic font-bold btn-interactive focus-ring disabled:pointer-events-none disabled:opacity-60';
   
   const variantClasses = {
     primary: 'bg-[var(--brand-primary)] text-[var(--brand-text)] hover:bg-[var(--brand-hover)] hover:shadow-lg hover:shadow-[var(--brand-primary)]/20',

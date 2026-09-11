@@ -85,22 +85,25 @@ export function Navbar() {
         ? 'h-20 bg-page/90 backdrop-blur-lg border-b border-default shadow-sm'
         : 'h-28 bg-transparent border-transparent'
         }`}>
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 h-full flex items-center justify-between">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex min-h-[44px] items-center gap-3 group">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex items-center justify-center transition-transform group-hover:scale-105 shadow-sm flex-shrink-0">
               <img src="/logo.png" alt="YGK Logo" className="w-full h-full object-cover scale-110" />
             </div>
-            <span className="text-base md:text-xl font-bold text-primary tracking-tight">Yazılım Geliştirme Kulübü</span>
+            <span className="text-base xl:text-xl font-bold text-primary tracking-tight">
+              <span className="sm:hidden">YGK</span>
+              <span className="hidden sm:inline">Yazılım Geliştirme Kulübü</span>
+            </span>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-base font-medium nav-link-animated ${location.pathname === link.path
+                className={`inline-flex min-h-[44px] items-center text-base font-medium nav-link-animated ${location.pathname === link.path
                   ? 'text-[var(--brand-primary)] active'
                   : 'text-muted hover:text-primary'
                   }`}
@@ -115,7 +118,7 @@ export function Navbar() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full hover:bg-surface text-muted icon-interactive focus-ring"
+                className="touch-target inline-flex items-center justify-center rounded-full hover:bg-surface text-muted icon-interactive focus-ring"
                 aria-label={theme === 'dark' ? 'Açık temaya geç' : 'Koyu temaya geç'}
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -125,7 +128,7 @@ export function Navbar() {
             <button
               ref={menuButtonRef}
               onClick={() => setMobileOpen(true)}
-              className="md:hidden p-2 rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors focus-ring"
+              className="xl:hidden touch-target inline-flex items-center justify-center rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors focus-ring"
               aria-label="Menüyü Aç"
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
@@ -138,7 +141,7 @@ export function Navbar() {
 
       {/* Mobile Drawer Overlay */}
       <div
-        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
@@ -153,18 +156,18 @@ export function Navbar() {
         aria-label="Mobil navigasyon"
         aria-hidden={!mobileOpen}
         inert={!mobileOpen}
-        className={`fixed top-0 right-0 bottom-0 z-[70] w-[80vw] max-w-[340px] flex flex-col bg-page border-l border-default shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 bottom-0 z-[70] w-[85vw] max-w-[340px] flex flex-col bg-page border-l border-default shadow-2xl transition-transform duration-300 ease-in-out xl:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-6 pt-8 pb-6 border-b border-default">
-          <Link to="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
+          <Link to="/" className="flex min-h-[44px] items-center gap-2" onClick={() => setMobileOpen(false)}>
             <img src="/logo.png" alt="YGK Logo" className="w-9 h-9 rounded-full object-cover" />
             <span className="font-bold text-primary text-sm leading-tight">Yazılım Geliştirme<br />Kulübü</span>
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
-            className="p-2 rounded-full hover:bg-surface text-muted hover:text-primary transition-colors cursor-pointer focus-ring"
+            className="touch-target inline-flex items-center justify-center rounded-full hover:bg-surface text-muted hover:text-primary transition-colors cursor-pointer focus-ring"
             aria-label="Menüyü Kapat"
           >
             <X className="w-5 h-5" />

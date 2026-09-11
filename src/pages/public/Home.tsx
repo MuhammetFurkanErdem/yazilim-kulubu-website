@@ -52,7 +52,7 @@ function CountUp({ target, suffix, label, delay = 0 }: { target: number; suffix:
       <div className="text-3xl md:text-5xl font-black text-primary tracking-tighter">
         {count}{suffix}
       </div>
-      <div className="text-[10px] md:text-xs font-semibold text-muted uppercase tracking-wider mt-1">{label}</div>
+      <div className="text-xs font-semibold text-muted uppercase tracking-wider mt-1">{label}</div>
     </div>
   );
 }
@@ -195,9 +195,9 @@ export function Home() {
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium mb-6 sm:mb-8"
           >
-            <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="icon-interactive flex items-center gap-3"><Instagram className="w-5 h-5 sm:w-6 sm:h-6" /></a>
-            <a href={settings.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="icon-interactive flex items-center gap-3"><Youtube className="w-5 h-5 sm:w-6 sm:h-6" /></a>
-            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-interactive flex items-center gap-3"><Linkedin className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="touch-target icon-interactive inline-flex items-center justify-center rounded-xl"><Instagram className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="touch-target icon-interactive inline-flex items-center justify-center rounded-xl"><Youtube className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="touch-target icon-interactive inline-flex items-center justify-center rounded-xl"><Linkedin className="w-5 h-5 sm:w-6 sm:h-6" /></a>
           </motion.div>
         </div>
       </section>

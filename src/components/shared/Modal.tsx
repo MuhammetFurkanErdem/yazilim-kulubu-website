@@ -96,7 +96,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
           <button 
             onClick={onClose}
             aria-label="Pencereyi kapat"
-            className="p-2 text-muted hover:text-primary hover:bg-surface rounded-full transition-colors cursor-pointer focus-ring"
+            className="touch-target inline-flex items-center justify-center text-muted hover:text-primary hover:bg-surface rounded-full transition-colors cursor-pointer focus-ring"
           >
             <X className="w-5 h-5 cursor-pointer" />
           </button>
