@@ -97,8 +97,11 @@ function PastEventsTimeline({ events }: { events: any[] }) {
 
   if (!events || events.length === 0) {
     return (
-      <div className="text-center text-muted font-medium py-12">
-        Geçmiş etkinlik bulunmamaktadır.
+      <div className="text-center py-12">
+        <p className="text-muted font-medium mb-5">Geçmiş etkinlik bulunmamaktadır.</p>
+        <Button asLink href="/iletisim" variant="secondary" size="sm">
+          Etkinlik öner
+        </Button>
       </div>
     );
   }
@@ -252,9 +255,18 @@ export function Events() {
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
+      <header className="pt-28 sm:pt-32 pb-10 px-4 sm:px-8 lg:px-20 bg-page">
+        <div className="max-w-[1280px] mx-auto text-center">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-4">Etkinlikler</h1>
+          <p className="text-base sm:text-lg text-muted font-medium max-w-2xl mx-auto">
+            Yaklaşan buluşmaları keşfet, yerini ayırt ve geçmiş etkinliklerimize göz at.
+          </p>
+        </div>
+      </header>
+
       {/* Featured Event (Büyük Etkinlik) */}
       {featuredEvent && (
-        <section className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page">
+        <section className="pt-6 pb-16 px-4 sm:px-8 lg:px-20 bg-page">
           <div className="max-w-[1280px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -343,22 +355,29 @@ export function Events() {
       )}
 
       {/* Upcoming Events Ticket Style */}
-      {upcomingEvents.length > 0 && (
-        <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default overflow-hidden">
-          <div className="max-w-[1000px] mx-auto">
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Yaklaşan Etkinlikler</h2>
-              <p className="text-sm sm:text-base text-muted font-medium">Biletini al, yerini garantile.</p>
-            </div>
+      <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default overflow-hidden">
+        <div className="max-w-[1000px] mx-auto">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Yaklaşan Etkinlikler</h2>
+            <p className="text-sm sm:text-base text-muted font-medium">Biletini al, yerini garantile.</p>
+          </div>
 
+          {upcomingEvents.length > 0 ? (
             <div className="space-y-8">
               {upcomingEvents.map((event) => (
                 <TicketCard key={event.id} event={event} />
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-muted font-medium mb-5">Şu anda planlanmış yeni bir etkinlik bulunmuyor.</p>
+              <Button asLink href="/iletisim" variant="secondary" size="sm">
+                Etkinlik öner
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Past Events */}
       <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-page">

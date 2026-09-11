@@ -141,9 +141,18 @@ ${formData.description}
 
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
+      <header className="pt-28 sm:pt-32 pb-10 px-4 sm:px-8 lg:px-20 bg-page">
+        <div className="max-w-[1280px] mx-auto text-center">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-4">Projeler</h1>
+          <p className="text-base sm:text-lg text-muted font-medium max-w-2xl mx-auto">
+            Kulüp ekiplerinin ve üyelerimizin geliştirdiği ürünleri keşfet.
+          </p>
+        </div>
+      </header>
+
       {/* Featured Project */}
       {featuredProject && (
-        <section id={`project-${featuredProject.id}`} tabIndex={-1} className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page scroll-mt-24 focus:outline-none">
+        <section id={`project-${featuredProject.id}`} tabIndex={-1} className="pt-6 pb-16 px-4 sm:px-8 lg:px-20 bg-page scroll-mt-24 focus:outline-none">
           <div className="max-w-[1280px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -327,7 +336,12 @@ ${formData.description}
             })}
           </div>
           {clubProjects.length === 0 && (
-            <div className="text-center text-muted font-medium py-12 w-full">Kulüp projesi bulunmamaktadır.</div>
+            <div className="text-center py-12 w-full">
+              <p className="text-muted font-medium mb-5">Henüz yayınlanmış bir kulüp projesi bulunmuyor.</p>
+              <Button asLink href="/iletisim" variant="secondary" size="sm">
+                Proje iş birliği öner
+              </Button>
+            </div>
           )}
         </div>
       </section>

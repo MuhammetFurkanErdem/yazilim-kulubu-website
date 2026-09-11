@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router';
 import { Button } from '@/components/shared/Button';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function Navbar() {
   const location = useLocation();
@@ -10,6 +10,8 @@ export function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -25,8 +27,47 @@ export function Navbar() {
 
   // Prevent body scroll when open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const menu = mobileMenuRef.current;
+    document.body.style.overflow = 'hidden';
+
+    const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const animationFrame = window.requestAnimationFrame(() => {
+      menu?.querySelector<HTMLElement>(focusableSelector)?.focus();
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMobileOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !menu) return;
+      const focusableElements = Array.from(menu.querySelectorAll<HTMLElement>(focusableSelector));
+      if (focusableElements.length === 0) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      menuButtonRef.current?.focus();
+    };
   }, [mobileOpen]);
 
   const navLinks = [
@@ -75,16 +116,19 @@ export function Navbar() {
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="p-2 rounded-full hover:bg-surface text-muted icon-interactive focus-ring"
-                aria-label="Toggle Theme"
+                aria-label={theme === 'dark' ? 'Açık temaya geç' : 'Koyu temaya geç'}
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             )}
             {/* Hamburger — only on mobile */}
             <button
+              ref={menuButtonRef}
               onClick={() => setMobileOpen(true)}
-              className="md:hidden p-2 rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors"
+              className="md:hidden p-2 rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors focus-ring"
               aria-label="Menüyü Aç"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-navigation"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -97,10 +141,18 @@ export function Navbar() {
         className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         onClick={() => setMobileOpen(false)}
+        aria-hidden="true"
       />
 
       {/* Mobile Drawer Panel */}
       <div
+        ref={mobileMenuRef}
+        id="mobile-navigation"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobil navigasyon"
+        aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
         className={`fixed top-0 right-0 bottom-0 z-[70] w-[80vw] max-w-[340px] flex flex-col bg-page border-l border-default shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
@@ -112,7 +164,7 @@ export function Navbar() {
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
-            className="p-2 rounded-full hover:bg-surface text-muted hover:text-primary transition-colors cursor-pointer"
+            className="p-2 rounded-full hover:bg-surface text-muted hover:text-primary transition-colors cursor-pointer focus-ring"
             aria-label="Menüyü Kapat"
           >
             <X className="w-5 h-5" />
@@ -127,7 +179,7 @@ export function Navbar() {
               to={link.path}
               onClick={() => setMobileOpen(false)}
               style={{ transitionDelay: mobileOpen ? `${idx * 40}ms` : '0ms' }}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 ${location.pathname === link.path
+              className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 focus-ring ${location.pathname === link.path
                 ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
                 : 'text-primary hover:bg-surface hover:text-[var(--brand-primary)]'
                 } ${mobileOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
@@ -145,7 +197,7 @@ export function Navbar() {
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors font-semibold text-sm"
+              className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-surface text-muted hover:text-primary transition-colors font-semibold text-sm focus-ring"
             >
               {theme === 'dark'
                 ? <><Sun className="w-5 h-5" /> Açık Tema</>

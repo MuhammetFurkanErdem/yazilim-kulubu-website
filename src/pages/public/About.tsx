@@ -352,7 +352,7 @@ export function About() {
             viewport={{ once: true }}
             className="order-2 lg:order-1"
           >
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 tracking-tight">{aboutData.title}</h2>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 tracking-tight">{aboutData.title}</h1>
             <div className="space-y-5 text-base sm:text-lg text-muted leading-relaxed font-medium">
               <p>
                 <span className="font-mono text-[var(--brand-primary)] font-bold mr-2">[misyon]</span>

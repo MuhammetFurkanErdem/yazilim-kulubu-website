@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
 import { DatabaseError } from '@/components/shared/DatabaseError';
+import { Button } from '@/components/shared/Button';
 
 type PublicTeamMember = {
   public_id: string;
@@ -69,6 +70,13 @@ export function Team() {
       {/* Leadership Section */}
       <section className="pt-28 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-8 lg:px-20 bg-page">
         <div className="max-w-[1280px] mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-4">Ekibimiz</h1>
+            <p className="text-base sm:text-lg text-muted font-medium max-w-2xl mx-auto">
+              Kulübün çalışmalarını birlikte yürüten üretken ekiple tanış.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             {members.map((member, idx) => (
               <motion.div
@@ -124,8 +132,11 @@ export function Team() {
           </div>
 
           {members.length === 0 && !isLoading && (
-            <div className="text-center text-muted font-medium py-12">
-              Henüz ekip üyesi bulunmamaktadır.
+            <div className="text-center py-12">
+              <p className="text-muted font-medium mb-5">Ekip bilgileri yakında burada yayınlanacak.</p>
+              <Button href="https://docs.google.com/forms/d/e/1FAIpQLSfuwWAWqtpjasdHr9SyZfBZt1LrPGmc2y80bfLXY1H-f7Hsrg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" variant="primary" size="sm">
+                Bize Katıl
+              </Button>
             </div>
           )}
         </div>
