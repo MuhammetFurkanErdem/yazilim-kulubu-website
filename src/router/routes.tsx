@@ -1,45 +1,27 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from '@/components/layout/Layout';
-import { Home } from '@/pages/public/Home';
-import { About } from '@/pages/public/About';
-import { Team } from '@/pages/public/Team';
-import { Events } from '@/pages/public/Events';
-import { EventDetail } from '@/pages/public/EventDetail';
-import { Projects } from '@/pages/public/Projects';
-import { Contact } from '@/pages/public/Contact';
-import { NotFound } from '@/pages/public/NotFound';
-
-// Admin Imports
-import { AdminLayout } from '@/layouts/AdminLayout';
-import { Dashboard as AdminDashboard } from '@/pages/admin/Dashboard';
-import { Events as AdminEvents } from '@/pages/admin/Events';
-import { Projects as AdminProjects } from '@/pages/admin/Projects';
-import { Team as AdminTeam } from '@/pages/admin/Team';
-import { Settings as AdminSettings } from '@/pages/admin/Settings';
-import { Submissions as AdminSubmissions } from '@/pages/admin/Submissions';
 
 // Auth & Protection
 import { ProtectedRoute } from '@/components/shared/ProtectedRoute';
-import { Login } from '@/pages/auth/Login';
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Layout,
     children: [
-      { index: true, Component: Home },
-      { path: "hakkimizda", Component: About },
-      { path: "ekibimiz", Component: Team },
-      { path: "etkinlikler", Component: Events },
-      { path: "etkinlikler/:id", Component: EventDetail },
-      { path: "projeler", Component: Projects },
-      { path: "iletisim", Component: Contact },
-      { path: "*", Component: NotFound },
+      { index: true, lazy: async () => ({ Component: (await import('@/pages/public/Home')).Home }) },
+      { path: "hakkimizda", lazy: async () => ({ Component: (await import('@/pages/public/About')).About }) },
+      { path: "ekibimiz", lazy: async () => ({ Component: (await import('@/pages/public/Team')).Team }) },
+      { path: "etkinlikler", lazy: async () => ({ Component: (await import('@/pages/public/Events')).Events }) },
+      { path: "etkinlikler/:id", lazy: async () => ({ Component: (await import('@/pages/public/EventDetail')).EventDetail }) },
+      { path: "projeler", lazy: async () => ({ Component: (await import('@/pages/public/Projects')).Projects }) },
+      { path: "iletisim", lazy: async () => ({ Component: (await import('@/pages/public/Contact')).Contact }) },
+      { path: "*", lazy: async () => ({ Component: (await import('@/pages/public/NotFound')).NotFound }) },
     ],
   },
   {
     path: "/admin/login",
-    Component: Login,
+    lazy: async () => ({ Component: (await import('@/pages/auth/Login')).Login }),
   },
   {
     path: "/admin",
@@ -47,15 +29,15 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        Component: AdminLayout,
+        lazy: async () => ({ Component: (await import('@/layouts/AdminLayout')).AdminLayout }),
         children: [
-          { index: true, Component: AdminDashboard },
-          { path: "etkinlikler", Component: AdminEvents },
-          { path: "projeler", Component: AdminProjects },
-          { path: "ekip", Component: AdminTeam },
-          { path: "basvurular", Component: AdminSubmissions },
-          { path: "ayarlar", Component: AdminSettings },
-          { path: "*", Component: NotFound },
+          { index: true, lazy: async () => ({ Component: (await import('@/pages/admin/Dashboard')).Dashboard }) },
+          { path: "etkinlikler", lazy: async () => ({ Component: (await import('@/pages/admin/Events')).Events }) },
+          { path: "projeler", lazy: async () => ({ Component: (await import('@/pages/admin/Projects')).Projects }) },
+          { path: "ekip", lazy: async () => ({ Component: (await import('@/pages/admin/Team')).Team }) },
+          { path: "basvurular", lazy: async () => ({ Component: (await import('@/pages/admin/Submissions')).Submissions }) },
+          { path: "ayarlar", lazy: async () => ({ Component: (await import('@/pages/admin/Settings')).Settings }) },
+          { path: "*", lazy: async () => ({ Component: (await import('@/pages/public/NotFound')).NotFound }) },
         ]
       }
     ],

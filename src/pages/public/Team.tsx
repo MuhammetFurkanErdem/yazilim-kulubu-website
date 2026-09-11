@@ -93,6 +93,8 @@ export function Team() {
                     <img
                       src={member.avatar_url}
                       alt={`${member.first_name} ${member.last_name}`}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                     />
                   ) : (

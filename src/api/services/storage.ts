@@ -1,5 +1,4 @@
 import { supabase } from '../config';
-import heic2any from 'heic2any';
 
 export type AppImageBucket = 'project-images' | 'event-covers';
 
@@ -109,6 +108,7 @@ export const storageService = {
 
   async fallbackHeic2Any(file: File): Promise<File> {
     try {
+      const { default: heic2any } = await import('heic2any');
       const convertedBlob = await heic2any({
         blob: file,
         toType: 'image/jpeg',

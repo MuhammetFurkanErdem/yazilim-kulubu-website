@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, Calendar, MapPin, Users, Clock, Zap, Ticket, Loader2 } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users, Clock, Ticket, Loader2 } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
@@ -147,6 +147,8 @@ function PastEventsTimeline({ events }: { events: any[] }) {
                         <img
                           src={event.image_url}
                           alt={event.title}
+                          loading="lazy"
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
                         />
                       ) : (

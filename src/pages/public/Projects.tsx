@@ -7,7 +7,6 @@ import { CheckCircle, Send } from 'lucide-react';
 import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
 import { DatabaseError } from '@/components/shared/DatabaseError';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 export function Projects() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -264,6 +263,8 @@ ${formData.description}
                         <img
                           src={project.image_url}
                           alt={project.title}
+                          loading="lazy"
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
                         />
                       ) : (
@@ -382,6 +383,8 @@ ${formData.description}
                     <img
                       src={project.image_url}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (

@@ -1,12 +1,10 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Youtube, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, Youtube, Linkedin, Instagram } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { supabase } from '@/api/config';
 import { NetworkBackground } from '@/components/layout/NetworkBackground';
-import { MatrixBackground } from '@/components/layout/MatrixBackground';
-import { GlowingOrbsBackground } from '@/components/layout/GlowingOrbsBackground';
 
 interface FeaturedProject {
   id: string;
@@ -255,6 +253,8 @@ export function Home() {
                   <img
                     src={project.image_url || '/logo.png'}
                     alt={project.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
