@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Github, ExternalLink, User, Loader2 } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { CheckCircle, Send } from 'lucide-react';
 import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
@@ -19,6 +19,7 @@ export function Projects() {
   const [memberProjects, setMemberProjects] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasScrolledToProject = useRef(false);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -34,6 +35,17 @@ export function Projects() {
   useEffect(() => {
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    if (isLoading || hasScrolledToProject.current || !window.location.hash.startsWith('#project-')) return;
+
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (!target) return;
+
+    hasScrolledToProject.current = true;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.focus({ preventScroll: true });
+  }, [isLoading, featuredProject, clubProjects, memberProjects]);
 
   const fetchProjects = async () => {
     setIsLoading(true);
@@ -131,7 +143,7 @@ ${formData.description}
     <div className="min-h-screen bg-page transition-colors duration-300">
       {/* Featured Project */}
       {featuredProject && (
-        <section className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page">
+        <section id={`project-${featuredProject.id}`} tabIndex={-1} className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page scroll-mt-24 focus:outline-none">
           <div className="max-w-[1280px] mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -228,11 +240,13 @@ ${formData.description}
               return (
                 <motion.div
                   key={project.id}
+                  id={`project-${project.id}`}
+                  tabIndex={-1}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
-                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center mb-24 lg:mb-32 last:mb-0`}
+                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center mb-24 lg:mb-32 last:mb-0 scroll-mt-24 focus:outline-none`}
                 >
                   {/* Image Side */}
                   <div className="w-full lg:w-1/2 relative group">
@@ -340,11 +354,13 @@ ${formData.description}
             {memberProjects.map((project, idx) => (
               <motion.div
                 key={project.id}
+                id={`project-${project.id}`}
+                tabIndex={-1}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
-                className="group flex flex-col"
+                className="group flex flex-col scroll-mt-24 focus:outline-none"
               >
                 {/* Visual Preview */}
                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden mb-6 shadow-md bg-surface">

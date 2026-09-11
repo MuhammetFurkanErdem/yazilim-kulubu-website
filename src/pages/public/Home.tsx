@@ -2,9 +2,19 @@ import { motion } from 'motion/react';
 import { ArrowRight, Rocket, Brain, Zap, Globe, Users, Trophy, Youtube, Linkedin, Instagram, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router';
+import { supabase } from '@/api/config';
 import { NetworkBackground } from '@/components/layout/NetworkBackground';
 import { MatrixBackground } from '@/components/layout/MatrixBackground';
 import { GlowingOrbsBackground } from '@/components/layout/GlowingOrbsBackground';
+
+interface FeaturedProject {
+  id: string;
+  title: string;
+  tech_stack: string[] | null;
+  image_url: string | null;
+  is_club_project: boolean | null;
+}
 
 function CountUp({ target, suffix, label, delay = 0 }: { target: number; suffix: string; label: string; delay?: number }) {
   const [count, setCount] = useState(0);
@@ -54,6 +64,12 @@ export function Home() {
   const words = ['işbirliği yap,', 'öğren,', 'inşa et,'];
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [settings, setSettings] = useState({
+    instagram: 'https://www.instagram.com/comuyazilimgelistirme/?hl=tr',
+    youtube: 'https://www.youtube.com/@comuyazilimgelistirme',
+    linkedin: 'https://www.linkedin.com/company/%C3%A7om%C3%BC-yaz%C4%B1l%C4%B1m-geli%C5%9Ftirme-kul%C3%BCb%C3%BC/'
+  });
+  const [featuredProjects, setFeaturedProjects] = useState<FeaturedProject[]>([]);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
@@ -83,6 +99,42 @@ export function Home() {
 
     return () => clearTimeout(timeout);
   }, [animatedText, isDeleting, wordIndex]);
+
+  useEffect(() => {
+    const fetchHomepageContent = async () => {
+      try {
+        const [{ data: settingsData, error: settingsError }, { data: projectsData, error: projectsError }] = await Promise.all([
+          supabase.from('site_settings').select('*'),
+          supabase
+            .from('projects')
+            .select('id, title, tech_stack, image_url, is_club_project')
+            .order('created_at', { ascending: false })
+            .limit(3)
+        ]);
+
+        if (settingsError) {
+          console.error('Sosyal medya ayarları çekilemedi:', settingsError);
+        } else if (settingsData) {
+          const settingsMap = Object.fromEntries(settingsData.map(item => [item.key, item.value]));
+          setSettings(previous => ({
+            instagram: settingsMap.social_instagram || previous.instagram,
+            youtube: settingsMap.social_youtube || previous.youtube,
+            linkedin: settingsMap.social_linkedin || previous.linkedin
+          }));
+        }
+
+        if (projectsError) {
+          console.error('Öne çıkan projeler çekilemedi:', projectsError);
+        } else {
+          setFeaturedProjects(projectsData || []);
+        }
+      } catch (error) {
+        console.error('Ana sayfa içerikleri çekilemedi:', error);
+      }
+    };
+
+    fetchHomepageContent();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -145,9 +197,9 @@ export function Home() {
             transition={{ duration: 1, delay: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-6 text-muted font-medium mb-6 sm:mb-8"
           >
-            <a href="#" className="icon-interactive flex items-center gap-3"><Instagram className="w-5 h-5 sm:w-6 sm:h-6" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-3"><Youtube className="w-5 h-5 sm:w-6 sm:h-6" /></a>
-            <a href="#" className="icon-interactive flex items-center gap-3"><Linkedin className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="icon-interactive flex items-center gap-3"><Instagram className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="icon-interactive flex items-center gap-3"><Youtube className="w-5 h-5 sm:w-6 sm:h-6" /></a>
+            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-interactive flex items-center gap-3"><Linkedin className="w-5 h-5 sm:w-6 sm:h-6" /></a>
           </motion.div>
         </div>
       </section>
@@ -189,13 +241,9 @@ export function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: 'Öğrenci Not Takip', category: 'Web Uygulaması', tech: ['React', 'Node.js'], image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800' },
-              { name: 'Kampüs Etkinlik App', category: 'Mobil', tech: ['Flutter', 'Firebase'], image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800' },
-              { name: 'Çanakkale Chronicles', category: 'Oyun', tech: ['Unity', 'C#'], image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800' }
-            ].map((project, idx) => (
+            {featuredProjects.map((project, idx) => (
               <motion.div
-                key={idx}
+                key={project.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -205,8 +253,8 @@ export function Home() {
                 {/* Real Image Placeholder instead of fake code block */}
                 <div className="relative aspect-[4/3] bg-surface overflow-hidden">
                   <img
-                    src={project.image}
-                    alt={project.name}
+                    src={project.image_url || '/logo.png'}
+                    alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4">
@@ -215,24 +263,27 @@ export function Home() {
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold mb-3">{project.name}</h3>
+                  <h3 className="text-xl font-bold mb-3">{project.title}</h3>
                   <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                    {project.tech.map(t => (
+                    {(project.tech_stack || []).map(t => (
                       <span key={t} className="px-3 py-1 bg-surface border border-default text-muted font-mono text-xs rounded-dynamic">
                         {t}
                       </span>
                     ))}
                   </div>
                   <div className="flex items-center justify-between pt-4 border-t border-default">
-                    <span className="text-sm font-medium text-muted">Takım Projesi</span>
-                    <a href="#" className="text-sm font-bold text-[var(--brand-primary)] hover:text-primary flex items-center gap-1 transition-colors">
+                    <span className="text-sm font-medium text-muted">{project.is_club_project ? 'Kulüp Projesi' : 'Üye Projesi'}</span>
+                    <Link to={`/projeler#project-${project.id}`} className="text-sm font-bold text-[var(--brand-primary)] hover:text-primary flex items-center gap-1 transition-colors">
                       İncele <ArrowRight className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
+          {featuredProjects.length === 0 && (
+            <p className="py-8 text-center text-muted font-medium">Öne çıkan projeler yakında burada yer alacak.</p>
+          )}
         </div>
       </section>
 
