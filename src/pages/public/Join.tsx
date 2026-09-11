@@ -113,12 +113,15 @@ export function Join() {
             className="col-span-1 lg:col-span-7"
           >
             <div className="bg-surface border border-default shadow-dynamic rounded-dynamic p-8 md:p-10">
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmit} aria-busy={isSubmitting}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-bold mb-2">Ad</label>
+                    <label htmlFor="join-first-name" className="block text-sm font-bold mb-2">Ad</label>
                     <input
+                      id="join-first-name"
+                      name="firstName"
                       type="text"
+                      autoComplete="given-name"
                       required
                       maxLength={60}
                       value={formData.firstName}
@@ -128,9 +131,12 @@ export function Join() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold mb-2">Soyad</label>
+                    <label htmlFor="join-last-name" className="block text-sm font-bold mb-2">Soyad</label>
                     <input
+                      id="join-last-name"
+                      name="lastName"
                       type="text"
+                      autoComplete="family-name"
                       required
                       maxLength={60}
                       value={formData.lastName}
@@ -142,9 +148,12 @@ export function Join() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2">Öğrenci E-postası</label>
+                  <label htmlFor="join-email" className="block text-sm font-bold mb-2">Öğrenci E-postası</label>
                   <input
+                    id="join-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     required
                     maxLength={254}
                     value={formData.email}
@@ -156,9 +165,12 @@ export function Join() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-bold mb-2">Bölüm</label>
+                    <label htmlFor="join-department" className="block text-sm font-bold mb-2">Bölüm</label>
                     <input
+                      id="join-department"
+                      name="department"
                       type="text"
+                      autoComplete="organization-title"
                       required
                       maxLength={120}
                       value={formData.department}
@@ -168,8 +180,10 @@ export function Join() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold mb-2">Sınıf</label>
+                    <label htmlFor="join-grade" className="block text-sm font-bold mb-2">Sınıf</label>
                     <select 
+                      id="join-grade"
+                      name="grade"
                       className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium text-primary"
                       value={formData.grade}
                       onChange={(e) => setFormData({...formData, grade: e.target.value})}
@@ -185,8 +199,10 @@ export function Join() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2">Kol Seçimi</label>
+                  <label htmlFor="join-branch" className="block text-sm font-bold mb-2">Kol Seçimi</label>
                   <select 
+                    id="join-branch"
+                    name="branch"
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium text-primary"
                     value={formData.branch}
                     onChange={(e) => setFormData({...formData, branch: e.target.value})}
@@ -201,8 +217,10 @@ export function Join() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2">Kendini Tanıt</label>
+                  <label htmlFor="join-message" className="block text-sm font-bold mb-2">Kendini Tanıt</label>
                   <textarea
+                    id="join-message"
+                    name="message"
                     className="w-full px-4 py-3.5 bg-page border border-default rounded-xl focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-medium placeholder:text-muted/60 resize-none"
                     rows={4}
                     required
@@ -213,6 +231,10 @@ export function Join() {
                     placeholder="Neden YGK'ya katılmak istiyorsun? Hangi projelere ilgin var?"
                   />
                 </div>
+
+                <p className="text-xs text-muted leading-relaxed">
+                  Bu form gelecekte kullanılmak üzere korunmaktadır; kulübün aktif üyelik başvuruları şu anda Google Form üzerinden alınmaktadır.
+                </p>
 
                 <Button variant="primary" className="w-full rounded-xl py-4 font-bold shadow-dynamic" size="lg" disabled={isSubmitting}>
                   {isSubmitting ? (

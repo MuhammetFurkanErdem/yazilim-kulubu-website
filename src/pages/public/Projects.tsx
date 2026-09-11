@@ -451,6 +451,8 @@ ${formData.description}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
+            role="status"
+            aria-live="polite"
             className="flex flex-col items-center justify-center py-12 text-center"
           >
             <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
@@ -465,52 +467,57 @@ ${formData.description}
             </Button>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" aria-busy={isSubmitting}>
             <p className="text-sm text-muted font-medium mb-2">
               Kendi geliştirdiğin, bitmiş veya devam eden projenin detaylarını aşağıya gir. Diğer üyelerimize ilham ol!
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-bold text-primary">Adın Soyadın</label>
-                <input value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" minLength={2} maxLength={120} required />
+                <label htmlFor="project-full-name" className="text-sm font-bold text-primary">Adın Soyadın</label>
+                <input id="project-full-name" name="fullName" autoComplete="name" value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" minLength={2} maxLength={120} required />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-bold text-primary">Bölüm / Sınıf</label>
-                <input value={formData.department} onChange={e => setFormData({ ...formData, department: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={160} required />
+                <label htmlFor="project-department" className="text-sm font-bold text-primary">Bölüm / Sınıf</label>
+                <input id="project-department" name="department" autoComplete="organization-title" value={formData.department} onChange={e => setFormData({ ...formData, department: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={160} required />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">E-posta Adresin</label>
-              <input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={254} required />
+              <label htmlFor="project-email" className="text-sm font-bold text-primary">E-posta Adresin</label>
+              <input id="project-email" name="email" autoComplete="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} type="email" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={254} required />
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Projenin Adı</label>
-              <input value={formData.projectName} onChange={e => setFormData({ ...formData, projectName: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={120} required />
+              <label htmlFor="project-name" className="text-sm font-bold text-primary">Projenin Adı</label>
+              <input id="project-name" name="projectName" value={formData.projectName} onChange={e => setFormData({ ...formData, projectName: e.target.value })} type="text" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={120} required />
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Kullanılan Teknolojiler</label>
-              <input value={formData.techStack} onChange={e => setFormData({ ...formData, techStack: e.target.value })} type="text" placeholder="Python, Fast API, PostgreSQL (virgülle ayırın)" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={500} required />
+              <label htmlFor="project-tech-stack" className="text-sm font-bold text-primary">Kullanılan Teknolojiler</label>
+              <input id="project-tech-stack" name="techStack" aria-describedby="project-tech-stack-help" value={formData.techStack} onChange={e => setFormData({ ...formData, techStack: e.target.value })} type="text" placeholder="Python, Fast API, PostgreSQL" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={500} required />
+              <p id="project-tech-stack-help" className="text-xs text-muted">Teknolojileri virgülle ayırarak yaz.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-bold text-primary">GitHub Linki</label>
-                <input value={formData.githubUrl} onChange={e => setFormData({ ...formData, githubUrl: e.target.value })} type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} required />
+                <label htmlFor="project-github-url" className="text-sm font-bold text-primary">GitHub Linki</label>
+                <input id="project-github-url" name="githubUrl" autoComplete="url" value={formData.githubUrl} onChange={e => setFormData({ ...formData, githubUrl: e.target.value })} type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} required />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-bold text-primary">Canlı Demo (Varsa)</label>
-                <input value={formData.demoUrl} onChange={e => setFormData({ ...formData, demoUrl: e.target.value })} type="url" placeholder="https://..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} />
+                <label htmlFor="project-demo-url" className="text-sm font-bold text-primary">Canlı Demo (Varsa)</label>
+                <input id="project-demo-url" name="demoUrl" autoComplete="url" value={formData.demoUrl} onChange={e => setFormData({ ...formData, demoUrl: e.target.value })} type="url" placeholder="https://..." className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" maxLength={2048} />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-sm font-bold text-primary">Proje Hakkında Kısa Bilgi</label>
-              <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} rows={4} placeholder="Projen ne işe yarıyor? Neden geliştirdin?" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" minLength={10} maxLength={5000} required></textarea>
+              <label htmlFor="project-description" className="text-sm font-bold text-primary">Proje Hakkında Kısa Bilgi</label>
+              <textarea id="project-description" name="description" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} rows={4} placeholder="Projen ne işe yarıyor? Neden geliştirdin?" className="w-full px-4 py-3 bg-page border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" minLength={10} maxLength={5000} required></textarea>
             </div>
+
+            <p className="text-xs text-muted leading-relaxed">
+              Proje gönderimleri ekip tarafından incelendikten sonra Üye Projeleri bölümünde yayınlanır.
+            </p>
 
             <div className="pt-2">
               <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-xl py-3.5 font-bold shadow-dynamic">

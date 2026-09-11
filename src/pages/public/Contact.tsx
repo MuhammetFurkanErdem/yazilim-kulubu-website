@@ -124,7 +124,15 @@ export function Contact() {
   return (
     <div className="min-h-screen bg-page transition-colors duration-300">
       <section className="pt-28 pb-16 px-4 sm:px-8 lg:px-20 bg-page">
-        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-[3.2fr_4.8fr_4fr] gap-12 lg:gap-16 items-start">
+        <div className="max-w-[1280px] mx-auto">
+          <header className="text-center mb-12 sm:mb-16">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight mb-4">İletişim</h1>
+            <p className="text-base sm:text-lg text-muted font-medium max-w-2xl mx-auto">
+              Soruların, proje fikirlerin ve iş birliği önerilerin için bize ulaş.
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[3.2fr_4.8fr_4fr] gap-12 lg:gap-16 items-start">
 
           {/* Left Column - Contact Info */}
           <motion.div
@@ -192,6 +200,8 @@ export function Contact() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
+                role="status"
+                aria-live="polite"
                 className="flex flex-col items-center justify-center py-12 text-center bg-surface border border-default rounded-xl p-8 shadow-dynamic"
               >
                 <div className="w-20 h-20 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full flex items-center justify-center mb-6">
@@ -209,13 +219,16 @@ export function Contact() {
                 </Button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5" aria-busy={isSubmitting}>
                 <div className="group">
-                  <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                  <label htmlFor="contact-full-name" className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
                     <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">fullName</span>: string;
                   </label>
                   <input
+                    id="contact-full-name"
+                    name="fullName"
                     type="text"
+                    autoComplete="name"
                     required
                     minLength={2}
                     maxLength={120}
@@ -227,11 +240,14 @@ export function Contact() {
                 </div>
 
                 <div className="group">
-                  <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                  <label htmlFor="contact-email" className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
                     <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">email</span>: string;
                   </label>
                   <input
+                    id="contact-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     required
                     maxLength={254}
                     value={formData.email}
@@ -242,11 +258,11 @@ export function Contact() {
                 </div>
 
                 <div className="group">
-                  <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                  <label id="contact-subject-label" htmlFor="contact-subject" className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
                     <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">subject</span>: string;
                   </label>
                   <Select value={formData.subject} onValueChange={(val) => setFormData({ ...formData, subject: val })}>
-                    <SelectTrigger className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm h-auto">
+                    <SelectTrigger id="contact-subject" aria-labelledby="contact-subject-label" className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm h-auto">
                       <SelectValue placeholder="Konu Seçin" />
                     </SelectTrigger>
                     <SelectContent className="bg-surface border-default font-mono text-sm shadow-xl rounded-lg overflow-hidden">
@@ -261,10 +277,12 @@ export function Contact() {
                 </div>
 
                 <div className="group">
-                  <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
+                  <label htmlFor="contact-message" className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
                     <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">message</span>: string;
                   </label>
                   <textarea
+                    id="contact-message"
+                    name="message"
                     className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm resize-none"
                     rows={4}
                     required
@@ -275,6 +293,10 @@ export function Contact() {
                     placeholder="// Mesajınızı buraya yazın..."
                   />
                 </div>
+
+                <p className="text-xs text-muted leading-relaxed">
+                  Mesajını aldıktan sonra verdiğin e-posta adresi üzerinden seninle iletişime geçeceğiz.
+                </p>
 
                 <Button type="submit" disabled={isSubmitting} variant="primary" className="w-full rounded-lg py-4 font-bold shadow-md font-mono" size="lg">
                   {isSubmitting ? (
@@ -310,6 +332,7 @@ export function Contact() {
               </div>
             </div>
           </motion.div>
+        </div>
         </div>
       </section>
 
