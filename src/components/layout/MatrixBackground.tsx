@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 
-export function MatrixBackground({ colorHex = '#534AB7' }: { colorHex?: string }) {
+export function MatrixBackground({ colorHex = '#29477A' }: { colorHex?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useTheme();
 
@@ -37,9 +37,9 @@ export function MatrixBackground({ colorHex = '#534AB7' }: { colorHex?: string }
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Parse hex color to rgb
-      const r = parseInt(colorHex.slice(1, 3), 16) || 83;
-      const g = parseInt(colorHex.slice(3, 5), 16) || 74;
-      const b = parseInt(colorHex.slice(5, 7), 16) || 183;
+      const r = parseInt(colorHex.slice(1, 3), 16) || 41;
+      const g = parseInt(colorHex.slice(3, 5), 16) || 71;
+      const b = parseInt(colorHex.slice(5, 7), 16) || 122;
 
       // Set text color and font
       // In light mode, make text almost solid so it stands out against white background

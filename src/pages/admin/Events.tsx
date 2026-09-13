@@ -214,9 +214,9 @@ export function Events() {
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'featured': return 'bg-purple-500/10 text-purple-500 border border-purple-500/20';
-      case 'past': return 'bg-gray-500/10 text-gray-500 border border-gray-500/20';
-      default: return 'bg-blue-500/10 text-blue-500 border border-blue-500/20';
+      case 'featured': return 'bg-[#54A3C7]/10 text-[#3D719F] border border-[#54A3C7]/20';
+      case 'past': return 'bg-surface text-muted border border-default';
+      default: return 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] border border-[var(--brand-primary)]/20';
     }
   };
 

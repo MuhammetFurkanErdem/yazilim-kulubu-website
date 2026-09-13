@@ -1,11 +1,12 @@
 import { Outlet, Link, useLocation } from "react-router";
 
-import { 
-  LayoutDashboard, 
-  Calendar, 
-  Briefcase, 
-  Users, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Calendar,
+  CalendarDays,
+  Briefcase,
+  Users,
+  Settings,
   LogOut,
   Code2,
   Inbox,
@@ -26,6 +27,7 @@ export function AdminLayout() {
   const menuItems = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
     { name: "Etkinlikler", path: "/admin/etkinlikler", icon: Calendar },
+    { name: "Akademik Takvim", path: "/admin/akademik-takvim", icon: CalendarDays },
     { name: "Projeler", path: "/admin/projeler", icon: Briefcase },
     { name: "Başvurular", path: "/admin/basvurular", icon: Inbox },
     { name: "Ekip Yönetimi", path: "/admin/ekip", icon: Users },

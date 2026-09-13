@@ -6,6 +6,7 @@ import { Team } from '@/pages/public/Team';
 import { Events } from '@/pages/public/Events';
 import { EventDetail } from '@/pages/public/EventDetail';
 import { Projects } from '@/pages/public/Projects';
+import { ProjectDetail } from '@/pages/public/ProjectDetail';
 import { Contact } from '@/pages/public/Contact';
 import { NotFound } from '@/pages/public/NotFound';
 
@@ -13,6 +14,7 @@ import { NotFound } from '@/pages/public/NotFound';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { Dashboard as AdminDashboard } from '@/pages/admin/Dashboard';
 import { Events as AdminEvents } from '@/pages/admin/Events';
+import { AcademicCalendar as AdminAcademicCalendar } from '@/pages/admin/AcademicCalendar';
 import { Projects as AdminProjects } from '@/pages/admin/Projects';
 import { Team as AdminTeam } from '@/pages/admin/Team';
 import { Settings as AdminSettings } from '@/pages/admin/Settings';
@@ -33,6 +35,7 @@ export const router = createBrowserRouter([
       { path: "etkinlikler", Component: Events },
       { path: "etkinlikler/:id", Component: EventDetail },
       { path: "projeler", Component: Projects },
+      { path: "projeler/:id", Component: ProjectDetail },
       { path: "iletisim", Component: Contact },
       { path: "*", Component: NotFound },
     ],
@@ -51,6 +54,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, Component: AdminDashboard },
           { path: "etkinlikler", Component: AdminEvents },
+          { path: "akademik-takvim", Component: AdminAcademicCalendar },
           { path: "projeler", Component: AdminProjects },
           { path: "ekip", Component: AdminTeam },
           { path: "basvurular", Component: AdminSubmissions },

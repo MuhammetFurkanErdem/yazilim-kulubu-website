@@ -4,12 +4,14 @@ import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
 import { useState, useEffect } from 'react';
 import { CheckCircle, Send } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
 import { DatabaseError } from '@/components/shared/DatabaseError';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 export function Projects() {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -143,7 +145,12 @@ ${formData.description}
                     ÖNE ÇIKAN KULÜP PROJESİ
                   </span>
                 </div>
-                <h2 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 tracking-tight">{featuredProject.title}</h2>
+                <h2
+                  onClick={() => navigate(`/projeler/${featuredProject.id}`)}
+                  className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 tracking-tight cursor-pointer hover:text-[var(--brand-primary)] transition-colors"
+                >
+                  {featuredProject.title}
+                </h2>
                 <p className="text-base sm:text-xl text-muted leading-relaxed font-medium mb-6 sm:mb-8">
                   {featuredProject.description}
                 </p>
@@ -187,7 +194,10 @@ ${formData.description}
               </div>
 
               {/* Right - Realistic Mockup Image */}
-              <div className="col-span-1 lg:col-span-6 relative order-1 lg:order-2 w-full max-w-md mx-auto lg:max-w-none">
+              <div
+                onClick={() => navigate(`/projeler/${featuredProject.id}`)}
+                className="col-span-1 lg:col-span-6 relative order-1 lg:order-2 w-full max-w-md mx-auto lg:max-w-none cursor-pointer"
+              >
                 <div className="relative rounded-dynamic overflow-hidden border border-default shadow-dynamic aspect-video bg-surface">
                   {featuredProject.image_url ? (
                     <img
@@ -225,7 +235,8 @@ ${formData.description}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
-                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center mb-24 lg:mb-32 last:mb-0`}
+                  onClick={() => navigate(`/projeler/${project.id}`)}
+                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center mb-24 lg:mb-32 last:mb-0 cursor-pointer`}
                 >
                   {/* Image Side */}
                   <div className="w-full lg:w-1/2 relative group">
@@ -276,24 +287,26 @@ ${formData.description}
 
                     <div className="flex flex-row items-center gap-3 w-full">
                       {project.demo_url && (
-                        <Button 
-                          href={project.demo_url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          variant="primary" 
-                          size="lg" 
+                        <Button
+                          href={project.demo_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          variant="primary"
+                          size="lg"
+                          onClick={(e: React.MouseEvent) => e.stopPropagation()}
                           className={`${project.github_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-8 py-2.5 sm:py-3.5 rounded-xl shadow-[0_0_20px_rgba(var(--brand-primary-rgb),0.3)] font-bold whitespace-nowrap`}
                         >
                           <span className="whitespace-nowrap">Projeyi İncele</span> <ExternalLink className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
                         </Button>
                       )}
                       {project.github_url && (
-                        <Button 
-                          href={project.github_url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          variant="secondary" 
-                          size="lg" 
+                        <Button
+                          href={project.github_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          variant="secondary"
+                          size="lg"
+                          onClick={(e: React.MouseEvent) => e.stopPropagation()}
                           className={`${project.demo_url ? 'w-1/2' : 'w-full'} sm:w-auto flex items-center justify-center text-xs xs:text-sm sm:text-base px-2.5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-surface hover:bg-elevated border-default font-bold shadow-sm whitespace-nowrap`}
                         >
                           <span className="whitespace-nowrap">Kaynak Kod</span> <Github className="w-3.5 h-3.5 sm:w-5 h-5 ml-1 sm:ml-2 shrink-0" />
@@ -337,7 +350,8 @@ ${formData.description}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
-                className="group flex flex-col"
+                onClick={() => navigate(`/projeler/${project.id}`)}
+                className="group flex flex-col cursor-pointer"
               >
                 {/* Visual Preview */}
                 <div className="relative aspect-[4/3] rounded-3xl overflow-hidden mb-6 shadow-md bg-surface">
@@ -359,12 +373,12 @@ ${formData.description}
                   {/* Hover Action Buttons */}
                   <div className="absolute top-4 right-4 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300 z-20">
                     {project.github_url && (
-                      <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white hover:bg-black/80 flex items-center justify-center shadow-2xl transition-all" title="Kaynak Kod">
+                      <a href={project.github_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white hover:bg-black/80 flex items-center justify-center shadow-2xl transition-all" title="Kaynak Kod">
                         <Github className="w-5 h-5" />
                       </a>
                     )}
                     {project.demo_url && (
-                      <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-[var(--brand-primary)] text-white hover:opacity-90 flex items-center justify-center shadow-2xl shadow-[var(--brand-primary)] transition-all" title="Demo">
+                      <a href={project.demo_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="w-12 h-12 rounded-full bg-[var(--brand-primary)] text-white hover:opacity-90 flex items-center justify-center shadow-2xl shadow-[var(--brand-primary)] transition-all" title="Demo">
                         <ExternalLink className="w-5 h-5" />
                       </a>
                     )}

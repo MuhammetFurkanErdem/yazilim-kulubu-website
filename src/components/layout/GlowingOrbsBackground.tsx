@@ -13,7 +13,7 @@ export function GlowingOrbsBackground() {
         }} 
       />
       
-      {/* Orb 1: Primary Brand Color (Deep Purple) */}
+      {/* Orb 1: Primary Brand Color (Deep Navy) */}
       <motion.div
         animate={{
           x: [0, 150, -50, 0],
@@ -25,10 +25,10 @@ export function GlowingOrbsBackground() {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] rounded-full bg-[#534AB7] opacity-20 dark:opacity-30 blur-[120px] mix-blend-multiply dark:mix-blend-screen"
+        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] rounded-full bg-[#29477A] opacity-20 dark:opacity-30 blur-[120px] mix-blend-multiply dark:mix-blend-screen"
       />
       
-      {/* Orb 2: Secondary Brand Color (Light Indigo) */}
+      {/* Orb 2: Secondary Brand Color (Light Blue) */}
       <motion.div
         animate={{
           x: [0, -150, 100, 0],
@@ -40,7 +40,7 @@ export function GlowingOrbsBackground() {
           repeat: Infinity,
           ease: "linear"
         }}
-        className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full bg-[#7F77DD] opacity-20 dark:opacity-30 blur-[150px] mix-blend-multiply dark:mix-blend-screen"
+        className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full bg-[#54A3C7] opacity-20 dark:opacity-30 blur-[150px] mix-blend-multiply dark:mix-blend-screen"
       />
 
       {/* Orb 3: Accent Color (Emerald/Teal) to give it a modern tech vibe */}

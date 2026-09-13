@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import { supabase } from '@/api/config';
 import { withTimeout } from '@/utils/promise';
 import { DatabaseError } from '@/components/shared/DatabaseError';
+import { EventsCalendar } from '@/components/shared/EventsCalendar';
 
 // Ticket Card Component for Upcoming Events
 function TicketCard({ event }: { event: any }) {
@@ -175,6 +176,7 @@ export function Events() {
   const [featuredEvent, setFeaturedEvent] = useState<any>(null);
   const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
   const [pastEvents, setPastEvents] = useState<any[]>([]);
+  const [allEvents, setAllEvents] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -200,6 +202,7 @@ export function Events() {
         setFeaturedEvent(featured);
         setUpcomingEvents(upcoming);
         setPastEvents(past);
+        setAllEvents(data);
 
         if (featured && featured.date) {
           startCountdown(new Date(featured.date));
@@ -360,8 +363,21 @@ export function Events() {
         </section>
       )}
 
-      {/* Past Events */}
+      {/* Etkinlik Takvimi */}
       <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-page">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="mb-8 sm:mb-12 text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Etkinlik Takvimi</h2>
+            <p className="text-sm sm:text-base text-muted font-medium">
+              Kulüp etkinliklerini; milli bayram, resmi tatil, vize ve final haftalarıyla birlikte tek takvimde takip edin.
+            </p>
+          </div>
+          <EventsCalendar events={allEvents} />
+        </div>
+      </section>
+
+      {/* Past Events */}
+      <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-20 bg-surface border-y border-default">
         <div className="max-w-[1280px] mx-auto">
           <div className="mb-8 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 tracking-tight">Geçmiş Etkinlikler</h2>

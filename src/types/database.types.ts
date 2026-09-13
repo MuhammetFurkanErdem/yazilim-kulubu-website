@@ -85,6 +85,38 @@ export interface Database {
           gallery_urls?: string[] | null
         }
       }
+      calendar_entries: {
+        Row: {
+          id: string
+          title: string
+          start_date: string
+          end_date: string | null
+          type: 'milli_bayram' | 'resmi_tatil' | 'vize' | 'final' | 'diger'
+          description: string | null
+          created_at: string | null
+          created_by: string | null
+        }
+        Insert: {
+          id?: string
+          title: string
+          start_date: string
+          end_date?: string | null
+          type?: 'milli_bayram' | 'resmi_tatil' | 'vize' | 'final' | 'diger'
+          description?: string | null
+          created_at?: string | null
+          created_by?: string | null
+        }
+        Update: {
+          id?: string
+          title?: string
+          start_date?: string
+          end_date?: string | null
+          type?: 'milli_bayram' | 'resmi_tatil' | 'vize' | 'final' | 'diger'
+          description?: string | null
+          created_at?: string | null
+          created_by?: string | null
+        }
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -140,6 +172,8 @@ export interface Database {
           created_by: string | null
           demo_url: string | null
           description: string
+          long_description: string | null
+          gallery_urls: string[] | null
           github_url: string | null
           id: string
           image_url: string | null
@@ -153,6 +187,8 @@ export interface Database {
           created_by?: string | null
           demo_url?: string | null
           description: string
+          long_description?: string | null
+          gallery_urls?: string[] | null
           github_url?: string | null
           id?: string
           image_url?: string | null
@@ -166,6 +202,8 @@ export interface Database {
           created_by?: string | null
           demo_url?: string | null
           description?: string
+          long_description?: string | null
+          gallery_urls?: string[] | null
           github_url?: string | null
           id?: string
           image_url?: string | null

@@ -81,7 +81,7 @@ export function Submissions() {
       case "pending": return { text: "Beklemede", cls: "bg-amber-500/10 text-amber-500 border-amber-500/20" };
       case "approved": return { text: "Onaylandı", cls: "bg-green-500/10 text-green-500 border-green-500/20" };
       case "rejected": return { text: "Reddedildi", cls: "bg-red-500/10 text-red-500 border-red-500/20" };
-      default: return { text: status, cls: "bg-gray-500/10 text-gray-500 border-gray-500/20" };
+      default: return { text: status, cls: "bg-surface text-muted border-default" };
     }
   };
 

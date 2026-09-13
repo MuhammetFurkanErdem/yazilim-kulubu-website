@@ -40,7 +40,7 @@ export function Login() {
     <div className="min-h-screen bg-page flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background Orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--brand-primary)] rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#54A3C7] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

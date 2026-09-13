@@ -218,13 +218,13 @@ export function Dashboard() {
 
         {/* Daily Visitors Card (Cyan theme) */}
         <div className="bg-page border border-default rounded-md shadow-sm p-6 relative overflow-hidden flex flex-col justify-between">
-          <div className="absolute top-0 left-0 w-full h-1 bg-cyan-500 opacity-20"></div>
+          <div className="absolute top-0 left-0 w-full h-1 bg-[#54A3C7] opacity-20"></div>
 
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-primary text-lg flex items-center gap-2">
-              <span className="text-cyan-500 opacity-50">&gt;</span> Günlük Ziyaretçi
+              <span className="text-[#54A3C7] opacity-50">&gt;</span> Günlük Ziyaretçi
             </h3>
-            <div className="w-8 h-8 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500">
+            <div className="w-8 h-8 rounded-full bg-[#54A3C7]/10 flex items-center justify-center text-[#54A3C7]">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
@@ -232,7 +232,7 @@ export function Dashboard() {
           <div className="flex-1 flex flex-col justify-center py-4">
             <div className="text-4xl font-extrabold text-primary tracking-tight flex items-baseline gap-1.5 font-mono">
               {todayViews}
-              <span className="w-3 h-6 bg-cyan-500 animate-pulse inline-block opacity-70"></span>
+              <span className="w-3 h-6 bg-[#54A3C7] animate-pulse inline-block opacity-70"></span>
             </div>
             <p className="text-xs text-muted mt-2">Bugünkü canlı tekil sayfa görüntülemeleri.</p>
           </div>

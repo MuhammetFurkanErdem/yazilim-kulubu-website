@@ -1,4 +1,4 @@
-import { Plus, Search, Edit2, Trash2, ExternalLink, Github, UploadCloud, AlertTriangle, Loader2 } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, ExternalLink, Github, UploadCloud, AlertTriangle, Loader2, X } from "lucide-react";
 import { Button } from '@/components/shared/Button';
 import { Modal } from '@/components/shared/Modal';
 import { useState, useEffect } from "react";
@@ -6,6 +6,8 @@ import { projectService } from "@/api/services/projects";
 import { storageService } from "@/api/services/storage";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/api/config";
+import { SmartImage } from "@/components/shared/SmartImage";
+import { ImageCropperModal } from "@/components/shared/ImageCropperModal";
 
 export function Projects() {
   const { user } = useAuth();
@@ -20,6 +22,7 @@ export function Projects() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    long_description: '',
     is_club_project: true,
     status: 'approved' as 'pending' | 'approved' | 'rejected',
     demo_url: '',
@@ -27,10 +30,81 @@ export function Projects() {
     tech_stack: ''
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>([]);
+
+  // Cropper State
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [cropperSrc, setCropperSrc] = useState<string | null>(null);
+  const [cropperTargetType, setCropperTargetType] = useState<'cover' | 'gallery'>('cover');
+  const [cropperAspect, setCropperAspect] = useState<number>(16 / 9);
+
+  // Geliştiriciler
+  const [allProfiles, setAllProfiles] = useState<any[]>([]);
+  const [developers, setDevelopers] = useState<{ profile_id: string; role: string }[]>([]);
+  const [selectedProfileToAdd, setSelectedProfileToAdd] = useState('');
+
+  const handleCoverSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (f) {
+      const processed = await storageService.processImage(f);
+      const url = URL.createObjectURL(processed);
+      setCropperSrc(url);
+      setCropperTargetType('cover');
+      setCropperAspect(16 / 9);
+      setCropperOpen(true);
+    }
+  };
+
+  const handleGallerySelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const f = e.target.files[0];
+      const processed = await storageService.processImage(f);
+      const url = URL.createObjectURL(processed);
+      setCropperSrc(url);
+      setCropperTargetType('gallery');
+      setCropperAspect(4 / 3);
+      setCropperOpen(true);
+    }
+  };
+
+  const handleCropComplete = (croppedFile: File) => {
+    if (cropperTargetType === 'cover') {
+      setImageFile(croppedFile);
+    } else {
+      setGalleryFiles(prev => [...prev, croppedFile]);
+    }
+  };
+
+  const handleAddDeveloper = () => {
+    if (!selectedProfileToAdd) return;
+    if (developers.some(d => d.profile_id === selectedProfileToAdd)) return;
+    setDevelopers(prev => [...prev, { profile_id: selectedProfileToAdd, role: '' }]);
+    setSelectedProfileToAdd('');
+  };
+
+  const handleRemoveDeveloper = (profileId: string) => {
+    setDevelopers(prev => prev.filter(d => d.profile_id !== profileId));
+  };
+
+  const handleDeveloperRoleChange = (profileId: string, role: string) => {
+    setDevelopers(prev => prev.map(d => d.profile_id === profileId ? { ...d, role } : d));
+  };
 
   useEffect(() => {
     fetchProjects();
+    fetchProfiles();
   }, []);
+
+  const fetchProfiles = async () => {
+    try {
+      const { data, error } = await supabase.from('profiles').select('id, first_name, last_name, avatar_url').order('first_name', { ascending: true });
+      if (error) throw error;
+      setAllProfiles(data || []);
+    } catch (error) {
+      console.error("Profiller çekilemedi:", error);
+    }
+  };
 
   const fetchProjects = async () => {
     setIsLoading(true);
@@ -61,11 +135,12 @@ export function Projects() {
     }
   };
 
-  const handleEdit = (project: any) => {
+  const handleEdit = async (project: any) => {
     setSelectedProject(project);
     setFormData({
       title: project.title,
       description: project.description,
+      long_description: project.long_description || '',
       is_club_project: project.is_club_project,
       status: project.status || 'approved',
       demo_url: project.demo_url || '',
@@ -73,6 +148,18 @@ export function Projects() {
       tech_stack: project.tech_stack ? project.tech_stack.join(', ') : ''
     });
     setImageFile(null);
+    setGalleryFiles([]);
+    setExistingGalleryUrls(project.gallery_urls || []);
+
+    try {
+      const { data, error } = await supabase.from('project_members').select('profile_id, role').eq('project_id', project.id);
+      if (error) throw error;
+      setDevelopers((data || []).map((d: any) => ({ profile_id: d.profile_id, role: d.role || '' })));
+    } catch (error) {
+      console.error("Geliştiriciler çekilemedi:", error);
+      setDevelopers([]);
+    }
+
     setIsModalOpen(true);
   };
 
@@ -81,6 +168,7 @@ export function Projects() {
     setFormData({
       title: '',
       description: '',
+      long_description: '',
       is_club_project: true,
       status: 'approved',
       demo_url: '',
@@ -88,6 +176,9 @@ export function Projects() {
       tech_stack: ''
     });
     setImageFile(null);
+    setGalleryFiles([]);
+    setExistingGalleryUrls([]);
+    setDevelopers([]);
     setIsModalOpen(true);
   };
 
@@ -101,6 +192,13 @@ export function Projects() {
 
       if (imageFile) {
         imageUrl = await storageService.uploadImage('project-images', imageFile);
+      }
+
+      let finalGalleryUrls = [...existingGalleryUrls];
+      if (galleryFiles.length > 0) {
+        const uploadPromises = galleryFiles.map(file => storageService.uploadImage('project-images', file, 'gallery'));
+        const newGalleryUrls = await Promise.all(uploadPromises);
+        finalGalleryUrls = [...finalGalleryUrls, ...newGalleryUrls];
       }
 
       const techArray = formData.tech_stack
@@ -118,19 +216,31 @@ export function Projects() {
       const projectPayload = {
         title: formData.title,
         description: formData.description,
+        long_description: formData.long_description,
         is_club_project: formData.is_club_project,
         status: formData.status,
         demo_url: formData.demo_url,
         github_url: formData.github_url,
         tech_stack: techArray,
         image_url: imageUrl,
+        gallery_urls: finalGalleryUrls,
         created_by: createdBy
       };
 
+      let projectId = selectedProject?.id;
       if (selectedProject) {
         await supabase.from('projects').update(projectPayload).eq('id', selectedProject.id);
       } else {
-        await projectService.createProject(projectPayload as any);
+        const created = await projectService.createProject(projectPayload as any);
+        projectId = created.id;
+      }
+
+      // Geliştiricileri senkronize et (mevcutları sil, güncel listeyi ekle)
+      await supabase.from('project_members').delete().eq('project_id', projectId);
+      if (developers.length > 0) {
+        await supabase.from('project_members').insert(
+          developers.map(d => ({ project_id: projectId, profile_id: d.profile_id, role: d.role || null }))
+        );
       }
 
       await fetchProjects();
@@ -157,7 +267,7 @@ export function Projects() {
       case 'approved': return 'bg-green-500/10 text-green-500 border border-green-500/20';
       case 'pending': return 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20';
       case 'rejected': return 'bg-red-500/10 text-red-500 border border-red-500/20';
-      default: return 'bg-gray-500/10 text-gray-500 border border-gray-500/20';
+      default: return 'bg-surface text-muted border border-default';
     }
   };
 
@@ -336,12 +446,12 @@ export function Projects() {
             <label className="text-sm font-bold text-primary">Kapak Görseli</label>
             {imageFile || selectedProject?.image_url ? (
               <div className="w-full relative h-40 border-2 border-default rounded-xl overflow-hidden bg-surface group">
-                <img 
-                  src={imageFile ? URL.createObjectURL(imageFile) : selectedProject?.image_url} 
-                  alt="Kapak" 
-                  className="w-full h-full object-cover opacity-80 group-hover:opacity-50 transition-opacity" 
+                <SmartImage
+                  src={imageFile ? URL.createObjectURL(imageFile) : selectedProject?.image_url}
+                  alt="Kapak"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-50 transition-opacity"
                 />
-                <button 
+                <button
                   type="button"
                   onClick={() => {
                     setImageFile(null);
@@ -358,16 +468,102 @@ export function Projects() {
                 <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
                   <UploadCloud className="w-8 h-8 text-[var(--brand-primary)] opacity-80" />
                   <span className="text-sm font-bold text-primary">Görsel Seç</span>
-                  <span className="text-xs font-medium text-muted">PNG, JPG veya WEBP (Max 5MB)</span>
-                  <input type="file" accept="image/*" className="hidden" onChange={e => setImageFile(e.target.files?.[0] || null)} />
+                  <span className="text-xs font-medium text-muted">PNG, JPG, WEBP veya HEIC/HEIF</span>
+                  <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" className="hidden" onChange={handleCoverSelect} />
                 </label>
               </div>
             )}
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-bold text-primary">Açıklama</label>
+            <label className="text-sm font-bold text-primary">Açıklama <span className="text-muted font-normal">(Amaç ve öne çıkan özellikler)</span></label>
             <textarea rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Proje hakkında kısa bilgi..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" required></textarea>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm font-bold text-primary">Detaylı Açıklama <span className="text-muted font-normal">(Opsiyonel, teknik veya genel detaylar)</span></label>
+            <textarea rows={6} value={formData.long_description} onChange={e => setFormData({...formData, long_description: e.target.value})} placeholder="Projenin mimarisi, kullanılan teknolojiler, karşılaşılan zorluklar vb..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none"></textarea>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm font-bold text-primary">Geliştiriciler <span className="text-muted font-normal">(Opsiyonel)</span></label>
+            <div className="w-full border-2 border-dashed border-default rounded-xl bg-page p-4 space-y-3">
+              {developers.length > 0 && (
+                <div className="space-y-2">
+                  {developers.map(d => {
+                    const profile = allProfiles.find(p => p.id === d.profile_id);
+                    return (
+                      <div key={d.profile_id} className="flex items-center gap-3 bg-surface border border-default rounded-lg p-2">
+                        <div className="w-8 h-8 rounded-full overflow-hidden bg-page border border-default flex-shrink-0 flex items-center justify-center">
+                          {profile?.avatar_url ? (
+                            <SmartImage src={profile.avatar_url} alt={profile.first_name} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-xs font-bold text-muted opacity-50">{profile?.first_name?.[0] || '?'}</span>
+                          )}
+                        </div>
+                        <span className="text-sm font-bold text-primary flex-shrink-0">{profile ? `${profile.first_name} ${profile.last_name}` : 'Bilinmiyor'}</span>
+                        <input
+                          type="text"
+                          value={d.role}
+                          onChange={e => handleDeveloperRoleChange(d.profile_id, e.target.value)}
+                          placeholder="Proje rolü (örn. Backend Geliştirici)"
+                          className="flex-1 min-w-0 px-3 py-1.5 bg-page border border-default rounded-lg text-xs focus:outline-none focus:border-[var(--brand-primary)]"
+                        />
+                        <button type="button" onClick={() => handleRemoveDeveloper(d.profile_id)} className="p-1.5 text-muted hover:text-red-500 transition-colors flex-shrink-0" title="Kaldır">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <select
+                  value={selectedProfileToAdd}
+                  onChange={e => setSelectedProfileToAdd(e.target.value)}
+                  className="flex-1 px-3 py-2 bg-surface border border-default rounded-lg text-sm focus:outline-none focus:border-[var(--brand-primary)] text-primary appearance-none"
+                >
+                  <option value="">Ekip üyesi seçin...</option>
+                  {allProfiles.filter(p => !developers.some(d => d.profile_id === p.id)).map(p => (
+                    <option key={p.id} value={p.id}>{p.first_name} {p.last_name}</option>
+                  ))}
+                </select>
+                <button type="button" onClick={handleAddDeveloper} disabled={!selectedProfileToAdd} className="px-4 py-2 bg-[var(--brand-primary)] text-white text-sm font-bold rounded-lg disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+                  Ekle
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-sm font-bold text-primary">Ekstra Görseller <span className="text-muted font-normal">(Opsiyonel, çoklu fotoğraf)</span></label>
+            <div className="w-full border-2 border-dashed border-default rounded-xl bg-page hover:bg-surface transition-colors p-4">
+              {(existingGalleryUrls.length > 0 || galleryFiles.length > 0) && (
+                <div className="flex gap-2 flex-wrap mb-4">
+                  {existingGalleryUrls.map((url, i) => (
+                    <div key={'ext-' + i} className="relative w-16 h-16 rounded-lg overflow-hidden group">
+                      <SmartImage src={url} alt="Galeri" className="w-full h-full object-cover" />
+                      <button type="button" onClick={() => setExistingGalleryUrls(existingGalleryUrls.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Trash2 className="w-4 h-4 text-red-400" />
+                      </button>
+                    </div>
+                  ))}
+                  {galleryFiles.map((f, i) => (
+                    <div key={'new-' + i} className="relative w-16 h-16 rounded-lg overflow-hidden group">
+                      <SmartImage src={URL.createObjectURL(f)} alt="Yeni" className="w-full h-full object-cover" />
+                      <button type="button" onClick={() => setGalleryFiles(galleryFiles.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Trash2 className="w-4 h-4 text-red-400" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <label className="flex flex-col items-center justify-center py-4 cursor-pointer w-full gap-2">
+                <UploadCloud className="w-6 h-6 text-muted" />
+                <span className="text-xs font-bold text-primary">Galeriye Fotoğraf Ekle (PNG, JPG, HEIC)</span>
+                <input type="file" accept="image/jpeg, image/png, image/webp, image/*, .heic, .heif" multiple className="hidden" onChange={handleGallerySelect} />
+              </label>
+            </div>
           </div>
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-default">
@@ -380,6 +576,14 @@ export function Projects() {
           </div>
         </form>
       </Modal>
+
+      <ImageCropperModal
+        isOpen={cropperOpen}
+        imageSrc={cropperSrc}
+        aspectRatio={cropperAspect}
+        onClose={() => setCropperOpen(false)}
+        onCropComplete={handleCropComplete}
+      />
 
       <Modal
         isOpen={confirmDelete !== null}

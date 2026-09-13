@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Code2, Linkedin, Instagram, Youtube, Mail } from 'lucide-react';
+import { Code2, Linkedin, Instagram, Youtube, Github, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/api/config';
 
@@ -80,6 +80,9 @@ export function Footer() {
               </a>
               <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--brand-primary)] hover:scale-110 transition-all duration-200" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="https://github.com/COMU-Yazilim-Gelistirme-Kulubu/.github" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--brand-primary)] hover:scale-110 transition-all duration-200" aria-label="GitHub">
+                <Github className="w-5 h-5" />
               </a>
             </div>
           </div>

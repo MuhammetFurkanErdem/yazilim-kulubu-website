@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { MapPin, Mail, Clock, Instagram, Linkedin, Youtube, Send, ChevronDown, ArrowRight, CheckCircle, Loader2 } from 'lucide-react';
+import { MapPin, Mail, Clock, Instagram, Linkedin, Youtube, Github, Send, ChevronDown, ArrowRight, CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { useState, useEffect } from 'react';
 import {
@@ -114,6 +114,14 @@ export function Contact() {
       icon: Linkedin,
       color: '#0A66C2',
       desc: 'Profesyonel ağımız'
+    },
+    {
+      name: 'GitHub',
+      handle: 'github.com/COMU-Yazilim-Gelistirme-Kulubu',
+      url: 'https://github.com/COMU-Yazilim-Gelistirme-Kulubu/.github',
+      icon: Github,
+      color: '#8b949e',
+      desc: 'Projelerimiz ve kaynak kodlarımız'
     }
   ];
 
@@ -208,7 +216,7 @@ export function Contact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="group">
                   <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
-                    <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">fullName</span>: string;
+                    <span className="text-[var(--brand-primary)]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">fullName</span>: string;
                   </label>
                   <input
                     type="text"
@@ -222,7 +230,7 @@ export function Contact() {
 
                 <div className="group">
                   <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
-                    <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">email</span>: string;
+                    <span className="text-[var(--brand-primary)]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">email</span>: string;
                   </label>
                   <input
                     type="email"
@@ -236,7 +244,7 @@ export function Contact() {
 
                 <div className="group">
                   <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
-                    <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">subject</span>: string;
+                    <span className="text-[var(--brand-primary)]">let</span> <span className="text-[#D85A30] dark:text-[#E27756]">subject</span>: string;
                   </label>
                   <Select value={formData.subject} onValueChange={(val) => setFormData({ ...formData, subject: val })}>
                     <SelectTrigger className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm h-auto">
@@ -255,7 +263,7 @@ export function Contact() {
 
                 <div className="group">
                   <label className="block text-xs font-mono mb-2 text-slate-600 dark:text-slate-400 transition-colors group-focus-within:text-[var(--brand-primary)]">
-                    <span className="text-[var(--brand-primary)] dark:text-[#b490ff]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">message</span>: string;
+                    <span className="text-[var(--brand-primary)]">const</span> <span className="text-[#D85A30] dark:text-[#E27756]">message</span>: string;
                   </label>
                   <textarea
                     className="w-full px-4 py-3 bg-surface border border-default rounded-lg focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] focus:outline-none transition-all font-mono text-sm text-slate-800 dark:text-slate-200 shadow-sm resize-none"

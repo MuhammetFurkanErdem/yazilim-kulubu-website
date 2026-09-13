@@ -9,7 +9,7 @@ interface BadgeProps {
 export function Badge({ variant = 'brand', children, className = '' }: BadgeProps) {
   const variantClasses = {
     brand: 'text-[var(--brand-primary)] border-l-[var(--brand-primary)] bg-[var(--brand-primary)]/5',
-    web: 'text-blue-500 border-l-blue-500 bg-blue-500/5',
+    web: 'text-[#3D719F] border-l-[#3D719F] bg-[#3D719F]/5',
     mobile: 'text-emerald-500 border-l-emerald-500 bg-emerald-500/5',
     game: 'text-orange-500 border-l-orange-500 bg-orange-500/5',
     blockchain: 'text-yellow-500 border-l-yellow-500 bg-yellow-500/5',

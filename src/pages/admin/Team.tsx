@@ -19,6 +19,8 @@ export function Team() {
     last_name: '',
     position: '',
     department: '',
+    bio: '',
+    email: '',
     linkedin_url: '',
     github_url: '',
     instagram_url: '',
@@ -77,6 +79,8 @@ export function Team() {
       last_name: member.last_name || '',
       position: member.position || '',
       department: member.department || '',
+      bio: member.bio || '',
+      email: member.email || '',
       linkedin_url: member.linkedin_url || '',
       github_url: member.github_url || '',
       instagram_url: member.instagram_url || '',
@@ -92,6 +96,8 @@ export function Team() {
       last_name: '',
       position: '',
       department: '',
+      bio: '',
+      email: '',
       linkedin_url: '',
       github_url: '',
       instagram_url: '',
@@ -117,6 +123,8 @@ export function Team() {
         position: formData.position,
         role: 'member', // Default sistem yetkisi
         department: formData.department,
+        bio: formData.bio,
+        email: formData.email,
         linkedin_url: formData.linkedin_url,
         github_url: formData.github_url,
         instagram_url: formData.instagram_url,
@@ -296,6 +304,11 @@ export function Team() {
           </div>
 
           <div className="space-y-1">
+            <label className="text-sm font-bold text-primary">Açıklama <span className="text-muted font-normal">(Opsiyonel)</span></label>
+            <textarea value={formData.bio} onChange={e => setFormData({...formData, bio: e.target.value})} placeholder="Üye hakkında kısa bir tanıtım metni..." rows={3} className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)] resize-none" />
+          </div>
+
+          <div className="space-y-1">
             <label className="text-sm font-bold text-primary">Profil Fotoğrafı</label>
             <div className="w-full border-2 border-dashed border-default rounded-xl bg-page hover:bg-surface transition-colors">
               <label className="flex flex-col items-center justify-center p-6 cursor-pointer w-full gap-2">
@@ -313,7 +326,11 @@ export function Team() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-sm font-bold text-primary">E-posta</label>
+              <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="ornek@email.com" className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />
+            </div>
             <div className="space-y-1">
               <label className="text-sm font-bold text-primary">LinkedIn</label>
               <input type="url" value={formData.linkedin_url} onChange={e => setFormData({...formData, linkedin_url: e.target.value})} placeholder="https://linkedin.com/in/..." className="w-full px-4 py-2.5 bg-surface border border-default rounded-xl text-sm focus:outline-none focus:border-[var(--brand-primary)]" />

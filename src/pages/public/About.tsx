@@ -28,8 +28,8 @@ const branchesData: BranchData[] = [
       '> Gerçek ürünler geliştirip canlıya alıyoruz.'
     ],
     tech: ['React', 'Node.js', 'Next.js', 'TypeScript', 'PostgreSQL'],
-    color: '#7F77DD',
-    colorBg: 'rgba(127,119,221,0.13)',
+    color: '#3D719F',
+    colorBg: 'rgba(61,113,159,0.13)',
   },
   {
     name: 'Mobil Geliştirme',

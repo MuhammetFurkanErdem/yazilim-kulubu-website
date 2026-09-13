@@ -41,7 +41,7 @@ export function Button({
 
   if (asLink && href) {
     return (
-      <Link to={href} className={classes}>
+      <Link to={href} className={classes} {...(props as any)}>
         {children}
       </Link>
     );
@@ -49,7 +49,7 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes} target={target || "_blank"} rel={rel || "noopener noreferrer"}>
+      <a href={href} className={classes} target={target || "_blank"} rel={rel || "noopener noreferrer"} {...(props as any)}>
         {children}
       </a>
     );
